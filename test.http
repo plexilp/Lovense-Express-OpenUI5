@@ -1,0 +1,49 @@
+@localhost=http://localhost:8081
+
+###
+GET {{localhost}}/
+###
+GET {{localhost}}/getDevices
+###
+GET {{localhost}}/getConfig
+###
+GET {{localhost}}/listActions
+###
+GET {{localhost}}/listRules
+###
+GET {{localhost}}/listModes
+
+###
+POST {{localhost}}/startDevice
+Content-Type: application/json
+Accept-Language: de-DE,en;q=0.5
+{
+    
+}
+
+
+###
+POST {{localhost}}/stopDevice
+Content-Type: application/json
+Accept-Language: de-DE,en;q=0.5
+{
+    
+}
+
+###
+POST {{localhost}}/checkConnection
+Content-Type: application/json
+Accept-Language: de-DE,en;q=0.5
+{
+    
+}
+
+###
+POST {{localhost}}/startDevice
+Content-Type: application/json
+Accept-Language: de-DE,en;q=0.5
+{
+    
+}
+
+###

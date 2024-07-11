@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const constants = require("./app/constants/constants");
 
 const config = {
   bRebuildDatabase: false,
@@ -29,9 +30,40 @@ async function start() {
   // parse requests of content-type - application/x-www-form-urlencoded
   app.use(bodyParser.urlencoded({ extended: true }));
 
+  requestController = require("./app/controllers/requests.controller");
+
   // simple route
   app.get("/", (req, res) => {
-    res.json({ message: "Welcome to my application." });
+    res.json({ message: "NodeJS LovApi" });
+  });
+  app.get("/getConfig", (req, res) => {
+    res.send(constants.CONFIG);
+  });
+  app.get("/getDevices", (req, res) => {
+    const result = requestController.getDevice();
+    res.send(result);
+  });
+
+  // ValueHelps
+  app.get("/listActions", (req, res) => {
+    res.send(constants.ACTIONS);
+  });
+  app.get("/listRules", (req, res) => {
+    res.send(constants.RULES);
+  });
+  app.get("/listModes", (req, res) => {
+    res.send(constants.MODES);
+  });
+
+  // Posts
+  app.post("/startDevice", (req, res) => {
+    res.send("POST");
+  });
+  app.post("/stopDevice", (req, res) => {
+    res.send("POST");
+  });
+  app.post("/checkConnection", (req, res) => {
+    res.send("POST");
   });
 
   // set port, listen for requests
