@@ -30,18 +30,59 @@ async function start() {
   // parse requests of content-type - application/x-www-form-urlencoded
   app.use(bodyParser.urlencoded({ extended: true }));
 
-  requestController = require("./app/controllers/requests.controller");
+  process.on("uncaughtException", (err) => {
+    console.error("There was an uncaught error", err);
+    // Optional: exit process with a 'failure' code
+    // process.exit(1);
+  });
+
+  process.on("unhandledRejection", (reason, promise) => {
+    console.error("Unhandled Rejection at:", promise, "reason:", reason);
+    // Optional: exit process with a 'failure' code
+    // process.exit(1);
+  });
+  const RequestController = require("./app/controllers/requests.controller");
+  const oReqCtrlInstances = {};
+
+  getUserObject = (req, res) => {
+    const sUserId = req.query.userId;
+    if (!sUserId) {
+      return res
+        .status(400)
+        .json({ error: "userId is required: Example: /getConfig?userId=1" });
+    }
+
+    return _getSetUser(sUserId);
+  };
+
+  _getSetUser = (sUserId) => {
+    if (!oReqCtrlInstances[sUserId]) {
+      oReqCtrlInstances[sUserId] = new RequestController(
+        sUserId,
+        "192.168.178.71",
+        "30010"
+      );
+    }
+    return oReqCtrlInstances[sUserId];
+  };
 
   // simple route
   app.get("/", (req, res) => {
     res.json({ message: "NodeJS LovApi" });
   });
+  app.get("/getUserId", (req, res) => {
+    //it also register the object(s) for that userid
+    const sUserId = "1";
+    _getSetUser(sUserId);
+    res.json({ userId: sUserId });
+  });
   app.get("/getConfig", (req, res) => {
-    res.send(constants.CONFIG);
+    const oConfig = getUserObject(req, res).getConfig();
+    res.send(oConfig);
   });
   app.get("/getDevices", (req, res) => {
-    const result = requestController.getDevice();
-    res.send(result);
+    const oUserObj = getUserObject(req, res);
+    oUserObj.getDevice().then((response) => res.send(response));
   });
 
   // ValueHelps
@@ -56,13 +97,31 @@ async function start() {
   });
 
   // Posts
+
+  app.post("/setConfig", (req, res) => {
+    const oUserObj = getUserObject(req, res);
+    const oData = req.body;
+
+    if (oData.ip) {
+      oUserObj.setIp(oData.ip);
+    }
+
+    if (oData.port) {
+      oUserObj.setIp(oData.port);
+    }
+
+    res.send("POST");
+  });
   app.post("/startDevice", (req, res) => {
+    const oUserObj = getUserObject(req, res);
     res.send("POST");
   });
   app.post("/stopDevice", (req, res) => {
+    const oUserObj = getUserObject(req, res);
     res.send("POST");
   });
   app.post("/checkConnection", (req, res) => {
+    const oUserObj = getUserObject(req, res);
     res.send("POST");
   });
 
