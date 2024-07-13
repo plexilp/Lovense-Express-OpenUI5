@@ -47,9 +47,10 @@ async function start() {
   getUserObject = (req, res) => {
     const sUserId = req.query.userId;
     if (!sUserId) {
-      return res
+      res
         .status(400)
         .json({ error: "userId is required: Example: /getConfig?userId=1" });
+      return false;
     }
 
     return _getSetUser(sUserId);
@@ -77,11 +78,18 @@ async function start() {
     res.json({ userId: sUserId });
   });
   app.get("/getConfig", (req, res) => {
-    const oConfig = getUserObject(req, res).getConfig();
+    const oUserObj = getUserObject(req, res);
+    if (oUserObj === false) {
+      return;
+    }
+    const oConfig = oUserObj.getConfig();
     res.send(oConfig);
   });
   app.get("/getDevices", (req, res) => {
     const oUserObj = getUserObject(req, res);
+    if (oUserObj === false) {
+      return;
+    }
     oUserObj.getDevice().then((response) => res.send(response));
   });
 
@@ -100,6 +108,9 @@ async function start() {
 
   app.post("/setConfig", (req, res) => {
     const oUserObj = getUserObject(req, res);
+    if (oUserObj === false) {
+      return;
+    }
     const oData = req.body;
 
     if (oData.ip) {
@@ -114,14 +125,23 @@ async function start() {
   });
   app.post("/startDevice", (req, res) => {
     const oUserObj = getUserObject(req, res);
+    if (oUserObj === false) {
+      return;
+    }
     res.send("POST");
   });
   app.post("/stopDevice", (req, res) => {
     const oUserObj = getUserObject(req, res);
+    if (oUserObj === false) {
+      return;
+    }
     res.send("POST");
   });
   app.post("/checkConnection", (req, res) => {
     const oUserObj = getUserObject(req, res);
+    if (oUserObj === false) {
+      return;
+    }
     res.send("POST");
   });
 
