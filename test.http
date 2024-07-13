@@ -3,9 +3,11 @@
 ###
 GET {{localhost}}/
 ###
-GET {{localhost}}/getDevices
+GET {{localhost}}/getUserId
+###---------
+GET {{localhost}}/getDevices?userId=1
 ###
-GET {{localhost}}/getConfig
+GET {{localhost}}/getConfig?userId=1
 ###
 GET {{localhost}}/listActions
 ###
@@ -14,9 +16,17 @@ GET {{localhost}}/listRules
 GET {{localhost}}/listModes
 
 ###
+POST {{localhost}}/setConfig?userId=1
+Content-Type: application/json
+
+{
+    "ip": "192.168.178.5"
+}
+
+###
 POST {{localhost}}/startDevice
 Content-Type: application/json
-Accept-Language: de-DE,en;q=0.5
+
 {
     
 }
@@ -25,7 +35,7 @@ Accept-Language: de-DE,en;q=0.5
 ###
 POST {{localhost}}/stopDevice
 Content-Type: application/json
-Accept-Language: de-DE,en;q=0.5
+
 {
     
 }
@@ -33,7 +43,7 @@ Accept-Language: de-DE,en;q=0.5
 ###
 POST {{localhost}}/checkConnection
 Content-Type: application/json
-Accept-Language: de-DE,en;q=0.5
+
 {
     
 }
@@ -41,7 +51,7 @@ Accept-Language: de-DE,en;q=0.5
 ###
 POST {{localhost}}/startDevice
 Content-Type: application/json
-Accept-Language: de-DE,en;q=0.5
+
 {
     
 }
