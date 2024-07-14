@@ -58,10 +58,10 @@ POST {{localhost}}/sendSpecialPattern?userId=1
 Content-Type: application/json
 
 {
-    "toy": "881a14342311",
+    "toy": "",
     "type": "random",
     "minStrength": 1,
-    "maxStrength": 10,
+    "maxStrength": 3,
     "minInterval": 500,
     "maxInterval": 1000,
     "features": ["v"],
