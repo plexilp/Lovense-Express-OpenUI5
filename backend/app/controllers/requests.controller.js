@@ -1,5 +1,6 @@
 const db = require("../models");
 const https = require("https");
+const constants = require("../constants/constants");
 
 class RequestController {
   constructor(userId, ip, port) {
@@ -20,7 +21,7 @@ class RequestController {
     return { userId: this.userId, ip: this.ip, port: this.port };
   }
 
-  getUrl(ip, port) {
+  getUrl(ip = this.ip, port = this.port) {
     const url = `https://${ip}:${port}/command`;
     return url;
   }
@@ -51,6 +52,85 @@ class RequestController {
     };
 
     return oReturn;
+  }
+
+  getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  getRule(aFeatures = [], iInterval = 1000) {
+    const sFeatures = aFeatures.join(",");
+    const sRule = `V:1;F:${sFeatures};S:${iInterval}#`;
+    return sRule;
+  }
+
+  _getRandomPatternObj(oBody) {
+    const oPostData = this.getPostData({});
+    try {
+      const iInterval = this.getRandomInt(oBody.minInterval, oBody.maxInterval);
+      const iTimeSec = this.getRandomInt(oBody.minTimeSec, oBody.maxTimeSec);
+
+      let aStrenghts = [];
+      for (let i = 0; i < oBody.patternLength; i++) {
+        let previousStrength = i > 0 ? aStrenghts[i - 1] : null;
+        let randomStrength = this.getRandomInt(
+          oBody.minStrength,
+          oBody.maxStrength
+        );
+
+        // Überprüfen, ob die Differenz zum vorherigen Wert größer als 5 ist
+        while (
+          previousStrength !== null &&
+          Math.abs(randomStrength - previousStrength) > oBody.possibleDifference
+        ) {
+          randomStrength = this.getRandomInt(
+            oBody.minStrength,
+            oBody.maxStrength
+          );
+        }
+
+        aStrenghts.push(randomStrength);
+      }
+
+      oPostData.rule = this.getRule(oBody.features, iInterval);
+      oPostData.timeSec = iTimeSec;
+      oPostData.strength = aStrenghts.slice(0, 50).join(";") || "0";
+    } catch (error) {
+      return error;
+    }
+
+    return oPostData;
+  }
+
+  getSpecialPatternObj(oBody) {
+    let oReturnData = {};
+    switch (oBody.type) {
+      case "random":
+        oReturnData = this._getRandomPatternObj(oBody);
+        break;
+
+      default:
+        break;
+    }
+    return oReturnData;
+  }
+
+  async getDevice() {
+    const sUrl = this.getUrl(this.ip, this.port);
+    const oBody = this.getPostData({ command: constants.COMMANDS.GetToys });
+    let result = {};
+    try {
+      result = await this.postData(sUrl, oBody);
+      try {
+        result.data.toys = JSON.parse(result.data.toys);
+      } catch (error) {}
+      console.log("Data received:", result);
+    } catch (error) {
+      console.error("Error calling postData:", error);
+      result = { error };
+      // Optional: zusätzliche Fehlerbehandlung, z.B. Logging oder spezifische Aktionen
+    }
+    return result;
   }
 
   async getRequest(sUrl) {
@@ -106,6 +186,9 @@ class RequestController {
         })
         .then((data) => {
           // Resolve the promise with the parsed data
+          try {
+            data.codeText = constants.RESPONSE_CODES[data.code];
+          } catch (error) {}
           resolve(data);
         })
         .catch((error) => {
@@ -113,25 +196,6 @@ class RequestController {
           reject(error);
         });
     });
-  }
-
-  async getDevice(req, res) {
-    const sUrl = this.getUrl(this.ip, this.port);
-    const oBody = this.getPostData({ command: "GetToys" });
-    let result = {};
-    try {
-      result = await this.postData(sUrl, oBody);
-      try {
-        result.data.toys = JSON.parse(result.data.toys);
-      } catch (error) {}
-      console.log("Data received:", result);
-    } catch (error) {
-      console.error("Error calling postData:", error);
-      result = { error };
-      // Optional: zusätzliche Fehlerbehandlung, z.B. Logging oder spezifische Aktionen
-    }
-
-    return result;
   }
 }
 

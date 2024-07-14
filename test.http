@@ -1,7 +1,10 @@
 @localhost=http://localhost:8081
+@lovApp=192.168.178.71:30010
 
 ###
 GET {{localhost}}/
+###
+GET {{localhost}}/help
 ###
 GET {{localhost}}/getUserId
 ###---------
@@ -10,6 +13,8 @@ GET {{localhost}}/getDevices?userId=1
 GET {{localhost}}/getConfig?userId=1
 ###
 GET {{localhost}}/listActions
+###
+GET {{localhost}}/getActiondetails?action=Suction
 ###
 GET {{localhost}}/listRules
 ###
@@ -24,7 +29,58 @@ Content-Type: application/json
 }
 
 ###
-POST {{localhost}}/startDevice
+POST {{localhost}}/sendFunction?userId=1
+Content-Type: application/json
+
+{
+    "toy": "048727454def",
+    "action": "Vibrate2:3",
+    "timeSec": 10,
+    "loopRunningSec": 10,
+    "loopPauseSec": 1,
+    "stopPrevious": 0
+}
+
+### Send Pattern
+POST {{localhost}}/sendPattern?userId=1
+Content-Type: application/json
+
+{
+    "toy": "048727454def",
+    "strengths": [1,2,3,4,5],
+    "interval": 500,
+    "features": [],
+    "timeSec": 10
+}
+
+### Send Random Pattern
+POST {{localhost}}/sendSpecialPattern?userId=1
+Content-Type: application/json
+
+{
+    "toy": "881a14342311",
+    "type": "random",
+    "minStrength": 1,
+    "maxStrength": 10,
+    "minInterval": 500,
+    "maxInterval": 1000,
+    "features": ["v"],
+    "minTimeSec": 0,
+    "maxTimeSec": 0,
+    "patternLength": 50,
+    "possibleDifference": 20
+}
+
+### Stop one Device
+POST {{localhost}}/stopDevice?userId=1
+Content-Type: application/json
+
+{
+    "toy": "881a14342311"
+}
+
+### Stop all Devices
+POST {{localhost}}/stopDevice?userId=1
 Content-Type: application/json
 
 {
@@ -32,28 +88,16 @@ Content-Type: application/json
 }
 
 
-###
-POST {{localhost}}/stopDevice
+### Try out
+POST {{lovApp}}/command
 Content-Type: application/json
 
 {
-    
+    "apiVer": 2,
+    "toy": "048727454def",
+    "command": "Pattern",
+    "rule": "V:1;F:v1;S:100#",
+    "strength": "1;2;3;4",
+    "timeSec": 5,
+    "stopPrevious": 0
 }
-
-###
-POST {{localhost}}/checkConnection
-Content-Type: application/json
-
-{
-    
-}
-
-###
-POST {{localhost}}/startDevice
-Content-Type: application/json
-
-{
-    
-}
-
-###

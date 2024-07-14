@@ -67,10 +67,56 @@ async function start() {
     return oReqCtrlInstances[sUserId];
   };
 
+  _getResponseFormat = (oReq, oRes) => {
+    return { request: oReq, response: oRes };
+  };
+
   // simple route
   app.get("/", (req, res) => {
-    res.json({ message: "NodeJS LovApi" });
+    res.json("Route /help for more informations");
   });
+  app.get("/help", (req, res) => {
+    getStruct = (sName, aQuery, aBody) => {
+      const obj = {
+        path: sName,
+        querys: aQuery,
+        bodyParameter: aBody,
+      };
+
+      return obj;
+    };
+
+    const aPaths = [
+      getStruct("/getUserId", [], []),
+      getStruct("/getConfig", ["userId"], []),
+      getStruct("/getDevices", ["userId"], []),
+      getStruct("/listActions", [], []),
+      getStruct("/getActiondetails", ["action"], []),
+      getStruct("/listRules", [], []),
+      getStruct("/listModes", [], []),
+      getStruct("/setConfig", ["userId"], ["ip", "port"]),
+      getStruct(
+        "/sendFunction",
+        ["userId"],
+        [
+          "toy",
+          "action",
+          "timeSec",
+          "loopRunningSec",
+          "loopPauseSec",
+          "stopPrevious",
+        ]
+      ),
+      getStruct(
+        "/sendPattern",
+        ["userId"],
+        ["toy", "strengths", "interval", "features", "timeSec"]
+      ),
+      getStruct("/stopDevice", ["userId"], ["toy"]),
+    ];
+    res.send(aPaths);
+  });
+
   app.get("/getUserId", (req, res) => {
     //it also register the object(s) for that userid
     const sUserId = "1";
@@ -97,6 +143,15 @@ async function start() {
   app.get("/listActions", (req, res) => {
     res.send(constants.ACTIONS);
   });
+  app.get("/getActiondetails", (req, res) => {
+    let oDetails = constants.ACTION_DETAILS;
+    if (req.query.action) {
+      oDetails = constants.ACTION_DETAILS.filter(
+        (x) => req.query.action === x.key
+      );
+    }
+    res.send(oDetails);
+  });
   app.get("/listRules", (req, res) => {
     res.send(constants.RULES);
   });
@@ -121,29 +176,97 @@ async function start() {
       oUserObj.setIp(oData.port);
     }
 
-    res.send("POST");
+    res.send(_getResponseFormat(req.body, "Data setted"));
   });
-  app.post("/startDevice", (req, res) => {
+
+  app.post("/sendFunction", (req, res) => {
     const oUserObj = getUserObject(req, res);
     if (oUserObj === false) {
       return;
     }
-    res.send("POST");
+
+    const oPostData = oUserObj.getPostData(req.body);
+    const sUrl = oUserObj.getUrl();
+
+    oPostData.command = constants.COMMANDS.Function;
+
+    oUserObj
+      .postData(sUrl, oPostData)
+      .then((response) => res.send(_getResponseFormat(oPostData, response)));
+    // res.send("POST");
   });
+
+  app.post("/sendPattern", (req, res) => {
+    const oUserObj = getUserObject(req, res);
+    const oBody = req.body;
+    if (oUserObj === false) {
+      return;
+    }
+    try {
+      const oPostData = oUserObj.getPostData(oBody);
+      const sUrl = oUserObj.getUrl();
+
+      oPostData.command = constants.COMMANDS.Pattern;
+      oPostData.apiVer = 2;
+      oPostData.rule = oUserObj.getRule(oBody.features, oBody.interval);
+      oPostData.strength = oBody.strengths.slice(0, 50).join(";") || "0";
+
+      oUserObj
+        .postData(sUrl, oPostData)
+        .then((response) => res.send(_getResponseFormat(oPostData, response)));
+    } catch (error) {
+      res.status(400).json({ error });
+    }
+    // res.send("POST");
+  });
+
+  app.post("/sendSpecialPattern", (req, res) => {
+    const oUserObj = getUserObject(req, res);
+    const oBody = req.body;
+    if (oUserObj === false) {
+      return;
+    }
+    try {
+      const sUrl = oUserObj.getUrl();
+      const oPostData = oUserObj.getSpecialPatternObj(oBody);
+
+      oPostData.command = constants.COMMANDS.Pattern;
+      oPostData.apiVer = 2;
+
+      oUserObj
+        .postData(sUrl, oPostData)
+        .then((response) => res.send(_getResponseFormat(oPostData, response)));
+    } catch (error) {
+      res.status(400).send({ error: error });
+    }
+    // res.send("POST");
+  });
+
   app.post("/stopDevice", (req, res) => {
     const oUserObj = getUserObject(req, res);
     if (oUserObj === false) {
       return;
     }
-    res.send("POST");
+
+    const oPostData = oUserObj.getPostData(req.body);
+    const sUrl = oUserObj.getUrl();
+
+    oPostData.action = constants.ACTIONS.Stop;
+    oPostData.timeSec = 0;
+    oPostData.command = constants.COMMANDS.Function;
+
+    oUserObj
+      .postData(sUrl, oPostData)
+      .then((response) => res.send(_getResponseFormat(oPostData, response)));
   });
-  app.post("/checkConnection", (req, res) => {
-    const oUserObj = getUserObject(req, res);
-    if (oUserObj === false) {
-      return;
-    }
-    res.send("POST");
-  });
+
+  // app.post("/checkConnection", (req, res) => {
+  //   const oUserObj = getUserObject(req, res);
+  //   if (oUserObj === false) {
+  //     return;
+  //   }
+  //   res.send("POST");
+  // });
 
   // set port, listen for requests
   const PORT = process.env.PORT || 8081;
