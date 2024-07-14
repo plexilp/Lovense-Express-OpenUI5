@@ -78,7 +78,6 @@ class RequestController {
           oBody.maxStrength
         );
 
-        // Überprüfen, ob die Differenz zum vorherigen Wert größer als 5 ist
         while (
           previousStrength !== null &&
           Math.abs(randomStrength - previousStrength) > oBody.possibleDifference

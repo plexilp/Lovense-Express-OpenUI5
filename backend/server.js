@@ -112,6 +112,23 @@ async function start() {
         ["userId"],
         ["toy", "strengths", "interval", "features", "timeSec"]
       ),
+      getStruct(
+        "/sendSpecialPattern",
+        ["userId"],
+        [
+          "toy",
+          "type",
+          "minStrength",
+          "maxStrength",
+          "minInterval",
+          "maxInterval",
+          "features",
+          "minTimeSec",
+          "maxTimeSec",
+          "patternLength",
+          "possibleDifference",
+        ]
+      ),
       getStruct("/stopDevice", ["userId"], ["toy"]),
     ];
     res.send(aPaths);
