@@ -1,10 +1,27 @@
-sap.ui.define(["./BaseController"], function (BaseController) {
-	"use strict";
+sap.ui.define(
+	["./BaseController", "de/plexdev/lovapp/model/models"],
+	function (BaseController, models) {
+		"use strict";
 
-	return BaseController.extend("de.plexdev.lovapp.controller.App", {
-		onInit: function () {
-			// apply content density mode to root view
-			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
-		}
-	});
-});
+		return BaseController.extend("de.plexdev.lovapp.controller.App", {
+			onInit: function () {
+				// apply content density mode to root view
+				this.getView().addStyleClass(
+					this.getOwnerComponent().getContentDensityClass()
+				);
+
+				this.getModel("viewModel").setData(models.getInitViewModel());
+			},
+			onMenuButtonPress(oEvent) {
+				const appBar = oEvent.getSource().getParent();
+
+				appBar.setSideExpanded(!appBar.getSideExpanded());
+			},
+
+			onItemSelect: function (oEvent) {
+				const item = oEvent.getParameter("item");
+				this.byId("pageContainer").to(this.getView().createId(item.getKey()));
+			},
+		});
+	}
+);
