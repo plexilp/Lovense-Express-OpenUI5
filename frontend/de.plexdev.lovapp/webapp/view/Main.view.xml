@@ -14,9 +14,23 @@
 		id="page"
 	>
 		<content>
+			<Select id="idSelectAction" items="{backend>/F4Actions}" selectedItem="{viewModel>/selectedAction}" modelContextChange="setSelection"> 
+				<core:Item text="{backend>name}" key="{backend>key}"></core:Item>
+			</Select>
+			<Select id="idSelectDevice" items="{backend>/getDevices?userId=1}" selectedItem="{viewModel>/selectedDevice}">
+				<core:Item text="{backend>name} {= ${backend>nickName} ? '(' + ${backend>nickName} + ')' : ''}" key="{backend>id}"></core:Item>
+			</Select>
+			<Slider
+				min="0"
+				max="20"
+				enableTickmarks="true"
+				liveChange="onSliderLiveChange"
+			>
+				<ResponsiveScale tickmarksBetweenLabels="2" />
+			</Slider>
 			<IllustratedMessage
 				title="{i18n>appTitle}"
-				illustrationType="sapIllus-SuccessHighFive"
+				illustrationType="sapIllus-SearchEarth"
 				enableVerticalResponsiveness="true"
 				description="{i18n>appDescription}"
 			>

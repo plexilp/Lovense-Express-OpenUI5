@@ -85,6 +85,9 @@ sap.ui.define(
 			async sendPost(sPath, oData = {}) {
 				const requestOptions = {
 					method: "POST",
+					headers: {
+						"Content-Type": "application/json", // Der Content-Type muss auf application/json gesetzt werden
+					},
 					body: JSON.stringify(oData),
 				};
 				const sUrl = this.getBackendUrl() + sPath;
@@ -112,6 +115,19 @@ sap.ui.define(
 					console.log("error", error);
 					throw error;
 				}
+			},
+
+			async bindPropertyToModel(
+				sPath,
+				oModel = this.getModel("backend"),
+				sAltPropName = ""
+			) {
+				const oListModes = await this.sendGet(sPath);
+				let sPropName = sPath;
+				if (sAltPropName) {
+					sPropName = sAltPropName;
+				}
+				oModel.setProperty(sPropName, JSON.parse(oListModes));
 			},
 		});
 	}

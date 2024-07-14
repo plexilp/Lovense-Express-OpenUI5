@@ -4,28 +4,16 @@ consts.CONFIG = {
   port: "30010",
 };
 
-// consts.ACTIONS = [
-//   { key: "Stop", name: "Stop" },
-//   { key: "All", name: "Alle" },
-//   { key: "Vibrate", name: "Vibrieren" },
-//   { key: "Rotate", name: "Rotieren" },
-//   { key: "Pump", name: "Pumpen" },
-//   { key: "Thrusting", name: "Stoßen" },
-//   { key: "Fingering", name: "Fingern" },
-//   { key: "Suction", name: "Saugen" },
-//   { key: "Depth", name: "Tiefe" },
-// ];
-
-// consts.RULES = [
-//   { key: "v", name: "Vibrieren" },
-//   { key: "r", name: "Rotieren" },
-//   { key: "p", name: "Pumpen" },
-//   { key: "t", name: "Stoßen" },
-//   { key: "f", name: "Fingern" },
-//   { key: "s", name: "Saugen" },
-//   { key: "d", name: "Tiefe" },
-//   { key: "", name: "Alle" },
-// ];
+consts.ARR_RULES = [
+  { key: "v", name: "Vibrieren" },
+  { key: "r", name: "Rotieren" },
+  { key: "p", name: "Pumpen" },
+  { key: "t", name: "Stoßen" },
+  { key: "f", name: "Fingern" },
+  { key: "s", name: "Saugen" },
+  { key: "d", name: "Tiefe" },
+  { key: "", name: "Alle" },
+];
 
 consts.ACTIONS = {
   Stop: "Stop",
@@ -42,16 +30,33 @@ consts.ACTIONS = {
   Depth: "Depth",
 };
 
-consts.ACTION_DETAILS = [
-  { key: "Stop", name: "Stop", minStrength: 0, maxStrength: 0 },
-  { key: "All", name: "Alle", minStrength: 0, maxStrength: 20 },
+consts.ARR_ACTIONS = [
   { key: "Vibrate", name: "Vibrieren", minStrength: 0, maxStrength: 20 },
+  {
+    key: "Vibrate1",
+    name: "Vibrieren-Motor 1",
+    minStrength: 0,
+    maxStrength: 20,
+  },
+  {
+    key: "Vibrate2",
+    name: "Vibrieren-Motor 2",
+    minStrength: 0,
+    maxStrength: 20,
+  },
+  {
+    key: "Vibrate3",
+    name: "Vibrieren-Motor 3",
+    minStrength: 0,
+    maxStrength: 20,
+  },
   { key: "Rotate", name: "Rotieren", minStrength: 0, maxStrength: 20 },
   { key: "Pump", name: "Pumpen", minStrength: 0, maxStrength: 3 },
   { key: "Thrusting", name: "Stoßen", minStrength: 0, maxStrength: 20 },
   { key: "Fingering", name: "Fingern", minStrength: 0, maxStrength: 20 },
   { key: "Suction", name: "Saugen", minStrength: 0, maxStrength: 20 },
   { key: "Depth", name: "Tiefe", minStrength: 0, maxStrength: 3 },
+  { key: "All", name: "Alle", minStrength: 0, maxStrength: 20 },
 ];
 
 consts.RULES = {
@@ -85,7 +90,7 @@ consts.RESPONSE_CODES = {
 };
 
 //Later works with database
-consts.MODES = [
+consts.ARR_MODES = [
   { key: "random", name: "Random", description: "1,5,7,2,4" },
   { key: "stair", name: "Treppe", description: "1,2,3,4,5" },
   { key: "wave", name: "Welle", description: "1,2,3,4,3,2,1" },

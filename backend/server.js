@@ -81,8 +81,7 @@ async function start() {
   };
 
   _getResponseFormat = (oReq, oRes) => {
-    // return { request: oReq, response: oRes };
-    return oRes;
+    return { request: oReq, response: oRes };
   };
 
   errorHandler = (req, res, error) => {
@@ -131,11 +130,11 @@ async function start() {
     const aPaths = [
       getStruct("/getUserId", [], []),
       getStruct("/getConfig", ["userId"], []),
+      getStruct("/getConnection", ["userId"], []),
       getStruct("/getDevices", ["userId"], []),
-      getStruct("/listActions", [], []),
-      getStruct("/getActiondetails", ["action"], []),
-      getStruct("/listRules", [], []),
-      getStruct("/listModes", [], []),
+      getStruct("/F4Actions", ["action"], []),
+      getStruct("/F4Rules", [], []),
+      getStruct("/F4Modes", [], []),
       getStruct("/setConfig", ["userId"], ["ip", "port"]),
       getStruct(
         "/sendFunction",
@@ -190,32 +189,50 @@ async function start() {
     const oConfig = oUserObj.getConfig();
     res.send(oConfig);
   });
-  app.get("/getDevices", (req, res) => {
+  app.get("/getConnection", (req, res) => {
     const oUserObj = getUserObject(req, res);
     if (oUserObj === false) {
       return;
     }
     oUserObj.getDevice().then((response) => res.send(response));
   });
+  app.get("/getDevices", (req, res) => {
+    const oUserObj = getUserObject(req, res);
+    if (oUserObj === false) {
+      return;
+    }
+    oUserObj.getDevice().then((response) => {
+      try {
+        const oToys = response.data.toys;
+        let aToys = Object.keys(oToys).map(function (key) {
+          return oToys[key];
+        });
+        aToys.push({ id: "", name: "Alle" });
+        res.send(aToys);
+      } catch (error) {
+        res.send(error);
+      }
+    });
+  });
 
   // ValueHelps
-  app.get("/listActions", (req, res) => {
-    res.send(constants.ACTIONS);
-  });
-  app.get("/getActiondetails", (req, res) => {
-    let oDetails = constants.ACTION_DETAILS;
+  // app.get("/listActions", (req, res) => {
+  //   res.send(constants.ACTIONS);
+  // });
+  app.get("/F4Actions", (req, res) => {
+    let oDetails = constants.ARR_ACTIONS;
     if (req.query.action) {
-      oDetails = constants.ACTION_DETAILS.filter(
+      oDetails = constants.ARR_ACTIONS.filter(
         (x) => req.query.action === x.key
       );
     }
     res.send(oDetails);
   });
-  app.get("/listRules", (req, res) => {
-    res.send(constants.RULES);
+  app.get("/F4Rules", (req, res) => {
+    res.send(constants.ARR_RULES);
   });
-  app.get("/listModes", (req, res) => {
-    res.send(constants.MODES);
+  app.get("/F4Modes", (req, res) => {
+    res.send(constants.ARR_MODES);
   });
 
   // Posts

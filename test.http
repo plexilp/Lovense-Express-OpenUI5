@@ -10,17 +10,19 @@ GET {{localhost}}/test
 ###
 GET {{localhost}}/getUserId
 ###---------
+GET {{localhost}}/getConnection?userId=1
+###
 GET {{localhost}}/getDevices?userId=1
 ###
 GET {{localhost}}/getConfig?userId=1
 ###
-GET {{localhost}}/listActions
+GET {{localhost}}/F4Actions
 ###
-GET {{localhost}}/getActiondetails?action=Suction
+GET {{localhost}}/F4Actions?action=Suction
 ###
-GET {{localhost}}/listRules
+GET {{localhost}}/F4Rules
 ###
-GET {{localhost}}/listModes
+GET {{localhost}}/F4Modes
 
 ###
 POST {{localhost}}/setConfig?userId=1
@@ -63,7 +65,7 @@ Content-Type: application/json
     "toy": "",
     "type": "random",
     "minStrength": 1,
-    "maxStrength": 2,
+    "maxStrength": 5,
     "minInterval": 100,
     "maxInterval": 1000,
     "features": ["v"],

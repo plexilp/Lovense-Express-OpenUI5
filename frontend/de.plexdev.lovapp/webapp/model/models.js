@@ -10,7 +10,7 @@ sap.ui.define(
 				return oModel;
 			},
 
-			getInitViewModel() {
+			getInitAppModel() {
 				const oData = {
 					selectedKey: "main",
 					navigation: [

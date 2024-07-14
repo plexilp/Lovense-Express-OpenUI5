@@ -10,7 +10,7 @@ sap.ui.define(
 					this.getOwnerComponent().getContentDensityClass()
 				);
 
-				this.getModel("viewModel").setData(models.getInitViewModel());
+				this.getModel("appModel").setData(models.getInitAppModel());
 			},
 			onMenuButtonPress(oEvent) {
 				const appBar = oEvent.getSource().getParent();

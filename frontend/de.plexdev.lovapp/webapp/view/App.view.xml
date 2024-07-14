@@ -37,8 +37,11 @@
 				</f:profile>
 				<f:additionalContent>
 					<OverflowToolbarButton
-						activeIcon="sap-icon://connected"
 						icon="sap-icon://connected"
+						type="Reject"
+					/>
+					<OverflowToolbarButton
+						icon="sap-icon://stop"
 						type="Reject"
 					/>
 				</f:additionalContent>
@@ -50,49 +53,49 @@
 		<tnt:sideContent>
 			<tnt:SideNavigation
 				expanded="true"
-				selectedKey="{viewModel>/selectedKey}"
+				selectedKey="{appModel>/selectedKey}"
 				itemSelect="onItemSelect"
 			>
 				<tnt:NavigationList items="{
-					path: 'viewModel>/navigation'
+					path: 'appModel>/navigation'
 				}">
 					<tnt:NavigationListItem
-						text="{viewModel>title}"
-						icon="{viewModel>icon}"
-						enabled="{viewModel>enabled}"
-						expanded="{viewModel>expanded}"
+						text="{appModel>title}"
+						icon="{appModel>icon}"
+						enabled="{appModel>enabled}"
+						expanded="{appModel>expanded}"
 						items="{
-							path: 'viewModel>items',
+							path: 'appModel>items',
 							templateShareable: true
 						}"
-						key="{viewModel>key}"
+						key="{appModel>key}"
 					>
 						<tnt:NavigationListItem
-							text="{viewModel>title}"
-							key="{viewModel>key}"
-							enabled="{viewModel>enabled}"
+							text="{appModel>title}"
+							key="{appModel>key}"
+							enabled="{appModel>enabled}"
 						/>
 					</tnt:NavigationListItem>
 				</tnt:NavigationList>
 				<tnt:fixedItem>
 					<tnt:NavigationList items="{
-						path: 'viewModel>/fixedNavigation'
+						path: 'appModel>/fixedNavigation'
 					}">
 						<tnt:NavigationListItem
-							text="{viewModel>title}"
-							icon="{viewModel>icon}"
-							enabled="{viewModel>enabled}"
-							expanded="{viewModel>expanded}"
+							text="{appModel>title}"
+							icon="{appModel>icon}"
+							enabled="{appModel>enabled}"
+							expanded="{appModel>expanded}"
 							items="{
-								path: 'viewModel>items',
+								path: 'appModel>items',
 								templateShareable: true
 							}"
-							key="{viewModel>key}"
+							key="{appModel>key}"
 						>
 							<tnt:NavigationListItem
-								text="{viewModel>title}"
-								key="{viewModel>key}"
-								enabled="{viewModel>enabled}"
+								text="{appModel>title}"
+								key="{appModel>key}"
+								enabled="{appModel>enabled}"
 							/>
 						</tnt:NavigationListItem>
 					</tnt:NavigationList>
@@ -137,14 +140,14 @@
 							omnis porro quae asperiores atque cum cumque dicta distinctio, doloremque
 							doloribus eaque earum enim eveniet expedita facere fugit impedit iure iusto labore libero maiores non odit pariatur possimus quas" />
 					</ScrollContainer>
-					<ScrollContainer
+					<mvc:View
 						id="settings"
-						horizontal="false"
-						vertical="true"
-						height="100%"
-					>
-						<Text text="Thats the settingspage" />
-					</ScrollContainer>
+						displayBlock="false"
+						height=""
+						viewName="de.plexdev.lovapp.view.Settings"
+						width="100%"
+						type="XML"
+					/>
 				</pages>
 			</NavContainer>
 		</tnt:mainContents>

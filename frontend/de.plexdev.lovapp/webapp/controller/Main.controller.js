@@ -4,6 +4,15 @@ sap.ui.define(
 		"use strict";
 
 		return BaseController.extend("de.plexdev.lovapp.controller.Main", {
+			onInit() {},
+
+			onBeforeRendering() {
+				this.getView().setModel(new JSONModel({}), "viewModel");
+			},
+
+			onAfterRendering() {
+				this.loadValueHelps();
+			},
 			sayHello: function () {
 				MessageBox.show("Hello World!");
 			},
@@ -21,6 +30,34 @@ sap.ui.define(
 				// );
 
 				console.log(oResult);
+			},
+
+			setSelection(oEvent) {
+				oEvent.getSource().setSelectedIndex(0);
+			},
+
+			async loadValueHelps() {
+				const oModel = this.getModel("backend");
+				await this.bindPropertyToModel("/F4Modes", oModel);
+				await this.bindPropertyToModel("/F4Rules", oModel);
+				await this.bindPropertyToModel("/F4Actions", oModel);
+				await this.bindPropertyToModel("/getUserId", oModel);
+				await this.bindPropertyToModel("/getDevices?userId=1", oModel);
+			},
+
+			async onSliderLiveChange(oEvent) {
+				const vValue = oEvent.getSource().getValue();
+				const sType = this.byId("idSelectAction").getSelectedKey();
+				const sId = this.byId("idSelectDevice").getSelectedKey();
+				const oData = {
+					toy: sId,
+					action: `${sType}:${vValue}`,
+
+					timeSec: 0,
+					loopRunningSec: 0,
+					loopPauseSec: 0,
+				};
+				const oResult = await this.sendPost("/sendFunction?userId=1", oData);
 			},
 		});
 	}

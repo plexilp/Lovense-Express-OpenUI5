@@ -9,6 +9,12 @@
 		"description": "{{appDescription}}",
 		"applicationVersion": {
 			"version": "${version}"
+		},
+		"dataSources": {
+			"backend":{
+				"uri": "http://localhost:8081",
+				"type": "http"
+			}
 		}
 	},
 
@@ -54,7 +60,17 @@
 					"bundleName": "de.plexdev.lovapp.i18n.i18n"
 				}
 			},
-			"viewModel": {
+			"backend": {
+				"type": "sap.ui.model.json.JSONModel",
+				"settings": {
+                    "defaultBindingMode": "TwoWay"
+                },
+                "uri": "http://localhost:8081"
+			},
+			"appModel": {
+				"type": "sap.ui.model.json.JSONModel"
+			},
+			"runtimeModel": {
 				"type": "sap.ui.model.json.JSONModel"
 			}
 		},
