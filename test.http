@@ -34,10 +34,10 @@ Content-Type: application/json
 
 {
     "toy": "881a14342311",
-    "action": "Vibrate:1",
+    "action": "Vibrate:2",
     "timeSec": 0,
-    "loopRunningSec": 20,
-    "loopPauseSec": 1,
+    "loopRunningSec": 0,
+    "loopPauseSec": 0,
     "stopPrevious": 0
 }
 
@@ -62,7 +62,7 @@ Content-Type: application/json
     "type": "random",
     "minStrength": 1,
     "maxStrength": 2,
-    "minInterval": 500,
+    "minInterval": 100,
     "maxInterval": 1000,
     "features": ["v"],
     "minTimeSec": 0,
