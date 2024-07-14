@@ -12,4 +12,6 @@ framework:
   libraries:
     - name: sap.m
     - name: sap.ui.core
+    - name: sap.tnt
+    - name: sap.f
     - name: themelib_sap_horizon
