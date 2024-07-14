@@ -6,6 +6,8 @@ GET {{localhost}}/
 ###
 GET {{localhost}}/help
 ###
+GET {{localhost}}/test
+###
 GET {{localhost}}/getUserId
 ###---------
 GET {{localhost}}/getDevices?userId=1

@@ -1,0 +1,17 @@
+{
+  "generator-ui5-app": {
+    "namespace": "de.plexdev.lovapp",
+    "framework": "OpenUI5",
+    "frameworkVersion": "1.126.0",
+    "author": "PlexDev",
+    "initrepo": true,
+    "appId": "de.plexdev.lovapp",
+    "appURI": "de/plexdev/lovapp",
+    "cdnDomain": "sdk.openui5.org",
+    "defaultTheme": "sap_horizon",
+    "qunitCoverageFile": "qunit-coverage-istanbul.js",
+    "gte1_98_0": true,
+    "gte1_104_0": true,
+    "setupCompleted": true
+  }
+}

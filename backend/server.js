@@ -13,7 +13,7 @@ async function start() {
   const app = express();
 
   var corsOptions = {
-    origin: "http://localhost:8081",
+    origin: "http://localhost:8080",
   };
   const db = require("./app/models");
   await db.sequelize.sync({ force: config.bRebuildDatabase }).then((oData) => {
@@ -21,6 +21,19 @@ async function start() {
       console.log(">> Drop and re-sync db.");
     }
   });
+
+  // app.use((req, res, next) => {
+  //   res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+  //   res.header(
+  //     "Access-Control-Allow-Methods",
+  //     "GET, POST, PUT, DELETE, OPTIONS"
+  //   );
+  //   res.header(
+  //     "Access-Control-Allow-Headers",
+  //     "Origin, X-Requested-With, Content-Type, Accept"
+  //   );
+  //   next();
+  // });
 
   app.use(cors(corsOptions));
 
@@ -68,12 +81,41 @@ async function start() {
   };
 
   _getResponseFormat = (oReq, oRes) => {
-    return { request: oReq, response: oRes };
+    // return { request: oReq, response: oRes };
+    return oRes;
+  };
+
+  errorHandler = (req, res, error) => {
+    console.log(error);
+    res.status(200).json("success");
+
+    try {
+      const result = {
+        code: error.code,
+        message: error.message,
+      };
+      res.status(parseInt(error.code) || 500).json({ error: result });
+    } catch (error) {
+      res.send(error);
+    }
   };
 
   // simple route
   app.get("/", (req, res) => {
-    res.json("Route /help for more informations");
+    res.status(200).json({ code: "Route /help for more informations" });
+  });
+  app.get("/test", (req, res) => {
+    const data = { message: "Data retrieved successfully" };
+    res.send(data);
+    // res.set({
+    //   "Content-Type": "text/plain",
+    //   "Content-Length": "123",
+    //   ETag: "12345",
+    // });
+    // res.type(".html");
+    // res.json({});
+
+    // res.status(200).json({ code: "Route /help for more informations" });
   });
   app.get("/help", (req, res) => {
     getStruct = (sName, aQuery, aBody) => {
@@ -131,7 +173,7 @@ async function start() {
       ),
       getStruct("/stopDevice", ["userId"], ["toy"]),
     ];
-    res.send(aPaths);
+    res.status(200).json({ response: aPaths });
   });
 
   app.get("/getUserId", (req, res) => {
@@ -274,7 +316,8 @@ async function start() {
 
     oUserObj
       .postData(sUrl, oPostData)
-      .then((response) => res.send(_getResponseFormat(oPostData, response)));
+      .then((response) => res.send(_getResponseFormat(oPostData, response)))
+      .catch((error) => errorHandler(req, res, error));
   });
 
   // app.post("/checkConnection", (req, res) => {
