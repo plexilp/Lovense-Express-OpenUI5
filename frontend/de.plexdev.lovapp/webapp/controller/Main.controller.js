@@ -47,11 +47,15 @@ sap.ui.define(
 
 			async onSliderLiveChange(oEvent) {
 				const vValue = oEvent.getSource().getValue();
-				const sType = this.byId("idSelectAction").getSelectedKey();
+				const aTypes = this.byId("idSelectAction").getSelectedKeys();
 				const sId = this.byId("idSelectDevice").getSelectedKey();
+				const aActions = [];
+				aTypes.forEach((type) => {
+					aActions.push(`${type}:${vValue}`);
+				});
 				const oData = {
 					toy: sId,
-					action: `${sType}:${vValue}`,
+					action: aActions.join(","),
 
 					timeSec: 0,
 					loopRunningSec: 0,
@@ -59,6 +63,8 @@ sap.ui.define(
 				};
 				const oResult = await this.sendPost("/sendFunction?userId=1", oData);
 			},
+
+			onDevicesSelectChange(oEvent) {},
 		});
 	}
 );

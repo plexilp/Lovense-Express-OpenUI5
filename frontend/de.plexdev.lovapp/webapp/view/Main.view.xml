@@ -14,11 +14,27 @@
 		id="page"
 	>
 		<content>
-			<Select id="idSelectAction" items="{backend>/F4Actions}" selectedItem="{viewModel>/selectedAction}" modelContextChange="setSelection"> 
-				<core:Item text="{backend>name}" key="{backend>key}"></core:Item>
-			</Select>
-			<Select id="idSelectDevice" items="{backend>/getDevices?userId=1}" selectedItem="{viewModel>/selectedDevice}">
-				<core:Item text="{backend>name} {= ${backend>nickName} ? '(' + ${backend>nickName} + ')' : ''}" key="{backend>id}"></core:Item>
+			<MultiComboBox
+				id="idSelectAction"
+				items="{backend>/F4Actions}"
+				selectedItems="{viewModel>/selectedAction}"
+				width="10em"
+			>
+				<core:Item
+					text="{backend>name}"
+					key="{backend>key}"
+				/>
+			</MultiComboBox>
+			<Select
+				id="idSelectDevice"
+				items="{backend>/getDevices?userId=1}"
+				selectedItem="{viewModel>/selectedDevice}"
+				change="onDevicesSelectChange"
+			>
+				<core:Item
+					text="{backend>name} {= ${backend>nickName} ? '(' + ${backend>nickName} + ')' : ''}"
+					key="{backend>id}"
+				/>
 			</Select>
 			<Slider
 				min="0"
@@ -30,7 +46,7 @@
 			</Slider>
 			<IllustratedMessage
 				title="{i18n>appTitle}"
-				illustrationType="sapIllus-SearchEarth"
+				illustrationType="sapIllus-Connection"
 				enableVerticalResponsiveness="true"
 				description="{i18n>appDescription}"
 			>

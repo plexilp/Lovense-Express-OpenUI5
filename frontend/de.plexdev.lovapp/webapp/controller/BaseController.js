@@ -117,6 +117,12 @@ sap.ui.define(
 				}
 			},
 
+			/**
+			 *
+			 * @param {string} sPath
+			 * @param {*} oModel
+			 * @param {*} sAltPropName
+			 */
 			async bindPropertyToModel(
 				sPath,
 				oModel = this.getModel("backend"),
