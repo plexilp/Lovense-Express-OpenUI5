@@ -15,21 +15,49 @@
 	>
 		<content>
 			<form:SimpleForm
-				editable="false"
+				editable="true"
 				layout="ResponsiveGridLayout"
 				title="Connection"
 				singleContainerFullSize="false"
+				objectBindings="{backend>/getConfig?userId=1}"
 			>
 				<form:content>
-					<Label text="Url" />
-					<Input value="{runtimeModel>/SupplierName}" />
+					<Label text="IP" />
+					<!-- <Input value="{backend>ip}" /> -->
+					<MaskInput
+						mask="CCC.CCC.CCC.CCC"
+						placeholderSymbol="_"
+						placeholder="Enter digits of IP"
+						value="{backend>ip}"
+					>
+						<rules>
+							<MaskInputRule
+								maskFormatSymbol="A"
+								regex="[0-2]"
+							/>
+							<MaskInputRule
+								maskFormatSymbol="C"
+								regex="[ 0-9]"
+							/>
+						</rules>
+					</MaskInput>
 					<Label text="Port" />
-					<Input value="{runtimeModel>/SupplierName}" />
+					<Input value="{backend>port}" />
 				</form:content>
+				<form:toolbar>
+					<OverflowToolbar asyncMode="false">
+						<ToolbarSpacer />
+						<Button
+							text="Save"
+							press="onSaveButtonPress"
+							type="Emphasized"
+						/>
+					</OverflowToolbar>
+				</form:toolbar>
 			</form:SimpleForm>
 		</content>
 		<footer>
-			<OverflowToolbar asyncMode="false">
+			<!-- <OverflowToolbar asyncMode="false">
 				<content>
 					<ToolbarSpacer />
 					<Button
@@ -49,7 +77,7 @@
 						press="onSaveButtonPress"
 					/>
 				</content>
-			</OverflowToolbar>
+			</OverflowToolbar> -->
 		</footer>
 	</Page>
 </mvc:View>

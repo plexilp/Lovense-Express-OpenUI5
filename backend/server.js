@@ -249,7 +249,7 @@ async function start() {
     }
 
     if (oData.port) {
-      oUserObj.setIp(oData.port);
+      oUserObj.setPort(oData.port);
     }
 
     res.send(_getResponseFormat(req.body, "Data setted"));

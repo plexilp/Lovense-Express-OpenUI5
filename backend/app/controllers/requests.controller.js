@@ -10,11 +10,11 @@ class RequestController {
   }
 
   setIp(sIp) {
-    this.ip = sIp;
+    this.ip = sIp.trim();
   }
 
   setPort(sPort) {
-    this.port = sPort;
+    this.port = sPort.trim();
   }
 
   getConfig() {
