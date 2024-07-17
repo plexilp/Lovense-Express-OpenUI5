@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm --prefix ./backend/ run start\" \"npm --prefix ./frontend/de.plexdev.lovapp run start\"",
+    "install": "npm --prefix ./backend/ install && npm --prefix ./frontend/de.plexdev.lovapp/ install",
+    "start": "concurrently \"npm --prefix ./backend/ run start\" \"npm --prefix ./frontend/de.plexdev.lovapp/ run start\"",
     "watch": "concurrently \"npm --prefix ./backend/ run watch\" \"npm --prefix ./frontend/ run start\""
   },
   "author": "",
