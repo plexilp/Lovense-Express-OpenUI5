@@ -20,17 +20,17 @@ sap.ui.define(
 							key: "main",
 						},
 						{
-							title: "Pages",
+							title: "Modes",
 							icon: "sap-icon://employee",
 							expanded: true,
 							items: [
 								{
-									title: "Child Item 1",
-									key: "page1",
+									title: "Random",
+									key: "mode-random",
 								},
 								{
-									title: "Child Item 2",
-									key: "page2",
+									title: "Sound",
+									key: "mode-sound",
 								},
 							],
 						},
