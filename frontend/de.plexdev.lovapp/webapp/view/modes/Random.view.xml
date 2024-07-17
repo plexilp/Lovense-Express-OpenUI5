@@ -1,0 +1,108 @@
+<mvc:View
+    xmlns:form="sap.ui.layout.form"
+    controllerName="de.plexdev.lovapp.controller.Random"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+    height="100%"
+    busyIndicatorDelay="0"
+>
+    <Page title="{i18n>appTitle}">
+        <content>
+            <form:SimpleForm editable="true">
+                <Label text="Toy" />
+                <Select
+                    id="idSelectDevice"
+                    items="{backend>/getDevices?userId=1}"
+                    selectedItem="{viewModel>/selectedDevice}"
+                    change="onDevicesSelectChange"
+                >
+                    <core:Item
+                        text="{backend>name} {= ${backend>nickName} ? '(' + ${backend>nickName} + ')' : ''}"
+                        key="{backend>id}"
+                    />
+                </Select>
+                <Label text="Feature (WIP)" />
+                <Select
+                    id="idSelectAction"
+                    items="{backend>/F4Actions}"
+                    selectedItems="{viewModel>/selectedAction}"
+                    width="10em"
+                    enabled="false"
+                >
+                    <core:Item
+                        text="{backend>name}"
+                        key="{backend>key}"
+                    />
+                </Select>
+                <Label text="Strength {viewModel>/strengthMin} {viewModel>/strengthMax}" />
+                <RangeSlider
+                    min="0"
+                    max="20"
+                    value="1"
+                    value2="5"
+                    enableTickmarks="true"
+                    class="sapUiMediumMarginBottom"
+                    liveChange="onRangeSliderLiveChange($event, '/strengthMin', '/strengthMax')"
+                >
+                    <ResponsiveScale tickmarksBetweenLabels="2" />
+                </RangeSlider>
+                <Label text="Interval (millisec) {viewModel>/intervalMin} {viewModel>/intervalMax}" />
+                <RangeSlider
+                    min="100"
+                    max="10000"
+                    value="100"
+                    value2="1000"
+                    enableTickmarks="true"
+                    class="sapUiMediumMarginBottom"
+                    liveChange="onRangeSliderLiveChange($event, '/intervalMin', '/intervalMax')"
+                >
+                    <ResponsiveScale tickmarksBetweenLabels="10" />
+                </RangeSlider>
+                <Label text="Time (sec) {viewModel>/timeMin} {viewModel>/timeMax}" />
+                <RangeSlider
+                    min="0"
+                    max="600"
+                    value="0"
+                    value2="0"
+                    enableTickmarks="true"
+                    class="sapUiMediumMarginBottom"
+                    liveChange="onRangeSliderLiveChange($event, '/timeMin', '/timeMax')"
+                >
+                    <ResponsiveScale tickmarksBetweenLabels="10" />
+                </RangeSlider>
+                <Label text="PatternLength {viewModel>/patternLength}" />
+                <Slider
+                    min="1"
+                    max="50"
+                    value="{viewModel>/patternLength}"
+                    enableTickmarks="true"
+                    class="sapUiMediumMarginBottom"
+                >
+                    <ResponsiveScale tickmarksBetweenLabels="2" />
+                </Slider>
+                <Label text="PossibleDifference {viewModel>/possibleDifference}" />
+                <Slider
+                    min="1"
+                    max="20"
+                    value="{viewModel>/possibleDifference}"
+                    enableTickmarks="true"
+                    class="sapUiMediumMarginBottom"
+                >
+                    <ResponsiveScale tickmarksBetweenLabels="2" />
+                </Slider>
+                <form:toolbar>
+                    <OverflowToolbar asyncMode="false">
+                        <ToolbarSpacer />
+                        <Button
+                            type="Emphasized"
+                            text="Senden"
+                            press="onPressSendRandom"
+                        />
+                    </OverflowToolbar>
+                </form:toolbar>
+            </form:SimpleForm>
+        </content>
+    </Page>
+</mvc:View>
