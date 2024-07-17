@@ -17,7 +17,7 @@
 			<MultiComboBox
 				id="idSelectAction"
 				items="{backend>/F4Actions}"
-				selectedItems="{viewModel>/selectedAction}"
+				selectedKeys="{viewModel>/selectedActions}"
 				width="10em"
 			>
 				<core:Item
@@ -45,10 +45,10 @@
 				<ResponsiveScale tickmarksBetweenLabels="2" />
 			</Slider>
 			<IllustratedMessage
-				title="{i18n>appTitle}"
-				illustrationType="sapIllus-Connection"
+				title="{= ${runtimeModel>/connected} === 'Success' ? 'Connected' : 'Connection Failed'}"
+				illustrationType="{= ${runtimeModel>/connected} === 'Success' ? 'sapIllus-SimpleCheckMark' : 'sapIllus-Connection'}"
 				enableVerticalResponsiveness="true"
-				description="{i18n>appDescription}"
+				description="{= ${runtimeModel>/connected} === 'Success' ? 'LovApp Connected' : 'LovApp not Connected, please Check IP and Port'}"
 			>
 				<additionalContent>
 					<Button
@@ -58,6 +58,7 @@
 							path: 'i18n>btnText'
 						}"
 						press="sayHello"
+						type=""
 					/>
 					<Button
 						text="STOP"

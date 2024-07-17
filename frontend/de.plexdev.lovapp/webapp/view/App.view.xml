@@ -38,11 +38,13 @@
 				<f:additionalContent>
 					<OverflowToolbarButton
 						icon="sap-icon://connected"
-						type="Reject"
+						type="{runtimeModel>/connected}"
+						press="onOverflowToolbarButtonConnectPress"
 					/>
 					<OverflowToolbarButton
 						icon="sap-icon://stop"
 						type="Reject"
+						press="onOverflowToolbarButtonStopPress"
 					/>
 				</f:additionalContent>
 				<!-- <f:searchManager>
@@ -116,30 +118,22 @@
 						width="100%"
 						type="XML"
 					/>
-					<ScrollContainer
-						id="page1"
-						horizontal="false"
-						vertical="true"
-						height="100%"
-					>
-						<Text text="This is the first page" />
-					</ScrollContainer>
-					<ScrollContainer
-						id="page2"
-						horizontal="false"
-						vertical="true"
-						height="100%"
-					>
-						<Text text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium architecto autem dicta dolor dolores dolorum earum
-							enim error esse eum ex exercitationem explicabo facilis fugit ipsum maiores, necessitatibus nemo nihil numquam odio officiis optio
-							possimus quas qui quod quos, reiciendis similique sunt tempore tenetur ut vitae voluptate. Ab accusantium, aperiam, asperiores dolores
-							fuga id incidunt itaque numquam placeat quidem recusandae veritatis voluptatibus. Delectus, dicta ea harum hic illo necessitatibus nisi
-							odit quidem quo quod. Architecto at delectus error eum laborum modi, necessitatibus optio perspiciatis quaerat quam, quas quo
-							recusandae repellat sed totam, veritatis voluptas voluptatem voluptates. Accusamus aliquid, asperiores assumenda consequuntur corporis
-							cum debitis delectus doloremque earum esse explicabo fugiat id inventore iste laborum modi molestiae neque nihil obcaecati officia
-							omnis porro quae asperiores atque cum cumque dicta distinctio, doloremque
-							doloribus eaque earum enim eveniet expedita facere fugit impedit iure iusto labore libero maiores non odit pariatur possimus quas" />
-					</ScrollContainer>
+					<mvc:View
+						id="mode-random"
+						displayBlock="false"
+						height=""
+						viewName="de.plexdev.lovapp.view.modes.Random"
+						width="100%"
+						type="XML"
+					/>
+					<mvc:View
+						id="mode-sound"
+						displayBlock="false"
+						height=""
+						viewName="de.plexdev.lovapp.view.modes.Sound"
+						width="100%"
+						type="XML"
+					/>
 					<mvc:View
 						id="settings"
 						displayBlock="false"
