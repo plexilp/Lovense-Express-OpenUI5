@@ -94,7 +94,11 @@ sap.ui.define(
 				try {
 					const response = await fetch(sUrl, requestOptions);
 					const result = await response.text();
-					return result;
+					try {
+						return JSON.parse(result);
+					} catch (error) {
+						return result;
+					}
 				} catch (error) {
 					console.log("error", error);
 					throw error;
@@ -110,11 +114,20 @@ sap.ui.define(
 				try {
 					const response = await fetch(sUrl, requestOptions);
 					const result = await response.text();
-					return result;
+					try {
+						return JSON.parse(result);
+					} catch (error) {
+						return result;
+					}
 				} catch (error) {
 					console.log("error", error);
 					throw error;
 				}
+			},
+
+			getUserId() {
+				const oModel = this.getModel("runtimeModel");
+				return oModel.getProperty("/userId");
 			},
 
 			/**
@@ -133,15 +146,15 @@ sap.ui.define(
 				if (sAltPropName) {
 					sPropName = sAltPropName;
 				}
-				oModel.setProperty(sPropName, JSON.parse(oData));
+				oModel.setProperty(sPropName, oData);
 			},
 
-			async getModelProperty(oModel, sPropertyPath) {
-				if (oModel.getProperty(sPropertyPath)) {
+			async getModelProperty(oModel, sPropertyPath, bRefresh) {
+				if (oModel.getProperty(sPropertyPath) && !bRefresh) {
 					return oModel.getProperty(sPropertyPath);
 				} else {
 					const oData = await this.sendGet(sPropertyPath);
-					oModel.setProperty(sPropertyPath, JSON.parse(oData));
+					oModel.setProperty(sPropertyPath, oData);
 					return oModel.getProperty(sPropertyPath);
 				}
 			},
