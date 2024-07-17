@@ -7,12 +7,13 @@ sap.ui.define(
 			onInit() {},
 
 			onBeforeRendering() {
-				this.getView().setModel(new JSONModel({}), "viewModel");
+				this.getView().setModel(
+					new JSONModel({ selectedActions: ["Vibrate"] }),
+					"viewModel"
+				);
 			},
 
-			onAfterRendering() {
-				this.loadValueHelps();
-			},
+			onAfterRendering() {},
 			sayHello: function () {
 				MessageBox.show("Hello World!");
 			},
@@ -34,15 +35,6 @@ sap.ui.define(
 
 			setSelection(oEvent) {
 				oEvent.getSource().setSelectedIndex(0);
-			},
-
-			async loadValueHelps() {
-				const oModel = this.getModel("backend");
-				await this.bindPropertyToModel("/F4Modes", oModel);
-				await this.bindPropertyToModel("/F4Rules", oModel);
-				await this.bindPropertyToModel("/F4Actions", oModel);
-				await this.bindPropertyToModel("/getUserId", oModel);
-				await this.bindPropertyToModel("/getDevices?userId=1", oModel);
 			},
 
 			async onSliderLiveChange(oEvent) {
