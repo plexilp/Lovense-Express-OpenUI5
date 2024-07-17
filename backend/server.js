@@ -13,7 +13,7 @@ async function start() {
   const app = express();
 
   var corsOptions = {
-    origin: "http://localhost:8081",
+    origin: "http://localhost:8080",
   };
   const db = require("./app/models");
   await db.sequelize.sync({ force: config.bRebuildDatabase }).then((oData) => {
@@ -21,6 +21,19 @@ async function start() {
       console.log(">> Drop and re-sync db.");
     }
   });
+
+  // app.use((req, res, next) => {
+  //   res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+  //   res.header(
+  //     "Access-Control-Allow-Methods",
+  //     "GET, POST, PUT, DELETE, OPTIONS"
+  //   );
+  //   res.header(
+  //     "Access-Control-Allow-Headers",
+  //     "Origin, X-Requested-With, Content-Type, Accept"
+  //   );
+  //   next();
+  // });
 
   app.use(cors(corsOptions));
 
@@ -71,9 +84,37 @@ async function start() {
     return { request: oReq, response: oRes };
   };
 
+  errorHandler = (req, res, error) => {
+    console.log(error);
+    res.status(200).json("success");
+
+    try {
+      const result = {
+        code: error.code,
+        message: error.message,
+      };
+      res.status(parseInt(error.code) || 500).json({ error: result });
+    } catch (error) {
+      res.send(error);
+    }
+  };
+
   // simple route
   app.get("/", (req, res) => {
-    res.json("Route /help for more informations");
+    res.status(200).json({ code: "Route /help for more informations" });
+  });
+  app.get("/test", (req, res) => {
+    const data = { message: "Data retrieved successfully" };
+    res.send(data);
+    // res.set({
+    //   "Content-Type": "text/plain",
+    //   "Content-Length": "123",
+    //   ETag: "12345",
+    // });
+    // res.type(".html");
+    // res.json({});
+
+    // res.status(200).json({ code: "Route /help for more informations" });
   });
   app.get("/help", (req, res) => {
     getStruct = (sName, aQuery, aBody) => {
@@ -89,11 +130,11 @@ async function start() {
     const aPaths = [
       getStruct("/getUserId", [], []),
       getStruct("/getConfig", ["userId"], []),
+      getStruct("/getConnection", ["userId"], []),
       getStruct("/getDevices", ["userId"], []),
-      getStruct("/listActions", [], []),
-      getStruct("/getActiondetails", ["action"], []),
-      getStruct("/listRules", [], []),
-      getStruct("/listModes", [], []),
+      getStruct("/F4Actions", ["action"], []),
+      getStruct("/F4Rules", [], []),
+      getStruct("/F4Modes", [], []),
       getStruct("/setConfig", ["userId"], ["ip", "port"]),
       getStruct(
         "/sendFunction",
@@ -112,9 +153,26 @@ async function start() {
         ["userId"],
         ["toy", "strengths", "interval", "features", "timeSec"]
       ),
+      getStruct(
+        "/sendSpecialPattern",
+        ["userId"],
+        [
+          "toy",
+          "type",
+          "minStrength",
+          "maxStrength",
+          "minInterval",
+          "maxInterval",
+          "features",
+          "minTimeSec",
+          "maxTimeSec",
+          "patternLength",
+          "possibleDifference",
+        ]
+      ),
       getStruct("/stopDevice", ["userId"], ["toy"]),
     ];
-    res.send(aPaths);
+    res.status(200).json({ response: aPaths });
   });
 
   app.get("/getUserId", (req, res) => {
@@ -131,32 +189,50 @@ async function start() {
     const oConfig = oUserObj.getConfig();
     res.send(oConfig);
   });
-  app.get("/getDevices", (req, res) => {
+  app.get("/getConnection", (req, res) => {
     const oUserObj = getUserObject(req, res);
     if (oUserObj === false) {
       return;
     }
     oUserObj.getDevice().then((response) => res.send(response));
   });
+  app.get("/getDevices", (req, res) => {
+    const oUserObj = getUserObject(req, res);
+    if (oUserObj === false) {
+      return;
+    }
+    oUserObj.getDevice().then((response) => {
+      try {
+        const oToys = response.data.toys;
+        let aToys = Object.keys(oToys).map(function (key) {
+          return oToys[key];
+        });
+        aToys.push({ id: "", name: "Alle" });
+        res.send(aToys);
+      } catch (error) {
+        res.send(error);
+      }
+    });
+  });
 
   // ValueHelps
-  app.get("/listActions", (req, res) => {
-    res.send(constants.ACTIONS);
-  });
-  app.get("/getActiondetails", (req, res) => {
-    let oDetails = constants.ACTION_DETAILS;
+  // app.get("/listActions", (req, res) => {
+  //   res.send(constants.ACTIONS);
+  // });
+  app.get("/F4Actions", (req, res) => {
+    let oDetails = constants.ARR_ACTIONS;
     if (req.query.action) {
-      oDetails = constants.ACTION_DETAILS.filter(
+      oDetails = constants.ARR_ACTIONS.filter(
         (x) => req.query.action === x.key
       );
     }
     res.send(oDetails);
   });
-  app.get("/listRules", (req, res) => {
-    res.send(constants.RULES);
+  app.get("/F4Rules", (req, res) => {
+    res.send(constants.ARR_RULES);
   });
-  app.get("/listModes", (req, res) => {
-    res.send(constants.MODES);
+  app.get("/F4Modes", (req, res) => {
+    res.send(constants.ARR_MODES);
   });
 
   // Posts
@@ -257,7 +333,8 @@ async function start() {
 
     oUserObj
       .postData(sUrl, oPostData)
-      .then((response) => res.send(_getResponseFormat(oPostData, response)));
+      .then((response) => res.send(_getResponseFormat(oPostData, response)))
+      .catch((error) => errorHandler(req, res, error));
   });
 
   // app.post("/checkConnection", (req, res) => {

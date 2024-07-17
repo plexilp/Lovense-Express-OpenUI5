@@ -1,0 +1,75 @@
+<mvc:View
+	controllerName="de.plexdev.lovapp.controller.Main"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:tnt="sap.tnt"
+	core:require="{
+		formatter: 'de/plexdev/lovapp/model/formatter'
+	}"
+>
+	<Page
+		title="{i18n>appTitle}"
+		id="page"
+	>
+		<content>
+			<MultiComboBox
+				id="idSelectAction"
+				items="{backend>/F4Actions}"
+				selectedKeys="{viewModel>/selectedActions}"
+				width="10em"
+			>
+				<core:Item
+					text="{backend>name}"
+					key="{backend>key}"
+				/>
+			</MultiComboBox>
+			<Select
+				id="idSelectDevice"
+				items="{backend>/getDevices?userId=1}"
+				selectedItem="{viewModel>/selectedDevice}"
+				change="onDevicesSelectChange"
+			>
+				<core:Item
+					text="{backend>name} {= ${backend>nickName} ? '(' + ${backend>nickName} + ')' : ''}"
+					key="{backend>id}"
+				/>
+			</Select>
+			<Slider
+				min="0"
+				max="20"
+				enableTickmarks="true"
+				liveChange="onSliderLiveChange"
+			>
+				<ResponsiveScale tickmarksBetweenLabels="2" />
+			</Slider>
+			<IllustratedMessage
+				title="{= ${runtimeModel>/connected} === 'Success' ? 'Connected' : 'Connection Failed'}"
+				illustrationType="{= ${runtimeModel>/connected} === 'Success' ? 'sapIllus-SimpleCheckMark' : 'sapIllus-Connection'}"
+				enableVerticalResponsiveness="true"
+				description="{= ${runtimeModel>/connected} === 'Success' ? 'LovApp Connected' : 'LovApp not Connected, please Check IP and Port'}"
+			>
+				<additionalContent>
+					<Button
+						id="helloButton"
+						text="{
+							formatter: 'formatter.formatValue',
+							path: 'i18n>btnText'
+						}"
+						press="sayHello"
+						type=""
+					/>
+					<Button
+						text="STOP"
+						press="onPressStop"
+					/>
+					<Button
+						text="TEST"
+						press="onPressTest"
+					/>
+				</additionalContent>
+			</IllustratedMessage>
+		</content>
+	</Page>
+</mvc:View>

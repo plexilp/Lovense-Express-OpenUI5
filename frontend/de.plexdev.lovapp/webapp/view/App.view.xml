@@ -1,0 +1,149 @@
+<mvc:View
+	controllerName="de.plexdev.lovapp.controller.App"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:core="sap.ui.core"
+	xmlns:tnt="sap.tnt"
+	xmlns:mvc="sap.ui.core.mvc"
+>
+	<!-- <App id="app" /> -->
+	<tnt:ToolPage id="app">
+		<tnt:header>
+			<f:ShellBar
+				title="LovApp"
+				secondTitle="Short description"
+				showMenuButton="true"
+				homeIcon="./resources/sap/ui/documentation/sdk/images/logo_sap.png"
+				showCopilot="false"
+				showNotifications="true"
+				menuButtonPressed="onMenuButtonPress"
+				notificationsNumber="0"
+			>
+				<!-- <f:menu>
+					<Menu>
+						<MenuItem
+							text="Flight booking"
+							icon="sap-icon://flight"
+						/>
+						<MenuItem
+							text="Car rental"
+							icon="sap-icon://car-rental"
+						/>
+					</Menu>
+				</f:menu> -->
+				<f:profile>
+					<Avatar initials="one" />
+				</f:profile>
+				<f:additionalContent>
+					<OverflowToolbarButton
+						icon="sap-icon://connected"
+						type="{runtimeModel>/connected}"
+						press="onOverflowToolbarButtonConnectPress"
+					/>
+					<OverflowToolbarButton
+						icon="sap-icon://stop"
+						type="Reject"
+						press="onOverflowToolbarButtonStopPress"
+					/>
+				</f:additionalContent>
+				<!-- <f:searchManager>
+					<f:SearchManager />
+				</f:searchManager> -->
+			</f:ShellBar>
+		</tnt:header>
+		<tnt:sideContent>
+			<tnt:SideNavigation
+				expanded="true"
+				selectedKey="{appModel>/selectedKey}"
+				itemSelect="onItemSelect"
+			>
+				<tnt:NavigationList items="{
+					path: 'appModel>/navigation'
+				}">
+					<tnt:NavigationListItem
+						text="{appModel>title}"
+						icon="{appModel>icon}"
+						enabled="{appModel>enabled}"
+						expanded="{appModel>expanded}"
+						items="{
+							path: 'appModel>items',
+							templateShareable: true
+						}"
+						key="{appModel>key}"
+					>
+						<tnt:NavigationListItem
+							text="{appModel>title}"
+							key="{appModel>key}"
+							enabled="{appModel>enabled}"
+						/>
+					</tnt:NavigationListItem>
+				</tnt:NavigationList>
+				<tnt:fixedItem>
+					<tnt:NavigationList items="{
+						path: 'appModel>/fixedNavigation'
+					}">
+						<tnt:NavigationListItem
+							text="{appModel>title}"
+							icon="{appModel>icon}"
+							enabled="{appModel>enabled}"
+							expanded="{appModel>expanded}"
+							items="{
+								path: 'appModel>items',
+								templateShareable: true
+							}"
+							key="{appModel>key}"
+						>
+							<tnt:NavigationListItem
+								text="{appModel>title}"
+								key="{appModel>key}"
+								enabled="{appModel>enabled}"
+							/>
+						</tnt:NavigationListItem>
+					</tnt:NavigationList>
+				</tnt:fixedItem>
+			</tnt:SideNavigation>
+		</tnt:sideContent>
+		<tnt:mainContents>
+			<NavContainer
+				id="pageContainer"
+				initialPage="main"
+			>
+				<pages>
+					<mvc:View
+						id="main"
+						displayBlock="false"
+						height=""
+						viewName="de.plexdev.lovapp.view.Main"
+						width="100%"
+						type="XML"
+					/>
+					<mvc:View
+						id="mode-random"
+						displayBlock="false"
+						height=""
+						viewName="de.plexdev.lovapp.view.modes.Random"
+						width="100%"
+						type="XML"
+					/>
+					<mvc:View
+						id="mode-sound"
+						displayBlock="false"
+						height=""
+						viewName="de.plexdev.lovapp.view.modes.Sound"
+						width="100%"
+						type="XML"
+					/>
+					<mvc:View
+						id="settings"
+						displayBlock="false"
+						height=""
+						viewName="de.plexdev.lovapp.view.Settings"
+						width="100%"
+						type="XML"
+					/>
+				</pages>
+			</NavContainer>
+		</tnt:mainContents>
+	</tnt:ToolPage>
+</mvc:View>

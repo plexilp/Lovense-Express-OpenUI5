@@ -1,0 +1,55 @@
+<mvc:View
+	controllerName="de.plexdev.lovapp.controller.Settings"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	core:require="{
+		formatter: 'de/plexdev/lovapp/model/formatter'
+	}"
+>
+	<Page
+		title="{i18n>appTitle}"
+		id="page"
+	>
+		<content>
+			<form:SimpleForm
+				editable="false"
+				layout="ResponsiveGridLayout"
+				title="Connection"
+				singleContainerFullSize="false"
+			>
+				<form:content>
+					<Label text="Url" />
+					<Input value="{runtimeModel>/SupplierName}" />
+					<Label text="Port" />
+					<Input value="{runtimeModel>/SupplierName}" />
+				</form:content>
+			</form:SimpleForm>
+		</content>
+		<footer>
+			<OverflowToolbar asyncMode="false">
+				<content>
+					<ToolbarSpacer />
+					<Button
+						text="Edit"
+						type="Emphasized"
+						press="onEditButtonPress"
+					/>
+					<Button
+						text="Cancel"
+						type="Reject"
+						visible=""
+						press="onCancelButtonPress"
+					/>
+					<Button
+						text="Save"
+						type="Accept"
+						press="onSaveButtonPress"
+					/>
+				</content>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>
