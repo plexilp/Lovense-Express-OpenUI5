@@ -128,12 +128,22 @@ sap.ui.define(
 				oModel = this.getModel("backend"),
 				sAltPropName = ""
 			) {
-				const oListModes = await this.sendGet(sPath);
+				const oData = await this.sendGet(sPath);
 				let sPropName = sPath;
 				if (sAltPropName) {
 					sPropName = sAltPropName;
 				}
-				oModel.setProperty(sPropName, JSON.parse(oListModes));
+				oModel.setProperty(sPropName, JSON.parse(oData));
+			},
+
+			async getModelProperty(oModel, sPropertyPath) {
+				if (oModel.getProperty(sPropertyPath)) {
+					return oModel.getProperty(sPropertyPath);
+				} else {
+					const oData = await this.sendGet(sPropertyPath);
+					oModel.setProperty(sPropertyPath, JSON.parse(oData));
+					return oModel.getProperty(sPropertyPath);
+				}
 			},
 		});
 	}
