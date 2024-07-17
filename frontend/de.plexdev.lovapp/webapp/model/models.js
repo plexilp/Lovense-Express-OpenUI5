@@ -34,34 +34,17 @@ sap.ui.define(
 								},
 							],
 						},
-						// {
-						// 	title: "Root Item",
-						// 	icon: "sap-icon://card",
-						// 	expanded: false,
-						// 	items: [
-						// 		{
-						// 			title: "Child Item",
-						// 		},
-						// 		{
-						// 			title: "Child Item",
-						// 		},
-						// 		{
-						// 			title: "Child Item",
-						// 		},
-						// 		{
-						// 			title: "Child Item",
-						// 		},
-						// 		{
-						// 			title: "Child Item",
-						// 		},
-						// 		{
-						// 			title: "Child Item",
-						// 		},
-						// 		{
-						// 			title: "Child Item",
-						// 		},
-						// 	],
-						// },
+						{
+							title: "Idle Game",
+							icon: "sap-icon://e-learning",
+							expanded: false,
+							items: [
+								{
+									title: "Home",
+									key: "idle-home",
+								},
+							],
+						},
 						// {
 						// 	title: "Root Item",
 						// 	icon: "sap-icon://action",
