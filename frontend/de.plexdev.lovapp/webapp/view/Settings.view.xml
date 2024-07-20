@@ -23,8 +23,11 @@
 			>
 				<form:content>
 					<Label text="IP" />
-					<!-- <Input value="{backend>ip}" /> -->
-					<MaskInput
+					<Input
+						value="{backend>ip}"
+						placeholder="Enter digits of IP"
+					/>
+					<!-- <MaskInput
 						mask="CCC.CCC.CCC.CCC"
 						placeholderSymbol="_"
 						placeholder="Enter digits of IP"
@@ -40,7 +43,7 @@
 								regex="[ 0-9]"
 							/>
 						</rules>
-					</MaskInput>
+					</MaskInput> -->
 					<Label text="Port" />
 					<Input value="{backend>port}" />
 				</form:content>
