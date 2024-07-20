@@ -89,6 +89,11 @@
 					"pattern": "",
 					"name": "app",
 					"target": "app"
+				},
+				{
+					"pattern": "main",
+					"name": "main",
+					"target": "main"
 				}
 			],
 			"targets": {

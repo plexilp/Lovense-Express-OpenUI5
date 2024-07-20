@@ -12,7 +12,7 @@
 		<tnt:header>
 			<f:ShellBar
 				title="LovApp"
-				secondTitle="Short description"
+				secondTitle="{runtimeModel>/secTitleConnToys}"
 				showMenuButton="true"
 				homeIcon="./resources/sap/ui/documentation/sdk/images/logo_sap.png"
 				showCopilot="false"
@@ -33,7 +33,7 @@
 					</Menu>
 				</f:menu> -->
 				<f:profile>
-					<Avatar initials="one" />
+					<Avatar initials="PLX" />
 				</f:profile>
 				<f:additionalContent>
 					<OverflowToolbarButton
@@ -131,6 +131,14 @@
 						displayBlock="false"
 						height=""
 						viewName="de.plexdev.lovapp.view.modes.Sound"
+						width="100%"
+						type="XML"
+					/>
+					<mvc:View
+						id="mode-predef-patterns"
+						displayBlock="false"
+						height=""
+						viewName="de.plexdev.lovapp.view.modes.PredefinedPatterns"
 						width="100%"
 						type="XML"
 					/>

@@ -10,11 +10,11 @@ class RequestController {
   }
 
   setIp(sIp) {
-    this.ip = sIp;
+    this.ip = sIp.trim();
   }
 
   setPort(sPort) {
-    this.port = sPort;
+    this.port = sPort.trim();
   }
 
   getConfig() {
@@ -102,16 +102,28 @@ class RequestController {
   }
 
   getSpecialPatternObj(oBody) {
-    let oReturnData = {};
+    let aReturnData = [];
     switch (oBody.type) {
       case "random":
-        oReturnData = this._getRandomPatternObj(oBody);
+        if (oBody.newForEachToy) {
+          oBody.toy.forEach((toy) => {
+            const oPatternObj = this._getRandomPatternObj(oBody);
+            oPatternObj.toy = toy;
+            aReturnData.push(oPatternObj);
+          });
+        } else {
+          const oPatternObj = this._getRandomPatternObj(oBody);
+          oBody.toy.forEach((toy) => {
+            oPatternObj.toy = toy;
+            aReturnData.push(oPatternObj);
+          });
+        }
         break;
 
       default:
         break;
     }
-    return oReturnData;
+    return aReturnData;
   }
 
   async getDevice() {

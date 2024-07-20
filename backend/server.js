@@ -13,7 +13,7 @@ async function start() {
   const app = express();
 
   var corsOptions = {
-    origin: "http://localhost:8080",
+    origin: "*",
   };
   const db = require("./app/models");
   await db.sequelize.sync({ force: config.bRebuildDatabase }).then((oData) => {
@@ -249,7 +249,7 @@ async function start() {
     }
 
     if (oData.port) {
-      oUserObj.setIp(oData.port);
+      oUserObj.setPort(oData.port);
     }
 
     res.send(_getResponseFormat(req.body, "Data setted"));
@@ -304,14 +304,18 @@ async function start() {
     }
     try {
       const sUrl = oUserObj.getUrl();
-      const oPostData = oUserObj.getSpecialPatternObj(oBody);
+      const aPostData = oUserObj.getSpecialPatternObj(oBody);
+      const aResponse = [];
 
-      oPostData.command = constants.COMMANDS.Pattern;
-      oPostData.apiVer = 2;
+      aPostData.forEach(async (oPostData) => {
+        oPostData.command = constants.COMMANDS.Pattern;
+        oPostData.apiVer = 2;
 
-      oUserObj
-        .postData(sUrl, oPostData)
-        .then((response) => res.send(_getResponseFormat(oPostData, response)));
+        const oResponse = await oUserObj.postData(sUrl, oPostData);
+        aResponse.push(oResponse);
+      });
+
+      res.send(_getResponseFormat(aPostData, aResponse));
     } catch (error) {
       res.status(400).send({ error: error });
     }
@@ -347,7 +351,7 @@ async function start() {
 
   // set port, listen for requests
   const PORT = process.env.PORT || 8081;
-  app.listen(PORT, () => {
+  app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server is running on port ${PORT}.`);
   });
 }

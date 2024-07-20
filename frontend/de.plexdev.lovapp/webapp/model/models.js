@@ -15,7 +15,7 @@ sap.ui.define(
 					selectedKey: "main",
 					navigation: [
 						{
-							title: "Main",
+							title: "Home",
 							icon: "sap-icon://home",
 							key: "main",
 						},
@@ -29,39 +29,30 @@ sap.ui.define(
 									key: "mode-random",
 								},
 								{
+									title: "Custom Pattern",
+									key: "mode-custom-pattern",
+								},
+								{
 									title: "Sound",
 									key: "mode-sound",
 								},
+								{
+									title: "Predefined Patterns (WIP)",
+									key: "mode-predef-patterns",
+								},
 							],
 						},
-						// {
-						// 	title: "Root Item",
-						// 	icon: "sap-icon://card",
-						// 	expanded: false,
-						// 	items: [
-						// 		{
-						// 			title: "Child Item",
-						// 		},
-						// 		{
-						// 			title: "Child Item",
-						// 		},
-						// 		{
-						// 			title: "Child Item",
-						// 		},
-						// 		{
-						// 			title: "Child Item",
-						// 		},
-						// 		{
-						// 			title: "Child Item",
-						// 		},
-						// 		{
-						// 			title: "Child Item",
-						// 		},
-						// 		{
-						// 			title: "Child Item",
-						// 		},
-						// 	],
-						// },
+						{
+							title: "Idle Game",
+							icon: "sap-icon://e-learning",
+							expanded: false,
+							items: [
+								{
+									title: "Home",
+									key: "idle-home",
+								},
+							],
+						},
 						// {
 						// 	title: "Root Item",
 						// 	icon: "sap-icon://action",
