@@ -31,32 +31,77 @@ consts.ACTIONS = {
 };
 
 consts.ARR_ACTIONS = [
-  { key: "Vibrate", name: "Vibrieren", minStrength: 0, maxStrength: 20 },
+  {
+    key: "Vibrate",
+    shortKey: "v",
+    name: "Vibrieren",
+    minStrength: 0,
+    maxStrength: 20,
+  },
   {
     key: "Vibrate1",
+    shortKey: "v",
     name: "Vibrieren-Motor 1",
     minStrength: 0,
     maxStrength: 20,
   },
   {
     key: "Vibrate2",
+    shortKey: "v",
     name: "Vibrieren-Motor 2",
     minStrength: 0,
     maxStrength: 20,
   },
   {
     key: "Vibrate3",
+    shortKey: "v",
     name: "Vibrieren-Motor 3",
     minStrength: 0,
     maxStrength: 20,
   },
-  { key: "Rotate", name: "Rotieren", minStrength: 0, maxStrength: 20 },
-  { key: "Pump", name: "Pumpen", minStrength: 0, maxStrength: 3 },
-  { key: "Thrusting", name: "Stoßen", minStrength: 0, maxStrength: 20 },
-  { key: "Fingering", name: "Fingern", minStrength: 0, maxStrength: 20 },
-  { key: "Suction", name: "Saugen", minStrength: 0, maxStrength: 20 },
-  { key: "Depth", name: "Tiefe", minStrength: 0, maxStrength: 3 },
-  { key: "All", name: "Alle", minStrength: 0, maxStrength: 20 },
+  {
+    key: "Rotate",
+    shortKey: "r",
+    name: "Rotieren",
+    minStrength: 0,
+    maxStrength: 20,
+  },
+  {
+    key: "Pump",
+    shortKey: "p",
+    name: "Pumpen",
+    minStrength: 0,
+    maxStrength: 3,
+  },
+  {
+    key: "Thrusting",
+    shortKey: "t",
+    name: "Stoßen",
+    minStrength: 0,
+    maxStrength: 20,
+  },
+  {
+    key: "Fingering",
+    shortKey: "f",
+    name: "Fingern",
+    minStrength: 0,
+    maxStrength: 20,
+  },
+  {
+    key: "Suction",
+    shortKey: "s",
+    name: "Saugen",
+    minStrength: 0,
+    maxStrength: 20,
+  },
+  {
+    key: "Depth",
+    shortKey: "d",
+    name: "Tiefe",
+    minStrength: 0,
+    maxStrength: 3,
+  },
+  { key: "All", shortKey: "", name: "Alle", minStrength: 0, maxStrength: 20 },
 ];
 
 consts.RULES = {
