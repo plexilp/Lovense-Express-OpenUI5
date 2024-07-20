@@ -56,7 +56,28 @@ sap.ui.define(
 				const oResult = await this.sendPost("/sendFunction?userId=1", oData);
 			},
 
-			onDevicesSelectChange(oEvent) {},
+			onDevicesSelectChange(oEvent) {
+				const oSelectedItem = oEvent.getSource().getSelectedItem();
+				const oData = oSelectedItem.getBindingContext("backend").getObject();
+				const oSelectAction = this.byId("idSelectAction");
+				const oBinding = oSelectAction.getBinding("items");
+
+				const aFilter = [];
+				if (oData.fullFunctionNames) {
+					oData.fullFunctionNames.forEach((item) => {
+						aFilter.push(
+							new sap.ui.model.Filter({
+								path: "key",
+								operator: "Contains",
+								value1: item,
+							})
+						);
+					});
+				}
+
+				oBinding.filter(aFilter);
+				// oSelectAction.setSelectedItems([]);
+			},
 		});
 	}
 );
