@@ -8,26 +8,36 @@
     height="100%"
     busyIndicatorDelay="0"
 >
-    <Page title="{i18n>appTitle}">
+    <Page title="{i18n>appTitle.Random}">
         <content>
             <form:SimpleForm editable="true">
                 <Label text="Toy" />
-                <Select
+                <MultiComboBox
                     id="idSelectDevice"
                     items="{backend>/getDevices?userId=1}"
-                    selectedItem="{viewModel>/selectedDevice}"
+                    selectedKeys="{viewModel>/selectedDevice}"
                     change="onDevicesSelectChange"
                 >
                     <core:Item
                         text="{backend>name} {= ${backend>nickName} ? '(' + ${backend>nickName} + ')' : ''}"
                         key="{backend>id}"
                     />
-                </Select>
+                </MultiComboBox>
+                <Label text="Generation for each Toy (WIP)" />
+                <FlexBox justifyContent="SpaceBetween">
+                    <items>
+                        <Switch
+                            state="{viewModel>/newForEachToy}"
+                            enabled="true"
+                        />
+                        <Text text="Soll für jedes Toy ein neues Pattern generiert werden?" />
+                    </items>
+                </FlexBox>
                 <Label text="Feature" />
                 <MultiComboBox
                     id="idSelectAction"
                     items="{backend>/F4Actions}"
-                    selectedItems="{viewModel>/selectedAction}"
+                    selectedKeys="{viewModel>/selectedAction}"
                     width="10em"
                     enabled="true"
                     tooltip="Einzelne Motoren (wenn das Toy mehrere hat) unterstützt die Offizielle API derzeit noch nicht"
@@ -37,6 +47,16 @@
                         key="{backend>shortKey}"
                     />
                 </MultiComboBox>
+                <Label text="Generation for each Feature (WIP)" />
+                <FlexBox justifyContent="SpaceBetween">
+                    <items>
+                        <Switch
+                            state="{viewModel>/newForEachFeature}"
+                            enabled="false"
+                        />
+                        <Text text="Soll für jedes ausgewählte Feature ein neues Pattern generiert werden?" />
+                    </items>
+                </FlexBox>
                 <Label text="Strength {viewModel>/strengthMin} {viewModel>/strengthMax}" />
                 <RangeSlider
                     min="0"

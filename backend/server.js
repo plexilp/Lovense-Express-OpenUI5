@@ -304,14 +304,18 @@ async function start() {
     }
     try {
       const sUrl = oUserObj.getUrl();
-      const oPostData = oUserObj.getSpecialPatternObj(oBody);
+      const aPostData = oUserObj.getSpecialPatternObj(oBody);
+      const aResponse = [];
 
-      oPostData.command = constants.COMMANDS.Pattern;
-      oPostData.apiVer = 2;
+      aPostData.forEach(async (oPostData) => {
+        oPostData.command = constants.COMMANDS.Pattern;
+        oPostData.apiVer = 2;
 
-      oUserObj
-        .postData(sUrl, oPostData)
-        .then((response) => res.send(_getResponseFormat(oPostData, response)));
+        const oResponse = await oUserObj.postData(sUrl, oPostData);
+        aResponse.push(oResponse);
+      });
+
+      res.send(_getResponseFormat(aPostData, aResponse));
     } catch (error) {
       res.status(400).send({ error: error });
     }

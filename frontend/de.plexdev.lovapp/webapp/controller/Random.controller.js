@@ -24,6 +24,10 @@ sap.ui.define(
 					timeMax: 0,
 					patternLength: 40,
 					possibleDifference: 10,
+					selectedDevice: [""],
+					selectedAction: [""],
+					newForEachToy: true,
+					newForEachFeature: false,
 				};
 				const oModel = this.getView().getModel("viewModel");
 				oModel.setData(oData);
@@ -39,19 +43,24 @@ sap.ui.define(
 
 			async onPressSendRandom() {
 				const oModel = this.getModel("viewModel");
+				const aSelectedToys = this.byId("idSelectDevice").getSelectedKeys();
+				const aFeatures = this.byId("idSelectAction").getSelectedKeys();
 				const oData = {
-					toy: this.byId("idSelectDevice").getSelectedItem().getKey(),
+					toy: aSelectedToys,
 					type: "random",
 					minStrength: oModel.getProperty("/strengthMin"),
 					maxStrength: oModel.getProperty("/strengthMax"),
 					minInterval: oModel.getProperty("/intervalMin"),
 					maxInterval: oModel.getProperty("/intervalMax"),
-					features: this.byId("idSelectAction").getSelectedKeys(),
+					features: aFeatures,
 					minTimeSec: oModel.getProperty("/timeMin"),
 					maxTimeSec: oModel.getProperty("/timeMax"),
 					patternLength: oModel.getProperty("/patternLength"),
 					possibleDifference: oModel.getProperty("/possibleDifference"),
+					newForEachToy: oModel.getProperty("/newForEachToy"),
+					newForEachFeature: oModel.getProperty("/newForEachFeature"),
 				};
+
 				const oResult = await this.sendPost(
 					"/sendSpecialPattern?userId=" + this.getUserId(),
 					oData
@@ -60,7 +69,7 @@ sap.ui.define(
 					const oResultJson = oResult;
 					const oRequest = oResultJson.request;
 					console.log(oRequest);
-					MessageToast.show(`Pattern: ${oRequest["strength"]}`);
+					MessageToast.show(`Pattern: ${oRequest[0]["strength"]}`);
 				} catch (error) {
 					console.error(error);
 				}
