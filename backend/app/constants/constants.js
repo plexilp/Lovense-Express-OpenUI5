@@ -136,11 +136,11 @@ consts.RESPONSE_CODES = {
 
 //Later works with database
 consts.ARR_MODES = [
-  { key: "random", name: "Random", description: "1,5,7,2,4" },
+  // { key: "random", name: "Random", description: "1,5,7,2,4" },
   { key: "stair", name: "Treppe", description: "1,2,3,4,5" },
   { key: "wave", name: "Welle", description: "1,2,3,4,3,2,1" },
   { key: "symmetric", name: "Symmetrisch", description: "1,6,2,5,3,4" },
-  { key: "custom", name: "Custom", description: "" },
+  // { key: "custom", name: "Custom", description: "" },
 ];
 
 consts.PRESETS = {
