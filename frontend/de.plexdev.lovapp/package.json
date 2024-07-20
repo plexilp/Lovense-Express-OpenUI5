@@ -12,6 +12,7 @@
 		"start-cdn": "ui5 serve --port 8080 -o index-cdn.html",
 		"start:dist": "npm start -- --config ui5-dist.yaml",
 		"start:dist-cdn": "npm run start-cdn -- --config ui5-dist.yaml",
+		"start:http": "http-server ./dist",
 		"lint": "eslint webapp",
 		"karma": "karma start",
 		"karma-ci": "karma start karma-ci.conf.js",
