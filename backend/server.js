@@ -13,7 +13,7 @@ async function start() {
   const app = express();
 
   var corsOptions = {
-    origin: "http://localhost:8080",
+    origin: "*",
   };
   const db = require("./app/models");
   await db.sequelize.sync({ force: config.bRebuildDatabase }).then((oData) => {
