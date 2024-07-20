@@ -15,7 +15,7 @@ sap.ui.define(
 					selectedKey: "main",
 					navigation: [
 						{
-							title: "Main",
+							title: "Home",
 							icon: "sap-icon://home",
 							key: "main",
 						},
