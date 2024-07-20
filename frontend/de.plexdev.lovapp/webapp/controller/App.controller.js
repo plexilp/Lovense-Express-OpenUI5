@@ -18,7 +18,8 @@ sap.ui.define(
 			 */
 			onBeforeRendering() {
 				//First Request for initial loading
-				this.setConnectionStatus();
+				this.loadValueHelps();
+				this.setConnectionStatus(false);
 				//And that runs every x Seconds
 				//Geht momentan nicht, weil multithreading und JS keine Freund sind. #Follow4Follo
 				// this.intervalIdConnectionStatus = setInterval(
@@ -26,7 +27,11 @@ sap.ui.define(
 				// 	10000
 				// );
 			},
-			async setConnectionStatus() {
+			/**
+			 *
+			 * @param {boolean} [bLoadValueHelps] .
+			 */
+			async setConnectionStatus(bLoadValueHelps = true) {
 				const oModel = this.getModel("runtimeModel");
 				const oResponse = await this.sendGet(
 					`/getConnection?userId=${this.getUserId()}`
@@ -35,7 +40,9 @@ sap.ui.define(
 				if (oResponse.code === 200) {
 					// IF erst, wenn die Funktion alle x Sekunden aufgerufen wird
 					// if (oModel.getProperty("/connected") !== "Success") {
-					this.loadValueHelps();
+					if (bLoadValueHelps) {
+						this.loadValueHelps();
+					}
 					// }
 					oModel.setProperty("/connected", "Success");
 				} else {
