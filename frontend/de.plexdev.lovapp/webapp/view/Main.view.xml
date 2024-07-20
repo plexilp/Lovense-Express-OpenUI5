@@ -4,69 +4,91 @@
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core"
-	xmlns:tnt="sap.tnt"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:f="sap.f"
+	xmlns:card="sap.f.cards"
 	core:require="{
 		formatter: 'de/plexdev/lovapp/model/formatter'
 	}"
 >
 	<Page title="{i18n>appTitle}">
 		<content>
-			<MultiComboBox
-				id="idSelectAction"
-				items="{backend>/F4Actions}"
-				selectedKeys="{viewModel>/selectedActions}"
-				width="10em"
-			>
-				<core:Item
-					text="{backend>name}"
-					key="{backend>key}"
-				/>
-			</MultiComboBox>
-			<Select
-				id="idSelectDevice"
-				items="{backend>/getDevices?userId=1}"
-				selectedItem="{viewModel>/selectedDevice}"
-				change="onDevicesSelectChange"
-			>
-				<core:Item
-					text="{backend>name} {= ${backend>nickName} ? '(' + ${backend>nickName} + ')' : ''}"
-					key="{backend>id}"
-				/>
-			</Select>
-			<Slider
-				min="0"
-				max="20"
-				enableTickmarks="true"
-				liveChange="onSliderLiveChange"
-			>
-				<ResponsiveScale tickmarksBetweenLabels="2" />
-			</Slider>
-			<IllustratedMessage
-				title="{= ${runtimeModel>/connected} === 'Success' ? 'Connected' : 'Connection Failed'}"
-				illustrationType="{= ${runtimeModel>/connected} === 'Success' ? 'sapIllus-SimpleCheckMark' : 'sapIllus-Connection'}"
-				enableVerticalResponsiveness="true"
-				description="{= ${runtimeModel>/connected} === 'Success' ? 'LovApp Connected' : 'LovApp not Connected, please Check IP and Port'}"
-			>
-				<additionalContent>
-					<Button
-						id="helloButton"
-						text="{
-							formatter: 'formatter.formatValue',
-							path: 'i18n>btnText'
-						}"
-						press="sayHello"
-						type=""
-					/>
-					<Button
-						text="STOP"
-						press="onPressStop"
-					/>
-					<Button
-						text="TEST"
-						press="onPressTest"
-					/>
-				</additionalContent>
-			</IllustratedMessage>
+			<form:SimpleForm editable="true">
+				<form:content>
+					<Label text="Toy" />
+					<Select
+						id="idSelectDevice"
+						items="{backend>/getDevices?userId=1}"
+						selectedItem="{viewModel>/selectedDevice}"
+						change="onDevicesSelectChange"
+					>
+						<core:Item
+							text="{backend>name} {= ${backend>nickName} ? '(' + ${backend>nickName} + ')' : ''}"
+							key="{backend>id}"
+						/>
+					</Select>
+					<Label text="Feature" />
+					<MultiComboBox
+						id="idSelectAction"
+						items="{backend>/F4Actions}"
+						selectedKeys="{viewModel>/selectedActions}"
+					>
+						<core:Item
+							text="{backend>name}"
+							key="{backend>key}"
+						/>
+					</MultiComboBox>
+					<Label text="Time {viewModel>/selectedTime}" />
+					<Slider
+						min="0"
+						max="600"
+						enableTickmarks="true"
+						value="{viewModel>/selectedTime}"
+						class="sapUiMediumMarginBottom"
+						enabled="false"
+					>
+						<ResponsiveScale tickmarksBetweenLabels="2" />
+					</Slider>
+					<Label text="Strength {viewModel>/selectedStrength}" />
+					<Slider
+						min="0"
+						max="20"
+						enableTickmarks="true"
+						liveChange="onSliderLiveChange"
+						value="{viewModel>/selectedStrength}"
+						class="sapUiMediumMarginBottom"
+					>
+						<ResponsiveScale tickmarksBetweenLabels="2" />
+					</Slider>
+				</form:content>
+			</form:SimpleForm>
+			<FlexBox>
+				<items>
+					<f:Card
+						width="300px"
+						class="sapUiSmallMarginBegin sapUiSmallMarginTop"
+					>
+						<f:header>
+							<card:Header title="Lovense API" />
+						</f:header>
+						<f:content>
+							<IllustratedMessage
+								title="{= ${runtimeModel>/connected} === 'Success' ? 'Connected' : 'Connection Failed'}"
+								illustrationType="{= ${runtimeModel>/connected} === 'Success' ? 'sapIllus-SimpleCheckMark' : 'sapIllus-Connection'}"
+								enableVerticalResponsiveness="true"
+								description="{= ${runtimeModel>/connected} === 'Success' ? 'LovApp Connected' : 'LovApp not Connected, please Check IP and Port'}"
+							>
+								<additionalContent>
+									<Button
+										text="STOP EVERYTHING"
+										press="onPressStop"
+									/>
+								</additionalContent>
+							</IllustratedMessage>
+						</f:content>
+					</f:Card>
+				</items>
+			</FlexBox>
 		</content>
 	</Page>
 </mvc:View>
