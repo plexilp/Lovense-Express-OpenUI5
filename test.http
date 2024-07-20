@@ -42,7 +42,7 @@ Content-Type: application/json
     "timeSec": 0,
     "loopRunningSec": 0,
     "loopPauseSec": 0,
-    "stopPrevious": 0
+    "stopPrevious": 0,
 }
 
 ### Send Pattern
@@ -105,5 +105,35 @@ Content-Type: application/json
     "rule": "V:1;F:v1;S:100#",
     "strength": "1;2;3;4",
     "timeSec": 5,
+    "stopPrevious": 0
+}
+
+### Try out
+POST {{lovApp}}/command
+Content-Type: application/json
+
+{
+    "action" : "Vibrate1:1",
+    "loopPauseSec" : 0,
+    "loopRunningSec" : 0,
+    "timeSec" : 0,
+    "toy" : "048727454def",
+    "apiVer" : 1,
+    "command": "Function",
+    "stopPrevious": 0
+}
+
+### Try out
+POST {{lovApp}}/command
+Content-Type: application/json
+
+{
+    "action" : "Vibrate2:0",
+    "loopPauseSec" : 0,
+    "loopRunningSec" : 0,
+    "timeSec" : 0,
+    "toy" : "048727454def",
+    "apiVer" : 1,
+    "command": "Function",
     "stopPrevious": 0
 }
