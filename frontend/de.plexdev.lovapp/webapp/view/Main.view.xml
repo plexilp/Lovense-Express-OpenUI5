@@ -62,14 +62,19 @@
 					</Slider>
 				</form:content>
 			</form:SimpleForm>
-			<FlexBox>
-				<items>
+			<Panel headerText="Lovense App">
+				<content>
 					<f:Card
+						objectBindings="{backend>/getConnection?userId=1}"
 						width="300px"
 						class="sapUiSmallMarginBegin sapUiSmallMarginTop"
 					>
 						<f:header>
-							<card:Header title="Lovense API" />
+							<card:Header
+								title="Lovense API"
+								subtitle="{backend>data/platform}"
+								statusText="{backend>type}"
+							/>
 						</f:header>
 						<f:content>
 							<IllustratedMessage
@@ -82,13 +87,88 @@
 									<Button
 										text="STOP EVERYTHING"
 										press="onPressStop"
+										type="Negative"
 									/>
 								</additionalContent>
 							</IllustratedMessage>
 						</f:content>
 					</f:Card>
-				</items>
-			</FlexBox>
+				</content>
+			</Panel>
+			<Panel
+				headerText="Toys"
+				content="{
+					path: 'backend>/getDevices?userId=1',
+					filters: [{
+						path: 'id',
+						operator: 'NE',
+						value1: ''
+					}]
+				}"
+			>
+				<content>
+					<f:Card
+						width="300px"
+						class="sapUiSmallMarginBegin sapUiSmallMarginTop"
+					>
+						<f:header>
+							<!-- <card:Header
+								title="{backend>name}"
+								subtitle="{backend>nickName}"
+							/> -->
+							<card:NumericHeader
+								number="{backend>battery}"
+								scale="%"
+								state="{= ${backend>battery} >= 70 ? 'Good' : ${backend>battery} >= 40 ? 'Critical' : 'Error'}"
+								subtitle="{backend>nickName}"
+								title="{backend>name}"
+								statusText="{backend>id}"
+							/>
+						</f:header>
+						<f:content>
+							<Panel headerText=" ">
+								<content>
+									<Button
+										bindingContexts="{backend>id}"
+										text="STOP TOY"
+										press="onPressStopToy"
+										type="Negative"
+										width="100%"
+									/>
+								</content>
+							</Panel>
+							<!-- <FlexBox
+								justifyContent="Center"
+								alignItems="Center"
+							>
+								<items>
+									<NumericContent
+										value="{backend>battery}"
+										scale="%"
+										valueColor="{= ${backend>battery} >= 70 ? 'Good' : ${backend>battery} >= 40 ? 'Critical' : 'Error'}"
+										class="sapUiSmallMargin"
+									/>
+								</items>
+							</FlexBox> -->
+							<!-- <IllustratedMessage
+								title="Battery: {backend>battery}"
+								illustrationType="{= ${backend>battery} >= 50 ? 'sapIllus-SimpleCheckMark' : 'sapIllus-Connection'}"
+								enableVerticalResponsiveness="true"
+								description="{backend>id}"
+							>
+								<additionalContent>
+									<Button
+										bindingContexts="{backend>id}"
+										text="STOP TOY"
+										press="onPressStopToy"
+										type="Negative"
+									/>
+								</additionalContent>
+							</IllustratedMessage> -->
+						</f:content>
+					</f:Card>
+				</content>
+			</Panel>
 		</content>
 	</Page>
 </mvc:View>
