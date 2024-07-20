@@ -9,10 +9,7 @@
 		formatter: 'de/plexdev/lovapp/model/formatter'
 	}"
 >
-	<Page
-		title="{i18n>appTitle}"
-		id="page"
-	>
+	<Page title="{i18n>appTitle}">
 		<content>
 			<MultiComboBox
 				id="idSelectAction"

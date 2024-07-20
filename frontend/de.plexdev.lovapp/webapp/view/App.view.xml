@@ -12,7 +12,7 @@
 		<tnt:header>
 			<f:ShellBar
 				title="LovApp"
-				secondTitle="Short description"
+				secondTitle="{runtimeModel>/secTitleConnToys}"
 				showMenuButton="true"
 				homeIcon="./resources/sap/ui/documentation/sdk/images/logo_sap.png"
 				showCopilot="false"
@@ -33,7 +33,7 @@
 					</Menu>
 				</f:menu> -->
 				<f:profile>
-					<Avatar initials="one" />
+					<Avatar initials="PLX" />
 				</f:profile>
 				<f:additionalContent>
 					<OverflowToolbarButton

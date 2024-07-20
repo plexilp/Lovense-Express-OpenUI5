@@ -40,6 +40,7 @@ sap.ui.define(
 				if (oResponse.code === 200) {
 					// IF erst, wenn die Funktion alle x Sekunden aufgerufen wird
 					// if (oModel.getProperty("/connected") !== "Success") {
+					this.loadDevices();
 					if (bLoadValueHelps) {
 						this.loadValueHelps();
 					}
@@ -70,13 +71,37 @@ sap.ui.define(
 				await this.setConnectionStatus();
 			},
 
+			async loadDevices() {
+				const oModel = this.getModel("backend");
+				const oRuntimeModel = this.getModel("runtimeModel");
+				const aDevices = await this.getModelProperty(
+					oModel,
+					"/getDevices?userId=1",
+					true
+				);
+				const aSecTitleConnToys = [];
+				aDevices.forEach((oDevice) => {
+					// debugger;
+					if (oDevice.id) {
+						const sName = oDevice.nickName || oDevice.name;
+						const sBattery = oDevice.battery.toString();
+						aSecTitleConnToys.push(`${sName}: ${sBattery}`);
+					}
+				});
+
+				oRuntimeModel.setProperty(
+					"/secTitleConnToys",
+					aSecTitleConnToys.join(", ")
+				);
+			},
+
 			async loadValueHelps() {
 				const oModel = this.getModel("backend");
 				await this.getModelProperty(oModel, "/F4Modes");
 				await this.getModelProperty(oModel, "/F4Rules");
 				await this.getModelProperty(oModel, "/F4Actions");
 				await this.getModelProperty(oModel, "/getUserId");
-				await this.getModelProperty(oModel, "/getDevices?userId=1", true);
+				// await this.getModelProperty(oModel, "/getDevices?userId=1", true);
 			},
 		});
 	}
