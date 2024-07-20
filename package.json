@@ -7,7 +7,7 @@
     "install": "npm --prefix ./backend/ install && npm --prefix ./frontend/de.plexdev.lovapp/ install",
     "start": "concurrently \"npm --prefix ./backend/ run start\" \"npm --prefix ./frontend/de.plexdev.lovapp/ run start\"",
     "watch": "concurrently \"npm --prefix ./backend/ run watch\" \"npm --prefix ./frontend/ run start\"",
-    "start:builded": "concurrently \"node ./backend/server.js --port 8081\" \"http-server ./frontend/de.plexdev.lovapp/dist/ --port 8080\""
+    "start:prod": "node ./backend/server.js"
   },
   "author": "",
   "license": "ISC",

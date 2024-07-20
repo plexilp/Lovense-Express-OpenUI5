@@ -21,6 +21,13 @@ server:
       afterMiddleware: compression
     - name: ui5-middleware-livereload
       afterMiddleware: compression
+    - name: ui5-middleware-route-proxy
+      afterMiddleware: compression
+      configuration:
+        debug: true
+        /api:
+          target: http://localhost:4711
+
     # - name: fiori-tools-proxy
     #   afterMiddleware: compression
     #   configuration:
