@@ -13,7 +13,7 @@ sap.ui.define(
 			},
 
 			async onSaveButtonPress(oEvent) {
-				// Ja, ich hasste mich selber für das Konstrukt
+				// Ja, ich hasse mich selber für das Konstrukt
 				const sPath = oEvent
 					.getSource()
 					.getParent()

@@ -29,6 +29,10 @@ sap.ui.define(
 									key: "mode-random",
 								},
 								{
+									title: "Custom Pattern",
+									key: "mode-custom-pattern",
+								},
+								{
 									title: "Sound",
 									key: "mode-sound",
 								},

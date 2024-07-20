@@ -72,7 +72,9 @@ Content-Type: application/json
     "minTimeSec": 0,
     "maxTimeSec": 0,
     "patternLength": 50,
-    "possibleDifference": 20
+    "possibleDifference": 20,
+    "newForEachToy": false,
+    "newForEachFeature": false
 }
 
 ### Stop one Device
