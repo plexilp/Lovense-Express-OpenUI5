@@ -15,12 +15,7 @@ sap.ui.define(
 				 * @override
 				 */
 				onBeforeRendering: function () {
-					this.getView().setModel(
-						new JSONModel({
-							cards: [{ patternName: "Firework" }, { patternName: "Stairs" }],
-						}),
-						"viewModel"
-					);
+					this.getView().setModel(new JSONModel({}), "viewModel");
 				},
 			}
 		);

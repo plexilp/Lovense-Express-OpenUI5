@@ -22,7 +22,8 @@
                 <f:header>
                     <card:Header
                         title="{backend>name}"
-                        iconSrc="sap-icon://accelerated"
+                        subtitle="{backend>description}"
+                        iconSrc="{backend>icon}"
                     />
                 </f:header>
                 <f:content>
