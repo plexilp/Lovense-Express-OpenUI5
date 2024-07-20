@@ -36,6 +36,10 @@ sap.ui.define(
 									title: "Sound",
 									key: "mode-sound",
 								},
+								{
+									title: "Predefined Patterns (WIP)",
+									key: "mode-predef-patterns",
+								},
 							],
 						},
 						{

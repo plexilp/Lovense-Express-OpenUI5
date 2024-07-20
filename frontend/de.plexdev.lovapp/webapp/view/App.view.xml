@@ -135,6 +135,14 @@
 						type="XML"
 					/>
 					<mvc:View
+						id="mode-predef-patterns"
+						displayBlock="false"
+						height=""
+						viewName="de.plexdev.lovapp.view.modes.PredefinedPatterns"
+						width="100%"
+						type="XML"
+					/>
+					<mvc:View
 						id="settings"
 						displayBlock="false"
 						height=""
