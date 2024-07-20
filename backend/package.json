@@ -17,6 +17,7 @@
     "https": "^1.0.0",
     "mysql2": "^3.9.7",
     "node-fetch": "^3.3.2",
+    "path": "^0.12.7",
     "sequelize": "^6.37.3",
     "sqlite3": "^5.1.7",
     "vue": "^3.4.27"
@@ -27,7 +28,10 @@
       "node16-macos-x64",
       "node16-win-x64"
     ],
-    "assets": [ "app/*", "server.js" ],
+    "assets": [
+      "app/*",
+      "server.js"
+    ],
     "outputPath": "dist"
   }
 }
