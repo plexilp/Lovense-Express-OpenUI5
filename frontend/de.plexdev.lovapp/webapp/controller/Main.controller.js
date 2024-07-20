@@ -48,10 +48,10 @@ sap.ui.define(
 				const oData = {
 					toy: sId,
 					action: aActions.join(","),
-
 					timeSec: 0,
 					loopRunningSec: 0,
 					loopPauseSec: 0,
+					stopPrevious: 0,
 				};
 				const oResult = await this.sendPost("/sendFunction?userId=1", oData);
 			},
