@@ -46,7 +46,7 @@ sap.ui.define(
 					maxStrength: oModel.getProperty("/strengthMax"),
 					minInterval: oModel.getProperty("/intervalMin"),
 					maxInterval: oModel.getProperty("/intervalMax"),
-					features: ["v"],
+					features: this.byId("idSelectAction").getSelectedKeys(),
 					minTimeSec: oModel.getProperty("/timeMin"),
 					maxTimeSec: oModel.getProperty("/timeMax"),
 					patternLength: oModel.getProperty("/patternLength"),
