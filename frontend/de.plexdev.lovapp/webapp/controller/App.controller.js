@@ -82,14 +82,16 @@ sap.ui.define(
 					true
 				);
 				const aSecTitleConnToys = [];
-				aDevices.forEach((oDevice) => {
-					// debugger;
-					if (oDevice.id) {
-						const sName = oDevice.nickName || oDevice.name;
-						const sBattery = oDevice.battery.toString();
-						aSecTitleConnToys.push(`${sName}: ${sBattery}`);
-					}
-				});
+				if (aDevices.length) {
+					aDevices.forEach((oDevice) => {
+						// debugger;
+						if (oDevice.id) {
+							const sName = oDevice.nickName || oDevice.name;
+							const sBattery = oDevice.battery.toString();
+							aSecTitleConnToys.push(`${sName}: ${sBattery}`);
+						}
+					});
+				}
 
 				oRuntimeModel.setProperty(
 					"/secTitleConnToys",
