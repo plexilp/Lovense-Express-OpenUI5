@@ -33,7 +33,9 @@ sap.ui.define(
 			 */
 			async setConnectionStatus(bLoadValueHelps = true) {
 				const oModel = this.getModel("runtimeModel");
-				const oResponse = await this.sendGet(
+				const oBackendModel = this.getModel("backend");
+				const oResponse = await this.getModelProperty(
+					oBackendModel,
 					`/getConnection?userId=${this.getUserId()}`
 				);
 
