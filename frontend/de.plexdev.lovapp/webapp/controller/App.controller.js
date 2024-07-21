@@ -33,7 +33,9 @@ sap.ui.define(
 			 */
 			async setConnectionStatus(bLoadValueHelps = true) {
 				const oModel = this.getModel("runtimeModel");
-				const oResponse = await this.sendGet(
+				const oBackendModel = this.getModel("backend");
+				const oResponse = await this.getModelProperty(
+					oBackendModel,
 					`/getConnection?userId=${this.getUserId()}`
 				);
 
@@ -59,7 +61,8 @@ sap.ui.define(
 
 			onItemSelect: function (oEvent) {
 				const item = oEvent.getParameter("item");
-				this.byId("pageContainer").to(this.getView().createId(item.getKey()));
+				// this.byId("pageContainer").to(this.getView().createId(item.getKey()));
+				this.navTo(item.getKey());
 			},
 
 			async onOverflowToolbarButtonStopPress() {
@@ -80,14 +83,16 @@ sap.ui.define(
 					true
 				);
 				const aSecTitleConnToys = [];
-				aDevices.forEach((oDevice) => {
-					// debugger;
-					if (oDevice.id) {
-						const sName = oDevice.nickName || oDevice.name;
-						const sBattery = oDevice.battery.toString();
-						aSecTitleConnToys.push(`${sName}: ${sBattery}`);
-					}
-				});
+				if (aDevices.length) {
+					aDevices.forEach((oDevice) => {
+						// debugger;
+						if (oDevice.id) {
+							const sName = oDevice.nickName || oDevice.name;
+							const sBattery = oDevice.battery.toString();
+							aSecTitleConnToys.push(`${sName}: ${sBattery}`);
+						}
+					});
+				}
 
 				oRuntimeModel.setProperty(
 					"/secTitleConnToys",

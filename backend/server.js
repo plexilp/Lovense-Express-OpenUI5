@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const constants = require("./app/constants/constants");
+const path = require("path");
 
 const config = {
   bRebuildDatabase: false,
@@ -15,12 +16,12 @@ async function start() {
   var corsOptions = {
     origin: "*",
   };
-  const db = require("./app/models");
-  await db.sequelize.sync({ force: config.bRebuildDatabase }).then((oData) => {
-    if (config.bRebuildDatabase) {
-      console.log(">> Drop and re-sync db.");
-    }
-  });
+  // const db = require("./app/models");
+  // await db.sequelize.sync({ force: config.bRebuildDatabase }).then((oData) => {
+  //   if (config.bRebuildDatabase) {
+  //     console.log(">> Drop and re-sync db.");
+  //   }
+  // });
 
   // app.use((req, res, next) => {
   //   res.header("Access-Control-Allow-Origin", "http://localhost:8080");
@@ -42,6 +43,16 @@ async function start() {
 
   // parse requests of content-type - application/x-www-form-urlencoded
   app.use(bodyParser.urlencoded({ extended: true }));
+
+  // add App connection
+  const appPath = path.join(
+    __dirname,
+    "..",
+    "frontend",
+    "de.plexdev.lovapp",
+    "dist"
+  );
+  app.use("/app", express.static(appPath));
 
   process.on("uncaughtException", (err) => {
     console.error("There was an uncaught error", err);
@@ -99,11 +110,16 @@ async function start() {
     }
   };
 
-  // simple route
+  // Redirect to app page
   app.get("/", (req, res) => {
+    res.redirect("/app");
+  });
+
+  // simple route
+  app.get("/api/", (req, res) => {
     res.status(200).json({ code: "Route /help for more informations" });
   });
-  app.get("/test", (req, res) => {
+  app.get("/api/test", (req, res) => {
     const data = { message: "Data retrieved successfully" };
     res.send(data);
     // res.set({
@@ -116,7 +132,7 @@ async function start() {
 
     // res.status(200).json({ code: "Route /help for more informations" });
   });
-  app.get("/help", (req, res) => {
+  app.get("/api/help", (req, res) => {
     getStruct = (sName, aQuery, aBody) => {
       const obj = {
         path: sName,
@@ -175,13 +191,13 @@ async function start() {
     res.status(200).json({ response: aPaths });
   });
 
-  app.get("/getUserId", (req, res) => {
+  app.get("/api/getUserId", (req, res) => {
     //it also register the object(s) for that userid
     const sUserId = "1";
     _getSetUser(sUserId);
     res.json({ userId: sUserId });
   });
-  app.get("/getConfig", (req, res) => {
+  app.get("/api/getConfig", (req, res) => {
     const oUserObj = getUserObject(req, res);
     if (oUserObj === false) {
       return;
@@ -189,14 +205,14 @@ async function start() {
     const oConfig = oUserObj.getConfig();
     res.send(oConfig);
   });
-  app.get("/getConnection", (req, res) => {
+  app.get("/api/getConnection", (req, res) => {
     const oUserObj = getUserObject(req, res);
     if (oUserObj === false) {
       return;
     }
     oUserObj.getDevice().then((response) => res.send(response));
   });
-  app.get("/getDevices", (req, res) => {
+  app.get("/api/getDevices", (req, res) => {
     const oUserObj = getUserObject(req, res);
     if (oUserObj === false) {
       return;
@@ -216,10 +232,10 @@ async function start() {
   });
 
   // ValueHelps
-  // app.get("/listActions", (req, res) => {
+  // app.get("/api/listActions", (req, res) => {
   //   res.send(constants.ACTIONS);
   // });
-  app.get("/F4Actions", (req, res) => {
+  app.get("/api/F4Actions", (req, res) => {
     let oDetails = constants.ARR_ACTIONS;
     if (req.query.action) {
       oDetails = constants.ARR_ACTIONS.filter(
@@ -228,16 +244,16 @@ async function start() {
     }
     res.send(oDetails);
   });
-  app.get("/F4Rules", (req, res) => {
+  app.get("/api/F4Rules", (req, res) => {
     res.send(constants.ARR_RULES);
   });
-  app.get("/F4Modes", (req, res) => {
+  app.get("/api/F4Modes", (req, res) => {
     res.send(constants.ARR_MODES);
   });
 
   // Posts
 
-  app.post("/setConfig", (req, res) => {
+  app.post("/api/setConfig", (req, res) => {
     const oUserObj = getUserObject(req, res);
     if (oUserObj === false) {
       return;
@@ -255,7 +271,7 @@ async function start() {
     res.send(_getResponseFormat(req.body, "Data setted"));
   });
 
-  app.post("/sendFunction", (req, res) => {
+  app.post("/api/sendFunction", (req, res) => {
     const oUserObj = getUserObject(req, res);
     if (oUserObj === false) {
       return;
@@ -272,7 +288,7 @@ async function start() {
     // res.send("POST");
   });
 
-  app.post("/sendPattern", (req, res) => {
+  app.post("/api/sendPattern", (req, res) => {
     const oUserObj = getUserObject(req, res);
     const oBody = req.body;
     if (oUserObj === false) {
@@ -296,7 +312,7 @@ async function start() {
     // res.send("POST");
   });
 
-  app.post("/sendSpecialPattern", (req, res) => {
+  app.post("/api/sendSpecialPattern", (req, res) => {
     const oUserObj = getUserObject(req, res);
     const oBody = req.body;
     if (oUserObj === false) {
@@ -322,7 +338,7 @@ async function start() {
     // res.send("POST");
   });
 
-  app.post("/stopDevice", (req, res) => {
+  app.post("/api/stopDevice", (req, res) => {
     const oUserObj = getUserObject(req, res);
     if (oUserObj === false) {
       return;
@@ -341,7 +357,7 @@ async function start() {
       .catch((error) => errorHandler(req, res, error));
   });
 
-  // app.post("/checkConnection", (req, res) => {
+  // app.post("/api/checkConnection", (req, res) => {
   //   const oUserObj = getUserObject(req, res);
   //   if (oUserObj === false) {
   //     return;

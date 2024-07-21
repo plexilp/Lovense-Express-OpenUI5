@@ -23,13 +23,14 @@ sap.ui.define(
 				console.log(oResult);
 			},
 
-			async onPressTest() {
-				const oResult = await this.sendGet("/test");
-				// const oData = { command: "GetToys" };
-				// const oResult = await this.sendPost("/command", oData).then((x) =>
-				// 	console.log(x)
-				// );
-
+			async onPressStopToy(oEvent) {
+				const oBinding = oEvent
+					.getSource()
+					.getBindingContext("backend")
+					.getObject();
+				const oResult = await this.sendPost("/stopDevice?userId=1", {
+					toy: oBinding.id,
+				});
 				console.log(oResult);
 			},
 

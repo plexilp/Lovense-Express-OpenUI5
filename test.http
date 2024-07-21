@@ -1,4 +1,4 @@
-@localhost=http://localhost:8081
+@localhost=http://localhost:8081/api
 @lovApp=192.168.178.71:30010
 
 ###

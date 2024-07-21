@@ -8,6 +8,7 @@
 		"clean": "rimraf dist coverage",
 		"build": "ui5 build --clean-dest",
 		"build:opt": "ui5 build self-contained --clean-dest --all",
+		"build:prod": "ui5 build --config=ui5.yaml --clean-dest --all --dest dist --include-task=generateVersionInfo",
 		"start": "ui5 serve --port 8080 -o index.html",
 		"start-cdn": "ui5 serve --port 8080 -o index-cdn.html",
 		"start:dist": "npm start -- --config ui5-dist.yaml",
@@ -35,5 +36,8 @@
 		"rimraf": "^5.0.7",
 		"ui5-middleware-livereload": "^3.0.3",
 		"wdio-ui5-service": "^1.5.6"
+	},
+	"dependencies": {
+		"ui5-middleware-route-proxy": "^1.0.10"
 	}
 }

@@ -79,7 +79,7 @@ sap.ui.define(
 			},
 
 			getBackendUrl() {
-				return "http://localhost:8081";
+				return "http://localhost:8081/api";
 			},
 
 			async sendPost(sPath, oData = {}) {
