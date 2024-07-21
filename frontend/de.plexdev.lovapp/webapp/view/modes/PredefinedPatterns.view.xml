@@ -47,7 +47,7 @@
                             >
                                 <core:Item
                                     text="{backend>name}"
-                                    key="{backend>key}"
+                                    key="{backend>shortKey}"
                                 />
                             </MultiComboBox>
                             <Label text="Time {backend>settedTime}" />

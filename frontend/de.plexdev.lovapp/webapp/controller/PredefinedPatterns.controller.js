@@ -28,7 +28,7 @@ sap.ui.define(
 					// const aSelectedToys = this.byId("idSelectDevice").getSelectedKeys();
 					// const aFeatures = this.byId("idSelectAction").getSelectedKeys();
 					const oData = {
-						toy: [oSelectedData.toy],
+						toy: [oSelectedData.settedToy],
 						type: oSelectedData.key,
 						minStrength: oSelectedData.settedMinStrength,
 						maxStrength: oSelectedData.settedMaxStrength,
