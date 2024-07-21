@@ -110,6 +110,11 @@ async function start() {
     }
   };
 
+  // Redirect to app page
+  app.get("/", (req, res) => {
+    res.redirect("/app");
+  });
+
   // simple route
   app.get("/api/", (req, res) => {
     res.status(200).json({ code: "Route /help for more informations" });
