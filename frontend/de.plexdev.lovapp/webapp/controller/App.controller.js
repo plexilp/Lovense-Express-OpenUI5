@@ -61,7 +61,8 @@ sap.ui.define(
 
 			onItemSelect: function (oEvent) {
 				const item = oEvent.getParameter("item");
-				this.byId("pageContainer").to(this.getView().createId(item.getKey()));
+				// this.byId("pageContainer").to(this.getView().createId(item.getKey()));
+				this.navTo(item.getKey());
 			},
 
 			async onOverflowToolbarButtonStopPress() {

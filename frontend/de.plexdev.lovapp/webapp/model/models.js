@@ -49,7 +49,7 @@ sap.ui.define(
 							items: [
 								{
 									title: "Home",
-									key: "idle-home",
+									key: "game-idle-home",
 								},
 							],
 						},

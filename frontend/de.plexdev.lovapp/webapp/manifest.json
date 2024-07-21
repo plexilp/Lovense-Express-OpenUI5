@@ -80,9 +80,12 @@
 				"routerClass": "sap.m.routing.Router",
 				"viewType": "XML",
 				"viewPath": "de.plexdev.lovapp.view",
-				"controlId": "app",
+				"controlId": "pageContainer",
 				"controlAggregation": "pages",
-				"async": true
+				"async": true,
+				"bypassed": {
+				"target": "app"
+				}
 			},
 			"routes": [
 				{
@@ -94,6 +97,41 @@
 					"pattern": "main",
 					"name": "main",
 					"target": "main"
+				},
+				{
+					"pattern": "mode/random",
+					"name": "mode-random",
+					"target": "mode-random"
+				},
+				{
+					"pattern": "mode/sound",
+					"name": "mode-sound",
+					"target": "mode-sound"
+				},
+				{
+					"pattern": "mode/custom-pattern",
+					"name": "mode-custom-pattern",
+					"target": "mode-custom-pattern"
+				},
+				{
+					"pattern": "mode/predefined-patterns",
+					"name": "mode-predef-patterns",
+					"target": "mode-predef-patterns"
+				},
+				{
+					"pattern": "idle-game/home",
+					"name": "game-idle-home",
+					"target": "game-idle-home"
+				},
+				{
+					"pattern": "settings",
+					"name": "settings",
+					"target": "settings"
+				},
+				{
+					"pattern": "help",
+					"name": "help",
+					"target": "help"
 				}
 			],
 			"targets": {
@@ -103,7 +141,43 @@
 				},
 				"main": {
 					"viewId": "main",
-					"viewName": "Main"
+					"viewName": "Main",
+					"transition": "fade",
+					"viewLevel": 0
+				},
+				"mode-random": {
+					"viewName": "Random",
+					"viewPath": "de.plexdev.lovapp.view.modes",
+					"transition": "fade",
+					"viewLevel": 1
+				},
+				"mode-sound": {
+					"viewName": "Sound",
+					"viewPath": "de.plexdev.lovapp.view.modes",
+					"transition": "fade",
+					"viewLevel": 1
+				},
+				"mode-predef-patterns": {
+					"viewName": "PredefinedPatterns",
+					"viewPath": "de.plexdev.lovapp.view.modes",
+					"transition": "fade",
+					"viewLevel": 1
+				},
+				"game-idle-home": {
+					"viewName": "IdleGameHome",
+					"viewPath": "de.plexdev.lovapp.view.games",
+					"transition": "fade",
+					"viewLevel": 1
+				},
+				"settings": {
+					"viewName": "Settings",
+					"transition": "fade",
+					"viewLevel": 0
+				},
+				"help": {
+					"viewName": "Help",
+					"transition": "fade",
+					"viewLevel": 0
 				}
 			}
 		}
