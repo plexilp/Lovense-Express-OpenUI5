@@ -1,0 +1,3 @@
+oFunctions = {};
+
+module.exports = oFunctions;
