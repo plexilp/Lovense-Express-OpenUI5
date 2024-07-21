@@ -43,6 +43,17 @@ sap.ui.define(
 							],
 						},
 						{
+							title: "Others",
+							icon: "sap-icon://e-learning",
+							expanded: false,
+							items: [
+								{
+									title: "Alarm Clock",
+									key: "others-alarm",
+								},
+							],
+						},
+						{
 							title: "Idle Game",
 							icon: "sap-icon://e-learning",
 							expanded: false,
