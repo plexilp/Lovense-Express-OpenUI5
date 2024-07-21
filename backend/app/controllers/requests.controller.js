@@ -119,7 +119,14 @@ class RequestController {
           });
         }
         break;
-
+      case "pulse":
+        break;
+      case "stair":
+        break;
+      case "wave":
+        break;
+      case "symmetric":
+        break;
       default:
         break;
     }

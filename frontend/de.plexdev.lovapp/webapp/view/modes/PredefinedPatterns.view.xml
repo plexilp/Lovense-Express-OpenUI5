@@ -29,20 +29,10 @@
                 <f:content>
                     <form:SimpleForm editable="true">
                         <form:content>
-                            <Label text="Feature" />
-                            <MultiComboBox
-                                items="{backend>/F4Actions}"
-                                selectedKeys="{viewModel>/selectedActions}"
-                            >
-                                <core:Item
-                                    text="{backend>name}"
-                                    key="{backend>key}"
-                                />
-                            </MultiComboBox>
                             <Label text="Toy" />
                             <Select
                                 items="{backend>/getDevices?userId=1}"
-                                selectedItem="{viewModel>/selectedDevice}"
+                                selectedKey="{backend>settedToy}"
                                 change="onDevicesSelectChange"
                             >
                                 <core:Item
@@ -50,27 +40,48 @@
                                     key="{backend>id}"
                                 />
                             </Select>
-                            <Label text="Time {viewModel>/selectedTime}" />
+                            <Label text="Feature" />
+                            <MultiComboBox
+                                items="{backend>/F4Actions}"
+                                selectedKeys="{backend>settedFeatures}"
+                            >
+                                <core:Item
+                                    text="{backend>name}"
+                                    key="{backend>key}"
+                                />
+                            </MultiComboBox>
+                            <Label text="Time {backend>settedTime}" />
                             <Slider
                                 min="0"
                                 max="600"
                                 enableTickmarks="true"
-                                value="{viewModel>/selectedTime}"
+                                value="{backend>settedTime}"
                                 class="sapUiMediumMarginBottom"
-                                enabled="false"
+                                enabled="true"
                             >
-                                <ResponsiveScale tickmarksBetweenLabels="2" />
+                                <ResponsiveScale tickmarksBetweenLabels="25" />
                             </Slider>
-                            <Label text="Strength {viewModel>/selectedStrength}" />
-                            <Slider
+                            <Label text="Strength {backend>settedMinStrength} {backend>settedMaxStrength}" />
+                            <RangeSlider
+                                value="{backend>settedMinStrength}"
+                                value2="{backend>settedMaxStrength}"
+                                class="sapUiMediumMarginBottom"
                                 min="0"
                                 max="20"
                                 enableTickmarks="true"
-                                liveChange="onSliderLiveChange"
-                                value="{viewModel>/selectedStrength}"
-                                class="sapUiMediumMarginBottom"
                             >
                                 <ResponsiveScale tickmarksBetweenLabels="2" />
+                            </RangeSlider>
+                            <Label text="Intervall {backend>settedInterval}" />
+                            <Slider
+                                min="100"
+                                max="5000"
+                                enableTickmarks="true"
+                                value="{backend>settedInterval}"
+                                class="sapUiMediumMarginBottom"
+                                enabled="true"
+                            >
+                                <ResponsiveScale tickmarksBetweenLabels="25" />
                             </Slider>
                         </form:content>
                         <form:toolbar>
@@ -78,8 +89,10 @@
                                 <content>
                                     <ToolbarSpacer />
                                     <Button
+                                        bindingContexts="{backend>}"
                                         text="Start"
                                         type="Emphasized"
+                                        press="onStartPatternButtonPress"
                                     />
                                 </content>
                             </Toolbar>
