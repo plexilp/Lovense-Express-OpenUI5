@@ -137,3 +137,35 @@ Content-Type: application/json
     "command": "Function",
     "stopPrevious": 0
 }
+
+
+### Official API get QR Code
+POST https://api.lovense-api.com/api/lan/getQrCode
+Content-Type: application/json
+
+{
+    "token" : "{{$dotenv LOV_TOKEN}}",
+    "uid" : 11,
+    "uname" : "Username",
+    "utoken" : "123",
+    "v": 2
+}
+
+### Official API get Session Token
+POST https://api.lovense-api.com/api/basicApi/getToken
+Content-Type: application/json
+
+{
+    "token" : "{{$dotenv LOV_TOKEN}}",
+    "uid" : 11,
+    "uname" : "Username"
+}
+
+### Official API get Socket URL
+POST https://api.lovense-api.com/api/basicApi/getSocketUrl
+Content-Type: application/json
+
+{
+    "platform" : "ChatBot",
+    "authToken" : "{{$dotenv SESSION TOKEN}}"
+}
