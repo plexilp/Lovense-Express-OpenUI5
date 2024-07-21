@@ -40,11 +40,13 @@
 						icon="sap-icon://connected"
 						type="{runtimeModel>/connected}"
 						press="onOverflowToolbarButtonConnectPress"
+						width="100px"
 					/>
 					<OverflowToolbarButton
 						icon="sap-icon://stop"
 						type="Reject"
 						press="onOverflowToolbarButtonStopPress"
+						width="100px"
 					/>
 				</f:additionalContent>
 				<!-- <f:searchManager>
