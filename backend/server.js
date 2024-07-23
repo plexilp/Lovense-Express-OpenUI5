@@ -5,6 +5,7 @@ const constants = require("./app/constants/constants");
 const path = require("path");
 const http = require("http");
 const WebSocket = require("ws");
+const WebSocketHandler = require("./app/controllers/websocket");
 
 const config = {
   bRebuildDatabase: false,
@@ -351,26 +352,8 @@ async function start() {
   const server = http.createServer(app);
 
   const wss = new WebSocket.Server({ server });
-
-  // WebSocket-Verbindungs-Handler
-  wss.on("connection", (ws) => {
-    console.log("Client connected");
-    ws.send(`Server received: `);
-
-    // Nachricht vom Client empfangen
-    ws.on("message", (message) => {
-      console.log(`Received message: ${message}`);
-      // Nachricht zurück an den Client senden
-      ws.send(`Server received: ${message}`);
-    });
-
-    // Client-Verbindung geschlossen
-    ws.on("close", () => {
-      console.log("Client disconnected");
-    });
-
-    ws.send("TEST");
-  });
+  const oWebSocketHandler = new WebSocketHandler(wss, this);
+  oWebSocketHandler.setupWebSocketHandler();
 
   // set port, listen for requests
   const PORT = process.env.PORT || 8081;

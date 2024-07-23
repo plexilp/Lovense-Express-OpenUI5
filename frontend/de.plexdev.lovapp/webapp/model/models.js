@@ -51,6 +51,10 @@ sap.ui.define(
 									title: "Alarm Clock",
 									key: "others-alarm",
 								},
+								{
+									title: "Shake Phone",
+									key: "others-shake",
+								},
 							],
 						},
 						{

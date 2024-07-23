@@ -25,11 +25,11 @@ sap.ui.define(
 				new WebSocketHandler().start("ws://localhost:8081", this);
 				//First Request for initial loading
 				this.loadValueHelps();
-				this.setConnectionStatus(false);
+				this.getSetConnectionStatus(false);
 				//And that runs every x Seconds
 				//Geht momentan nicht, weil multithreading und JS keine Freund sind. #Follow4Follo
 				// this.intervalIdConnectionStatus = setInterval(
-				// 	this.setConnectionStatus.bind(this),
+				// 	this.getSetConnectionStatus.bind(this),
 				// 	10000
 				// );
 			},
@@ -40,13 +40,18 @@ sap.ui.define(
 					"setConnectionStatus",
 					this.setConnectionStatus.bind(this)
 				);
+				await this.getEventBus().subscribe(
+					"App",
+					"refreshConnection",
+					this.getSetConnectionStatus.bind(this)
+				);
 			},
 
 			/**
 			 *
 			 * @param {boolean} [bLoadValueHelps] .
 			 */
-			async setConnectionStatus(bLoadValueHelps = true) {
+			async getSetConnectionStatus(bLoadValueHelps = true) {
 				const oModel = this.getModel("runtimeModel");
 				const oBackendModel = this.getModel("backend");
 				const oResponse = await this.getModelProperty(
@@ -61,6 +66,20 @@ sap.ui.define(
 					if (bLoadValueHelps) {
 						this.loadValueHelps();
 					}
+					// }
+					oModel.setProperty("/connected", "Success");
+				} else {
+					oModel.setProperty("/connected", "Negative");
+				}
+			},
+
+			async setConnectionStatus(oCaller, oApp, oData) {
+				const oModel = this.getModel("runtimeModel");
+				if (oData.code === 200) {
+					// IF erst, wenn die Funktion alle x Sekunden aufgerufen wird
+					// if (oModel.getProperty("/connected") !== "Success") {
+					debugger;
+					this.loadDevices();
 					// }
 					oModel.setProperty("/connected", "Success");
 				} else {
@@ -86,17 +105,23 @@ sap.ui.define(
 			},
 
 			async onOverflowToolbarButtonConnectPress() {
-				await this.setConnectionStatus();
+				await this.getSetConnectionStatus();
 			},
 
-			async loadDevices() {
+			/**
+			 *
+			 * @param {Array} [aDevices] .
+			 */
+			async loadDevices(aDevices = []) {
 				const oModel = this.getModel("backend");
 				const oRuntimeModel = this.getModel("runtimeModel");
-				const aDevices = await this.getModelProperty(
-					oModel,
-					"/getDevices?userId=1",
-					true
-				);
+				if (!aDevices.length) {
+					aDevices = await this.getModelProperty(
+						oModel,
+						"/getDevices?userId=1",
+						true
+					);
+				}
 				const aSecTitleConnToys = [];
 				if (aDevices.length) {
 					aDevices.forEach((oDevice) => {

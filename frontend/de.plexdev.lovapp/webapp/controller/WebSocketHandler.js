@@ -23,11 +23,35 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
 		},
 
 		onMessageReceive(oEvent) {
-			this.oEventBus.publish(
-				"App",
-				"setConnectionStatus",
-				this.oBaseController
-			);
+			try {
+				const oData = JSON.parse(oEvent.data);
+				this.oFunctionManager(oData);
+			} catch (error) {
+				console.error(error);
+			}
+		},
+
+		oFunctionManager(oData) {
+			switch (oData.function) {
+				case "refreshConnection":
+					this.oEventBus.publish(
+						"App",
+						"refreshConnection",
+						oData
+						// this.oBaseController
+					);
+					break;
+				case "trigger irgenwas":
+					this.oEventBus.publish(
+						"App",
+						"setConnectionStatus",
+						oData
+						// this.oBaseController
+					);
+					break;
+				default:
+					break;
+			}
 		},
 	});
 });
