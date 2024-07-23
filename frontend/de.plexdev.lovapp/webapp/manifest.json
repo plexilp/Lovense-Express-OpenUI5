@@ -10,12 +10,7 @@
 		"applicationVersion": {
 			"version": "${version}"
 		},
-		"dataSources": {
-			"backend":{
-				"uri": "http://localhost:8081",
-				"type": "http"
-			}
-		}
+		"dataSources": {}
 	},
 
 	"sap.ui": {

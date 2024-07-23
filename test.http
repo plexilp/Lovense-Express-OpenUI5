@@ -1,5 +1,7 @@
 @localhost=http://localhost:8081/api
 @lovApp=192.168.178.71:30010
+# @lovAppLocal=127-0-0-1.lovense.club:30010
+@lovAppLocal=127.0.0.1:30010
 
 ###
 GET {{localhost}}/
@@ -93,6 +95,22 @@ Content-Type: application/json
     
 }
 
+
+### Try out
+POST {{lovAppLocal}}/command
+Content-Type: application/json
+
+{
+    "command": "GetToys"
+}
+
+### Try out
+POST {{lovApp}}/command
+Content-Type: application/json
+
+{
+    "command": "GetToys"
+}
 
 ### Try out
 POST {{lovApp}}/command

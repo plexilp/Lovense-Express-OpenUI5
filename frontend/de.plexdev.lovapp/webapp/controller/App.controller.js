@@ -1,6 +1,10 @@
 sap.ui.define(
-	["./BaseController", "de/plexdev/lovapp/model/models"],
-	function (BaseController, models) {
+	[
+		"./BaseController",
+		"de/plexdev/lovapp/model/models",
+		"de/plexdev/lovapp/controller/WebSocketHandler",
+	],
+	function (BaseController, models, WebSocketHandler) {
 		"use strict";
 
 		return BaseController.extend("de.plexdev.lovapp.controller.App", {
@@ -9,6 +13,7 @@ sap.ui.define(
 				this.getView().addStyleClass(
 					this.getOwnerComponent().getContentDensityClass()
 				);
+				this._setEventBus();
 
 				this.getModel("appModel").setData(models.getInitAppModel());
 				this.getModel("runtimeModel").setProperty("/userId", "1");
@@ -17,6 +22,7 @@ sap.ui.define(
 			 * @override
 			 */
 			onBeforeRendering() {
+				new WebSocketHandler().start("ws://localhost:8081", this);
 				//First Request for initial loading
 				this.loadValueHelps();
 				this.setConnectionStatus(false);
@@ -27,6 +33,15 @@ sap.ui.define(
 				// 	10000
 				// );
 			},
+
+			async _setEventBus() {
+				await this.getEventBus().subscribe(
+					"App",
+					"setConnectionStatus",
+					this.setConnectionStatus.bind(this)
+				);
+			},
+
 			/**
 			 *
 			 * @param {boolean} [bLoadValueHelps] .

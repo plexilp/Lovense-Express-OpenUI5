@@ -1,6 +1,7 @@
 const db = require("../models");
 const https = require("https");
 const constants = require("../constants/constants");
+const websocket = require("./websocket");
 
 class RequestController {
   constructor(userId, ip, port) {

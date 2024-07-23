@@ -3,11 +3,28 @@ sap.ui.define(
 		"sap/ui/core/mvc/Controller",
 		"sap/ui/core/UIComponent",
 		"sap/ui/core/routing/History",
+		"de/plexdev/lovapp/controller/WebSocketHandler",
 	],
-	function (Controller, UIComponent, History) {
+	function (Controller, UIComponent, History, WebSocketHandler) {
 		"use strict";
 
 		return Controller.extend("de.plexdev.lovapp.controller.BaseController", {
+			/**
+			 * @override
+			 */
+			// onInit: function () {
+			// 	// Controller.prototype.onInit.apply(this, arguments);
+			// 	// new WebSocketHandler().start("ws://localhost:8081", this);
+			// },
+
+			/**
+			 * @override
+			 */
+			// onBeforeRendering: function () {
+			// 	// Controller.prototype.onBeforeRendering.apply(this, arguments);
+			// 	// new WebSocketHandler().init("ws://localhost:8081", this);
+			// },
+
 			/**
 			 * Convenience method for accessing the component of the controller's view.
 			 * @returns {sap.ui.core.Component} The component of the controller's view
@@ -51,6 +68,14 @@ sap.ui.define(
 			setModel: function (oModel, sName) {
 				this.getView().setModel(oModel, sName);
 				return this;
+			},
+
+			/**
+			 * Returns Eventbus
+			 * @returns {object} oEventBus
+			 */
+			getEventBus() {
+				return this.getOwnerComponent().getEventBus();
 			},
 
 			/**
