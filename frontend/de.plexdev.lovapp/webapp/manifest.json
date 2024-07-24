@@ -59,8 +59,7 @@
 				"type": "sap.ui.model.json.JSONModel",
 				"settings": {
                     "defaultBindingMode": "TwoWay"
-                },
-                "uri": "http://localhost:8081"
+                }
 			},
 			"appModel": {
 				"type": "sap.ui.model.json.JSONModel"
@@ -112,6 +111,16 @@
 					"pattern": "mode/predefined-patterns",
 					"name": "mode-predef-patterns",
 					"target": "mode-predef-patterns"
+				},
+				{
+					"pattern": "others/alarm",
+					"name": "others-alarm",
+					"target": "others-alarm"
+				},
+				{
+					"pattern": "others/shake",
+					"name": "others-shake",
+					"target": "others-shake"
 				},
 				{
 					"pattern": "idle-game/home",
