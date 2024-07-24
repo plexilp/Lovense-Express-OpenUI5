@@ -1,5 +1,7 @@
 @localhost=http://localhost:8081/api
 @lovApp=192.168.178.71:30010
+# @lovAppLocal=127-0-0-1.lovense.club:30010
+@lovAppLocal=127.0.0.1:30010
 
 ###
 GET {{localhost}}/
@@ -95,6 +97,22 @@ Content-Type: application/json
 
 
 ### Try out
+POST {{lovAppLocal}}/command
+Content-Type: application/json
+
+{
+    "command": "GetToys"
+}
+
+### Try out
+POST {{lovApp}}/command
+Content-Type: application/json
+
+{
+    "command": "GetToys"
+}
+
+### Try out
 POST {{lovApp}}/command
 Content-Type: application/json
 
@@ -136,4 +154,36 @@ Content-Type: application/json
     "apiVer" : 1,
     "command": "Function",
     "stopPrevious": 0
+}
+
+
+### Official API get QR Code
+POST https://api.lovense-api.com/api/lan/getQrCode
+Content-Type: application/json
+
+{
+    "token" : "{{$dotenv LOV_TOKEN}}",
+    "uid" : 11,
+    "uname" : "Username",
+    "utoken" : "123",
+    "v": 2
+}
+
+### Official API get Session Token
+POST https://api.lovense-api.com/api/basicApi/getToken
+Content-Type: application/json
+
+{
+    "token" : "{{$dotenv LOV_TOKEN}}",
+    "uid" : 11,
+    "uname" : "Username"
+}
+
+### Official API get Socket URL
+POST https://api.lovense-api.com/api/basicApi/getSocketUrl
+Content-Type: application/json
+
+{
+    "platform" : "ChatBot",
+    "authToken" : "{{$dotenv SESSION TOKEN}}"
 }

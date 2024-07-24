@@ -8,50 +8,74 @@
 	xmlns:mvc="sap.ui.core.mvc"
 >
 	<!-- <App id="app" /> -->
-	<tnt:ToolPage id="app">
+	<tnt:ToolPage id="app" sideExpanded="true">
 		<tnt:header>
 			<f:ShellBar
 				title="LovApp"
 				secondTitle="{runtimeModel>/secTitleConnToys}"
 				showMenuButton="true"
-				homeIcon="./resources/sap/ui/documentation/sdk/images/logo_sap.png"
 				showCopilot="false"
-				showNotifications="true"
+				showNotifications="false"
 				menuButtonPressed="onMenuButtonPress"
-				notificationsNumber="0"
-			>
-				<!-- <f:menu>
-					<Menu>
-						<MenuItem
-							text="Flight booking"
-							icon="sap-icon://flight"
-						/>
-						<MenuItem
-							text="Car rental"
-							icon="sap-icon://car-rental"
-						/>
-					</Menu>
-				</f:menu> -->
-				<f:profile>
-					<Avatar initials="PLX" />
-				</f:profile>
+				notificationsNumber="0">
 				<f:additionalContent>
 					<OverflowToolbarButton
 						icon="sap-icon://connected"
 						type="{runtimeModel>/connected}"
 						press="onOverflowToolbarButtonConnectPress"
+						width="100px"
+						visible="{= !${device>/system/phone} || !${device>/orientation/portrait}}"
 					/>
 					<OverflowToolbarButton
 						icon="sap-icon://stop"
 						type="Reject"
 						press="onOverflowToolbarButtonStopPress"
+						width="100px"
+						visible="{= !${device>/system/phone} || !${device>/orientation/portrait}}"
 					/>
 				</f:additionalContent>
-				<!-- <f:searchManager>
-					<f:SearchManager />
-				</f:searchManager> -->
 			</f:ShellBar>
+			<!-- <tnt:ToolHeader>
+				<Button
+						icon="sap-icon://connected"
+						type="{runtimeModel>/connected}"
+						press="onMenuButtonPress"
+						width="100px"
+					/>
+				<Title level="H1" text="LovApp" title="TEST" wrapping="false" id="productName">
+				</Title>
+				<ToolbarSpacer/>
+				<Button
+						icon="sap-icon://connected"
+						type="{runtimeModel>/connected}"
+						press="onOverflowToolbarButtonConnectPress"
+						width="100px"
+					/>
+				<Button
+					icon="sap-icon://stop"
+					type="Reject"
+					press="onOverflowToolbarButtonStopPress"
+					width="100px"
+				/>
+			</tnt:ToolHeader> -->
 		</tnt:header>
+		<tnt:subHeader>
+			<tnt:ToolHeader visible="{= ${device>/system/phone} &amp;&amp; ${device>/orientation/portrait}}">
+				<Button
+					icon="sap-icon://connected"
+					type="{runtimeModel>/connected}"
+					press="onOverflowToolbarButtonConnectPress"
+					width="45%"
+				/>
+				<ToolbarSpacer/>
+				<Button
+					icon="sap-icon://stop"
+					type="Reject"
+					press="onOverflowToolbarButtonStopPress"
+					width="45%"
+				/>
+			</tnt:ToolHeader>
+		</tnt:subHeader>
 		<tnt:sideContent>
 			<tnt:SideNavigation
 				expanded="true"

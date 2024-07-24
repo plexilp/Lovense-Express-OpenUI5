@@ -1,6 +1,7 @@
 const db = require("../models");
 const https = require("https");
 const constants = require("../constants/constants");
+const websocket = require("./websocket");
 
 class RequestController {
   constructor(userId, ip, port) {
@@ -64,6 +65,11 @@ class RequestController {
     return sRule;
   }
 
+  /**
+   *
+   * @param {object} oBody Sendet Data from POST Request
+   * @returns
+   */
   _getRandomPatternObj(oBody) {
     const oPostData = this.getPostData(oBody);
     try {
@@ -101,25 +107,140 @@ class RequestController {
     return oPostData;
   }
 
+  /**
+   * TODO:
+   * @param {object} oBody Sendet Data from POST Request
+   * @returns
+   */
+  _getPulsePatternObj(oBody) {
+    const oPostData = this.getPostData(oBody);
+    try {
+      const iInterval = this.getRandomInt(oBody.minInterval, oBody.maxInterval);
+      const iTimeSec = this.getRandomInt(oBody.minTimeSec, oBody.maxTimeSec);
+      const aStrenghts = [];
+
+      aStrenghts.push(oBody.minStrength);
+      aStrenghts.push(oBody.maxStrength);
+
+      oPostData.strength = aStrenghts.slice(0, 50).join(";") || "0";
+      oPostData.rule = this.getRule(oBody.features, iInterval);
+      oPostData.timeSec = iTimeSec;
+    } catch (error) {
+      return error;
+    }
+    return oPostData;
+  }
+
+  /**
+   * TODO:
+   * @param {object} oBody Sendet Data from POST Request
+   * @returns
+   */
+  _getStairPatternObj(oBody) {
+    const oPostData = this.getPostData(oBody);
+    try {
+      const iInterval = this.getRandomInt(oBody.minInterval, oBody.maxInterval);
+      const iTimeSec = this.getRandomInt(oBody.minTimeSec, oBody.maxTimeSec);
+      const aStrenghts = [];
+
+      oPostData.strength = aStrenghts.slice(0, 50).join(";") || "0";
+      oPostData.rule = this.getRule(oBody.features, iInterval);
+      oPostData.timeSec = iTimeSec;
+    } catch (error) {
+      return error;
+    }
+    return oPostData;
+  }
+
+  /**
+   * TODO:
+   * @param {object} oBody Sendet Data from POST Request
+   * @returns
+   */
+  _getWavePatternObj(oBody) {
+    const oPostData = this.getPostData(oBody);
+    try {
+      const iInterval = this.getRandomInt(oBody.minInterval, oBody.maxInterval);
+      const iTimeSec = this.getRandomInt(oBody.minTimeSec, oBody.maxTimeSec);
+      const aStrenghts = [];
+
+      oPostData.strength = aStrenghts.slice(0, 50).join(";") || "0";
+      oPostData.rule = this.getRule(oBody.features, iInterval);
+      oPostData.timeSec = iTimeSec;
+    } catch (error) {
+      return error;
+    }
+    return oPostData;
+  }
+
+  /**
+   * TODO:
+   * @param {object} oBody Sendet Data from POST Request
+   * @returns
+   */
+  _getSymmetricPatternObj(oBody) {
+    const oPostData = this.getPostData(oBody);
+    try {
+      const iInterval = this.getRandomInt(oBody.minInterval, oBody.maxInterval);
+      const iTimeSec = this.getRandomInt(oBody.minTimeSec, oBody.maxTimeSec);
+      const aStrenghts = [];
+
+      oPostData.strength = aStrenghts.slice(0, 50).join(";") || "0";
+      oPostData.rule = this.getRule(oBody.features, iInterval);
+      oPostData.timeSec = iTimeSec;
+    } catch (error) {
+      return error;
+    }
+    return oPostData;
+  }
+
   getSpecialPatternObj(oBody) {
     let aReturnData = [];
+    let oPatternObj = {};
     switch (oBody.type) {
       case "random":
         if (oBody.newForEachToy) {
           oBody.toy.forEach((toy) => {
-            const oPatternObj = this._getRandomPatternObj(oBody);
+            oPatternObj = this._getRandomPatternObj(oBody);
             oPatternObj.toy = toy;
             aReturnData.push(oPatternObj);
           });
         } else {
-          const oPatternObj = this._getRandomPatternObj(oBody);
+          oPatternObj = this._getRandomPatternObj(oBody);
           oBody.toy.forEach((toy) => {
             oPatternObj.toy = toy;
             aReturnData.push(oPatternObj);
           });
         }
         break;
-
+      case "pulse":
+        oPatternObj = this._getPulsePatternObj(oBody);
+        oBody.toy.forEach((toy) => {
+          oPatternObj.toy = toy;
+          aReturnData.push(oPatternObj);
+        });
+        break;
+      case "stair":
+        oPatternObj = this._getStairPatternObj(oBody);
+        oBody.toy.forEach((toy) => {
+          oPatternObj.toy = toy;
+          aReturnData.push(oPatternObj);
+        });
+        break;
+      case "wave":
+        oPatternObj = this._getWavePatternObj(oBody);
+        oBody.toy.forEach((toy) => {
+          oPatternObj.toy = toy;
+          aReturnData.push(oPatternObj);
+        });
+        break;
+      case "symmetric":
+        oPatternObj = this._getSymmetricPatternObj(oBody);
+        oBody.toy.forEach((toy) => {
+          oPatternObj.toy = toy;
+          aReturnData.push(oPatternObj);
+        });
+        break;
       default:
         break;
     }
@@ -135,7 +256,7 @@ class RequestController {
       try {
         result.data.toys = JSON.parse(result.data.toys);
       } catch (error) {}
-      console.log("Data received:", result);
+      // console.log("Data received:", result);
     } catch (error) {
       console.error("Error calling postData:", error);
       result = { error };

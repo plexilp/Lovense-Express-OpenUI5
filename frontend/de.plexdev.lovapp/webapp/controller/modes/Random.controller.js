@@ -1,6 +1,6 @@
 sap.ui.define(
 	[
-		"./BaseController",
+		"../BaseController",
 		"sap/m/MessageBox",
 		"sap/ui/model/json/JSONModel",
 		"sap/m/MessageToast",
@@ -8,7 +8,7 @@ sap.ui.define(
 	function (BaseController, MessageBox, JSONModel, MessageToast) {
 		"use strict";
 
-		return BaseController.extend("de.plexdev.lovapp.controller.Random", {
+		return BaseController.extend("de.plexdev.lovapp.controller.modes.Random", {
 			onInit() {},
 			onBeforeRendering() {
 				this.getView().setModel(new JSONModel({}), "viewModel");

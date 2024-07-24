@@ -3,6 +3,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const constants = require("./app/constants/constants");
 const path = require("path");
+const http = require("http");
+const WebSocket = require("ws");
+const WebSocketHandler = require("./app/controllers/websocket");
 
 const config = {
   bRebuildDatabase: false,
@@ -16,25 +19,6 @@ async function start() {
   var corsOptions = {
     origin: "*",
   };
-  // const db = require("./app/models");
-  // await db.sequelize.sync({ force: config.bRebuildDatabase }).then((oData) => {
-  //   if (config.bRebuildDatabase) {
-  //     console.log(">> Drop and re-sync db.");
-  //   }
-  // });
-
-  // app.use((req, res, next) => {
-  //   res.header("Access-Control-Allow-Origin", "http://localhost:8080");
-  //   res.header(
-  //     "Access-Control-Allow-Methods",
-  //     "GET, POST, PUT, DELETE, OPTIONS"
-  //   );
-  //   res.header(
-  //     "Access-Control-Allow-Headers",
-  //     "Origin, X-Requested-With, Content-Type, Accept"
-  //   );
-  //   next();
-  // });
 
   app.use(cors(corsOptions));
 
@@ -365,9 +349,15 @@ async function start() {
   //   res.send("POST");
   // });
 
+  const server = http.createServer(app);
+
+  const wss = new WebSocket.Server({ server });
+  const oWebSocketHandler = new WebSocketHandler(wss, this);
+  oWebSocketHandler.setupWebSocketHandler();
+
   // set port, listen for requests
   const PORT = process.env.PORT || 8081;
-  app.listen(PORT, "0.0.0.0", () => {
+  server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
   });
 }

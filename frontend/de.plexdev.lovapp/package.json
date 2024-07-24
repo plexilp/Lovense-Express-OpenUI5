@@ -9,7 +9,7 @@
 		"build": "ui5 build --clean-dest",
 		"build:opt": "ui5 build self-contained --clean-dest --all",
 		"build:prod": "ui5 build --config=ui5.yaml --clean-dest --all --dest dist --include-task=generateVersionInfo",
-		"start": "ui5 serve --port 8080 -o index.html",
+		"start": "ui5 serve --port 8080 -o index.html --accept-remote-connections",
 		"start-cdn": "ui5 serve --port 8080 -o index-cdn.html",
 		"start:dist": "npm start -- --config ui5-dist.yaml",
 		"start:dist-cdn": "npm run start-cdn -- --config ui5-dist.yaml",

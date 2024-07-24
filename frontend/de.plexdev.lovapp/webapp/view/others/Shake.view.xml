@@ -1,0 +1,36 @@
+<mvc:View
+    controllerName="de.plexdev.lovapp.controller.others.Shake"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core"
+    displayBlock="true"
+    height="100%"
+    busyIndicatorDelay="0"
+>
+    <TextArea value="{viewModel>/test}"/>
+    <!-- <Table items="{oViewModel>/test}">
+        <columns>
+        <Column
+            autoPopinWidth="8"
+            demandPopin="false"
+            hAlign="Begin"
+            importance="None"
+            mergeDuplicates="false"
+            mergeFunctionName="getText"
+            minScreenWidth=""
+            popinDisplay="Block"
+            sortIndicator="None"
+            styleClass=""
+            vAlign="Inherit"
+            visible="true"
+            width=""
+        >
+            <footer>
+                
+            </footer>
+            <header>
+            </header>
+        </Column>
+        </columns>
+    </Table> -->
+</mvc:View>

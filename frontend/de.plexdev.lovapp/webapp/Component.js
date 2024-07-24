@@ -12,10 +12,19 @@ sap.ui.define(
 				UIComponent.prototype.init.call(this); // create the views based on the url/hash
 
 				// create the device model
-				this.setModel(models.createDeviceModel(), "device");
+				const oDeviceModel = models.createDeviceModel();
+				this.setModel(oDeviceModel, "device");
 
 				// create the views based on the url/hash
 				this.getRouter().initialize();
+
+				Device.orientation.attachHandler(function () {
+					oDeviceModel.setData(Device);
+				});
+
+				Device.resize.attachHandler(function () {
+					oDeviceModel.setData(Device);
+				});
 			},
 			/**
 			 * This method can be called to determine whether the sapUiSizeCompact or sapUiSizeCozy

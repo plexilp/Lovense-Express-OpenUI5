@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="de.plexdev.lovapp.controller.Sound"
+	controllerName="de.plexdev.lovapp.controller.modes.Sound"
 	displayBlock="true"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"

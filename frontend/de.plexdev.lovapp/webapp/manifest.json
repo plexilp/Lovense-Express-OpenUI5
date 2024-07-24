@@ -10,12 +10,7 @@
 		"applicationVersion": {
 			"version": "${version}"
 		},
-		"dataSources": {
-			"backend":{
-				"uri": "http://localhost:8081",
-				"type": "http"
-			}
-		}
+		"dataSources": {}
 	},
 
 	"sap.ui": {
@@ -64,8 +59,7 @@
 				"type": "sap.ui.model.json.JSONModel",
 				"settings": {
                     "defaultBindingMode": "TwoWay"
-                },
-                "uri": "http://localhost:8081"
+                }
 			},
 			"appModel": {
 				"type": "sap.ui.model.json.JSONModel"
@@ -119,6 +113,16 @@
 					"target": "mode-predef-patterns"
 				},
 				{
+					"pattern": "others/alarm",
+					"name": "others-alarm",
+					"target": "others-alarm"
+				},
+				{
+					"pattern": "others/shake",
+					"name": "others-shake",
+					"target": "others-shake"
+				},
+				{
 					"pattern": "idle-game/home",
 					"name": "game-idle-home",
 					"target": "game-idle-home"
@@ -160,6 +164,18 @@
 				"mode-predef-patterns": {
 					"viewName": "PredefinedPatterns",
 					"viewPath": "de.plexdev.lovapp.view.modes",
+					"transition": "fade",
+					"viewLevel": 1
+				},
+				"others-alarm": {
+					"viewName": "Alarm",
+					"viewPath": "de.plexdev.lovapp.view.others",
+					"transition": "fade",
+					"viewLevel": 1
+				},
+				"others-shake": {
+					"viewName": "Shake",
+					"viewPath": "de.plexdev.lovapp.view.others",
 					"transition": "fade",
 					"viewLevel": 1
 				},
