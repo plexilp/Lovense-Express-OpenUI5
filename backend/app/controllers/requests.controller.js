@@ -256,7 +256,7 @@ class RequestController {
       try {
         result.data.toys = JSON.parse(result.data.toys);
       } catch (error) {}
-      console.log("Data received:", result);
+      // console.log("Data received:", result);
     } catch (error) {
       console.error("Error calling postData:", error);
       result = { error };
