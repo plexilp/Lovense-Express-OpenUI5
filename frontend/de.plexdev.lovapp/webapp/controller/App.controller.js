@@ -22,7 +22,8 @@ sap.ui.define(
 			 * @override
 			 */
 			onBeforeRendering() {
-				new WebSocketHandler().start("ws://localhost:8081", this);
+				const hostname = window.location.hostname;
+				new WebSocketHandler().start(`ws://${hostname}:8081`, this);
 				//First Request for initial loading
 				this.loadValueHelps();
 				this.getSetConnectionStatus(false);
