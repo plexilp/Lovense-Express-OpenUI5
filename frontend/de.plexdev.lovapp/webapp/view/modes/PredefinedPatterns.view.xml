@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="de.plexdev.lovapp.controller.PredefinedPatterns"
+    controllerName="de.plexdev.lovapp.controller.modes.PredefinedPatterns"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"

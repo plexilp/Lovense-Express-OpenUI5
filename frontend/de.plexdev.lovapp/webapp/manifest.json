@@ -158,6 +158,18 @@
 					"transition": "fade",
 					"viewLevel": 1
 				},
+				"others-alarm": {
+					"viewName": "Alarm",
+					"viewPath": "de.plexdev.lovapp.view.others",
+					"transition": "fade",
+					"viewLevel": 1
+				},
+				"others-shake": {
+					"viewName": "Shake",
+					"viewPath": "de.plexdev.lovapp.view.others",
+					"transition": "fade",
+					"viewLevel": 1
+				},
 				"game-idle-home": {
 					"viewName": "IdleGameHome",
 					"viewPath": "de.plexdev.lovapp.view.games",

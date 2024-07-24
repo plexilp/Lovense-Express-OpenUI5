@@ -45,7 +45,7 @@ sap.ui.define(
 						{
 							title: "Others",
 							icon: "sap-icon://e-learning",
-							expanded: false,
+							expanded: true,
 							items: [
 								{
 									title: "Alarm Clock",
