@@ -104,7 +104,9 @@ sap.ui.define(
 			},
 
 			getBackendUrl() {
-				return "http://localhost:8081/api";
+				const hostname = window.location.hostname;
+				const port = "8081";
+				return `http://${hostname}:${port}/api`;
 			},
 
 			async sendPost(sPath, oData = {}) {
