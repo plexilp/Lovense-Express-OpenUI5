@@ -113,7 +113,7 @@
                 >
                     <ResponsiveScale tickmarksBetweenLabels="2" />
                 </Slider>
-                <form:toolbar>
+                <!-- <form:toolbar>
                     <OverflowToolbar asyncMode="false">
                         <ToolbarSpacer />
                         <Button
@@ -122,8 +122,18 @@
                             press="onPressSendRandom"
                         />
                     </OverflowToolbar>
-                </form:toolbar>
+                </form:toolbar> -->
             </form:SimpleForm>
         </content>
+        <subHeader>
+            <OverflowToolbar asyncMode="false">
+                <ToolbarSpacer />
+                <Button
+                    type="Emphasized"
+                    text="Senden"
+                    press="onPressSendRandom"
+                />
+            </OverflowToolbar>
+        </subHeader>
     </Page>
 </mvc:View>
