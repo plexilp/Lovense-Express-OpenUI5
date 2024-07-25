@@ -55,48 +55,6 @@ async function start() {
   const ExpressGet = new Express_GET();
   const ExpressPost = new Express_POST();
 
-  getUserObject = (req, res) => {
-    const sUserId = req.query.userId;
-    if (!sUserId) {
-      res
-        .status(400)
-        .json({ error: "userId is required: Example: /getConfig?userId=1" });
-      return false;
-    }
-
-    return _getSetUser(sUserId);
-  };
-
-  _getSetUser = (sUserId) => {
-    if (!oReqCtrlInstances[sUserId]) {
-      oReqCtrlInstances[sUserId] = new RequestController(
-        sUserId,
-        "192.168.178.71",
-        "30010"
-      );
-    }
-    return oReqCtrlInstances[sUserId];
-  };
-
-  _getResponseFormat = (oReq, oRes) => {
-    return { request: oReq, response: oRes };
-  };
-
-  errorHandler = (req, res, error) => {
-    console.log(error);
-    res.status(200).json("success");
-
-    try {
-      const result = {
-        code: error.code,
-        message: error.message,
-      };
-      res.status(parseInt(error.code) || 500).json({ error: result });
-    } catch (error) {
-      res.send(error);
-    }
-  };
-
   // Redirect to app page
   app.get("/", (req, res) => {
     res.redirect("/app");
