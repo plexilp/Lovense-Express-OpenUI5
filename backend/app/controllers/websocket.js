@@ -1,14 +1,14 @@
 class WebSocketHandler {
-  constructor(oWebSocketServer, oCaller) {
+  constructor(oWebSocketServer, oApiFunctions) {
     this.wss = oWebSocketServer;
-    this.oCaller = oCaller;
+    this.oApiFunctions = oApiFunctions;
     this.oUserObj = undefined;
   }
 
   setupWebSocketHandler() {
     // WebSocket-Verbindungs-Handler
     this.wss.on("connection", (ws) => {
-      this.oUserObj = this.oCaller._getSetUser("1"); //TEMP If another Idea how to to
+      this.oUserObj = this.oApiFunctions.getSetUser("1"); //TEMP If another Idea how to to
       console.log("Client connected");
       // ws.send(`Server received: `);
 

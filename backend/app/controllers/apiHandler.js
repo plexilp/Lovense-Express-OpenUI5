@@ -2,7 +2,7 @@ const RequestController = require("./requests.controller");
 const oReqCtrlInstances = {};
 const constants = require("../constants/constants");
 
-class ExpressFunctions {
+class ApiFunctions {
   constructor() {}
   getUserObject = (req, res) => {
     const sUserId = req.query.userId;
@@ -48,7 +48,7 @@ class ExpressFunctions {
 }
 
 module.exports.Express_GET = class Express_GET {
-  oFuncs = new ExpressFunctions();
+  oFuncs = new ApiFunctions();
   constructor() {}
   getTest(req, res) {
     const data = { message: "Data retrieved successfully" };
@@ -178,7 +178,7 @@ module.exports.Express_GET = class Express_GET {
 };
 
 module.exports.Express_POST = class Express_POST {
-  oFuncs = new ExpressFunctions();
+  oFuncs = new ApiFunctions();
   constructor() {}
 
   setConfig(req, res) {
@@ -287,3 +287,5 @@ module.exports.Express_POST = class Express_POST {
       .catch((error) => errorHandler(req, res, error));
   }
 };
+
+module.exports.ApiFunctions = ApiFunctions;

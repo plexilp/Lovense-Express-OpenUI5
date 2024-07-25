@@ -49,7 +49,11 @@ async function start() {
     // process.exit(1);
   });
 
-  const { Express_GET, Express_POST } = require("./app/controllers/express");
+  const {
+    ApiFunctions,
+    Express_GET,
+    Express_POST,
+  } = require("./app/controllers/apiHandler");
   const ApiGet = new Express_GET();
   const ApiPost = new Express_POST();
 
@@ -92,7 +96,7 @@ async function start() {
   const server = http.createServer(app);
 
   const wss = new WebSocket.Server({ server });
-  const oWebSocketHandler = new WebSocketHandler(wss, this);
+  const oWebSocketHandler = new WebSocketHandler(wss, new ApiFunctions());
   oWebSocketHandler.setupWebSocketHandler();
 
   // set port, listen for requests
