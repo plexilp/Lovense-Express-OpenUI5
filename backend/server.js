@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const constants = require("./app/constants/constants");
 const path = require("path");
 const http = require("http");
 const WebSocket = require("ws");
@@ -49,8 +48,7 @@ async function start() {
     // Optional: exit process with a 'failure' code
     // process.exit(1);
   });
-  const RequestController = require("./app/controllers/requests.controller");
-  const oReqCtrlInstances = {};
+
   const { Express_GET, Express_POST } = require("./app/controllers/express");
   const ApiGet = new Express_GET();
   const ApiPost = new Express_POST();
