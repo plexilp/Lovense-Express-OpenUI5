@@ -52,8 +52,8 @@ async function start() {
   const RequestController = require("./app/controllers/requests.controller");
   const oReqCtrlInstances = {};
   const { Express_GET, Express_POST } = require("./app/controllers/express");
-  const ExpressGet = new Express_GET();
-  const ExpressPost = new Express_POST();
+  const ApiGet = new Express_GET();
+  const ApiPost = new Express_POST();
 
   // Redirect to app page
   app.get("/", (req, res) => {
@@ -64,27 +64,24 @@ async function start() {
   app.get("/api/", (req, res) => {
     res.status(200).json({ code: "Route /help for more informations" });
   });
-  app.get("/api/test", ExpressGet.getTest.bind(ExpressGet));
-  app.get("/api/help", ExpressGet.getHelp.bind(ExpressGet));
-  app.get("/api/getUserId", ExpressGet.getUserId.bind(ExpressGet));
-  app.get("/api/getConfig", ExpressGet.getConfig.bind(ExpressGet));
-  app.get("/api/getConnection", ExpressGet.getConnection.bind(ExpressGet));
-  app.get("/api/getDevices", ExpressGet.getDevices.bind(ExpressGet));
+  app.get("/api/test", ApiGet.getTest.bind(ApiGet));
+  app.get("/api/help", ApiGet.getHelp.bind(ApiGet));
+  app.get("/api/getUserId", ApiGet.getUserId.bind(ApiGet));
+  app.get("/api/getConfig", ApiGet.getConfig.bind(ApiGet));
+  app.get("/api/getConnection", ApiGet.getConnection.bind(ApiGet));
+  app.get("/api/getDevices", ApiGet.getDevices.bind(ApiGet));
 
-  app.get("/api/F4Actions", ExpressGet.F4Actions.bind(ExpressGet));
-  app.get("/api/F4Rules", ExpressGet.F4Rules.bind(ExpressGet));
-  app.get("/api/F4Modes", ExpressGet.F4Modes.bind(ExpressGet));
+  app.get("/api/F4Actions", ApiGet.F4Actions.bind(ApiGet));
+  app.get("/api/F4Rules", ApiGet.F4Rules.bind(ApiGet));
+  app.get("/api/F4Modes", ApiGet.F4Modes.bind(ApiGet));
 
   // Posts
 
-  app.post("/api/setConfig", ExpressPost.setConfig.bind(ExpressGet));
-  app.post("/api/sendFunction", ExpressPost.sendFunction.bind(ExpressGet));
-  app.post("/api/sendPattern", ExpressPost.sendPattern.bind(ExpressGet));
-  app.post(
-    "/api/sendSpecialPattern",
-    ExpressPost.sendSpecialPattern.bind(ExpressGet)
-  );
-  app.post("/api/stopDevice", ExpressPost.stopDevice.bind(ExpressGet));
+  app.post("/api/setConfig", ApiPost.setConfig.bind(ApiPost));
+  app.post("/api/sendFunction", ApiPost.sendFunction.bind(ApiPost));
+  app.post("/api/sendPattern", ApiPost.sendPattern.bind(ApiPost));
+  app.post("/api/sendSpecialPattern", ApiPost.sendSpecialPattern.bind(ApiPost));
+  app.post("/api/stopDevice", ApiPost.stopDevice.bind(ApiPost));
 
   // app.post("/api/checkConnection", (req, res) => {
   //   const oUserObj = getUserObject(req, res);
