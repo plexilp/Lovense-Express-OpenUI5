@@ -23,7 +23,7 @@ class WebSocketHandler {
         clearInterval(oIntervalConnections);
       });
 
-      this.sendStatus();
+      this.sendStatus(ws);
       const oIntervalConnections = setInterval(() => {
         this.sendRefreshConnections(ws);
       }, 20000);
@@ -32,7 +32,7 @@ class WebSocketHandler {
 
   onReceiveMessage(ws, sMessage) {
     console.log(`Received message: ${sMessage}`);
-    ws.send(`Server received: ${sMessage}`);
+    this.sendMessage(ws, `Server received: ${sMessage}`);
   }
 
   onConnectionClosed(ws) {
@@ -51,6 +51,11 @@ class WebSocketHandler {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  sendMessage(ws, message) {
+    const oData = { message: message };
+    ws.send(JSON.stringify(oData));
   }
 }
 
