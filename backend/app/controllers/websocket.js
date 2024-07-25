@@ -20,10 +20,11 @@ class WebSocketHandler {
       // Client-Verbindung geschlossen
       ws.on("close", () => {
         this.onConnectionClosed(ws);
+        clearInterval(oIntervalConnections);
       });
 
       this.sendStatus();
-      setInterval(() => {
+      const oIntervalConnections = setInterval(() => {
         this.sendRefreshConnections(ws);
       }, 20000);
     });
