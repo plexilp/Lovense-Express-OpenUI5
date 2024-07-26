@@ -117,12 +117,12 @@ class RequestController {
     try {
       const iInterval = this.getRandomInt(oBody.minInterval, oBody.maxInterval);
       const iTimeSec = this.getRandomInt(oBody.minTimeSec, oBody.maxTimeSec);
-      const aStrenghts = [];
+      const aStrengths = [];
 
-      aStrenghts.push(oBody.minStrength);
-      aStrenghts.push(oBody.maxStrength);
+      aStrengths.push(oBody.minStrength);
+      aStrengths.push(oBody.maxStrength);
 
-      oPostData.strength = aStrenghts.slice(0, 50).join(";") || "0";
+      oPostData.strength = aStrengths.slice(0, 50).join(";") || "0";
       oPostData.rule = this.getRule(oBody.features, iInterval);
       oPostData.timeSec = iTimeSec;
     } catch (error) {
@@ -141,9 +141,21 @@ class RequestController {
     try {
       const iInterval = this.getRandomInt(oBody.minInterval, oBody.maxInterval);
       const iTimeSec = this.getRandomInt(oBody.minTimeSec, oBody.maxTimeSec);
-      const aStrenghts = [];
+      const aStrengths = [];
 
-      oPostData.strength = aStrenghts.slice(0, 50).join(";") || "0";
+      //put oBody.minStrength and oBody.maxStrength in the array, but also the numbers between them. And Skip the numbercount from oBody.possibleDifference
+      for (
+        let i = oBody.minStrength;
+        i <= oBody.maxStrength;
+        i += oBody.possibleDifference
+      ) {
+        aStrengths.push(i);
+      }
+      if (aStrengths[aStrengths.length - 1] < oBody.maxStrength) {
+        aStrengths.push(oBody.maxStrength);
+      }
+
+      oPostData.strength = aStrengths.slice(0, 50).join(";") || "0";
       oPostData.rule = this.getRule(oBody.features, iInterval);
       oPostData.timeSec = iTimeSec;
     } catch (error) {
@@ -162,9 +174,9 @@ class RequestController {
     try {
       const iInterval = this.getRandomInt(oBody.minInterval, oBody.maxInterval);
       const iTimeSec = this.getRandomInt(oBody.minTimeSec, oBody.maxTimeSec);
-      const aStrenghts = [];
+      const aStrengths = [];
 
-      oPostData.strength = aStrenghts.slice(0, 50).join(";") || "0";
+      oPostData.strength = aStrengths.slice(0, 50).join(";") || "0";
       oPostData.rule = this.getRule(oBody.features, iInterval);
       oPostData.timeSec = iTimeSec;
     } catch (error) {
@@ -183,9 +195,9 @@ class RequestController {
     try {
       const iInterval = this.getRandomInt(oBody.minInterval, oBody.maxInterval);
       const iTimeSec = this.getRandomInt(oBody.minTimeSec, oBody.maxTimeSec);
-      const aStrenghts = [];
+      const aStrengths = [];
 
-      oPostData.strength = aStrenghts.slice(0, 50).join(";") || "0";
+      oPostData.strength = aStrengths.slice(0, 50).join(";") || "0";
       oPostData.rule = this.getRule(oBody.features, iInterval);
       oPostData.timeSec = iTimeSec;
     } catch (error) {

@@ -148,6 +148,7 @@ consts.ARR_MODES = [
     settedInterval: 500,
     settedToy: "",
     settedFeatures: ["v"],
+    latestPattern: "",
   },
   {
     key: "stair",
@@ -160,6 +161,8 @@ consts.ARR_MODES = [
     settedInterval: 500,
     settedToy: "",
     settedFeatures: ["v"],
+    stepSize: 1,
+    latestPattern: "",
   },
   {
     key: "wave",
@@ -172,6 +175,8 @@ consts.ARR_MODES = [
     settedInterval: 500,
     settedToy: "",
     settedFeatures: ["v"],
+    stepSize: 1,
+    latestPattern: "",
   },
   {
     key: "symmetric",
@@ -184,6 +189,7 @@ consts.ARR_MODES = [
     settedInterval: 500,
     settedToy: "",
     settedFeatures: ["v"],
+    latestPattern: "",
   },
   // { key: "custom", name: "Custom", description: "" },
 ];

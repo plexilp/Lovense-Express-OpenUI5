@@ -38,7 +38,7 @@ sap.ui.define(
 						minTimeSec: oSelectedData.settedTime,
 						maxTimeSec: oSelectedData.settedTime,
 						patternLength: "",
-						possibleDifference: "",
+						possibleDifference: oSelectedData.stepSize,
 						newForEachToy: false,
 						newForEachFeature: false,
 					};
