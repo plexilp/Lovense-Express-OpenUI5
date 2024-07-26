@@ -50,6 +50,8 @@ sap.ui.define(
 					try {
 						const oResultJson = oResult;
 						const oRequest = oResultJson.request;
+						oSelectedData.latestPattern = oRequest[0].strength;
+						this.getModel("backend").refresh();
 					} catch (error) {
 						console.error(error);
 					}
