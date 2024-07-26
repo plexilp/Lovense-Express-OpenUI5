@@ -176,6 +176,25 @@ class RequestController {
       const iTimeSec = this.getRandomInt(oBody.minTimeSec, oBody.maxTimeSec);
       const aStrengths = [];
 
+      for (
+        let i = oBody.minStrength;
+        i <= oBody.maxStrength;
+        i += oBody.possibleDifference
+      ) {
+        aStrengths.push(i);
+      }
+      if (aStrengths[aStrengths.length - 1] < oBody.maxStrength) {
+        aStrengths.push(oBody.maxStrength);
+      }
+
+      // Mirror the array except for the last number
+      const mirroredArray = [...aStrengths.slice(0, -1)].reverse();
+
+      aStrengths.push(...mirroredArray);
+
+      // Remove the last number from the mirrored array
+      aStrengths.pop();
+
       oPostData.strength = aStrengths.slice(0, 50).join(";") || "0";
       oPostData.rule = this.getRule(oBody.features, iInterval);
       oPostData.timeSec = iTimeSec;

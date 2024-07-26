@@ -167,7 +167,7 @@ consts.ARR_MODES = [
   {
     key: "wave",
     name: "Welle",
-    description: "1,2,3,4,5,6,5,4,3,2,1",
+    description: "1,2,3,4,5,6,5,4,3,2",
     icon: "sap-icon://sort-ascending",
     settedMaxStrength: 5,
     settedMinStrength: 0,
