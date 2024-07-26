@@ -216,6 +216,20 @@ class RequestController {
       const iTimeSec = this.getRandomInt(oBody.minTimeSec, oBody.maxTimeSec);
       const aStrengths = [];
 
+      let left = oBody.minStrength;
+      let right = oBody.maxStrength;
+
+      while (left <= right) {
+        if (left <= right) {
+          aStrengths.push(left);
+          left++;
+        }
+        if (left <= right) {
+          aStrengths.push(right);
+          right--;
+        }
+      }
+
       oPostData.strength = aStrengths.slice(0, 50).join(";") || "0";
       oPostData.rule = this.getRule(oBody.features, iInterval);
       oPostData.timeSec = iTimeSec;
