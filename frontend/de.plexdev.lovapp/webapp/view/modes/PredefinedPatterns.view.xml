@@ -99,7 +99,6 @@
                                 <ResponsiveScale tickmarksBetweenLabels="25" />
                             </Slider>
                             <Label
-                                design="Bold"
                                 text="Requested: Latest Pattern"
                                 visible="{= !!${backend>latestPattern}}"
                             />
