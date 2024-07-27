@@ -1,13 +1,13 @@
 const RequestController = require("./requests.controller");
 const oReqCtrlInstances = {};
 const constants = require("../constants/constants");
-const backendConfig = require("../../../backend-config.json");
+const configFile = require("../../../config.json");
 
 class ApiFunctions {
   constructor() {}
   getUserObject = (req, res) => {
     let sUserId = req.query.userId;
-    if (!sUserId && backendConfig["serviceConfig"]["api-user-required"]) {
+    if (!sUserId && configFile["serviceConfig"]["api-user-required"]) {
       res
         .status(400)
         .json({ error: "userId is required: Example: /getConfig?userId=1" });
@@ -20,12 +20,10 @@ class ApiFunctions {
   };
 
   getSetUser = (sUserId) => {
+    const sIp = constants.CONFIG.ip;
+    const sPort = constants.CONFIG.port;
     if (!oReqCtrlInstances[sUserId]) {
-      oReqCtrlInstances[sUserId] = new RequestController(
-        sUserId,
-        "192.168.178.71",
-        "30010"
-      );
+      oReqCtrlInstances[sUserId] = new RequestController(sUserId, sIp, sPort);
     }
     return oReqCtrlInstances[sUserId];
   };

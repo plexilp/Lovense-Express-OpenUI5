@@ -1,7 +1,8 @@
+const configFile = require("../../../config.json");
 const consts = {};
 consts.CONFIG = {
-  ip: "192.168.178.1",
-  port: "30010",
+  ip: configFile["lovense"]["default-ip"],
+  port: configFile["lovense"]["default-port"],
 };
 
 consts.ARR_RULES = [
