@@ -1,3 +1,5 @@
+English Version below
+
 # Willkommen
 
 Diese App ist für die besonderen Spielzeuge von der Firma "Lovense".
@@ -92,3 +94,119 @@ Die App besitzt momentan folgende Funktionen:
 
 Eine klare Roadmap habe ich nicht, ich baue, was mir in den Sinn kommt. Ideen sind natürlich aber immer Willkommen :).
 Dennoch sind teilweise schon Buttons und Seiten eingebaut, die noch keine Funktion haben, diese kommt vermutlich in Zukunft. (Demnach ist die Roadmap so zu sagen das was unfertig in der App vorzufinden ist.)
+
+---
+
+---
+
+---
+
+---
+
+# English Version
+
+#### Translated with Deepl :)
+
+---
+
+# Welcome
+
+This app is for the special toys from the company ‘Lovense’.
+For these toys there is an official mobile phone app and PC app, these also offer many possibilities, but some would like to be able to control their pleasure more precisely, for this there is now my app, among others.
+
+## Licences:
+
+I use other libraries, so the Apache and ISC licences are included.
+However, the MIT licence applies to my coding.
+
+## Structure of the app
+
+The app consists of frontend (OpenUI5) and backend. The app is started as described below. It can be started on the computer (or local server), for example, and opened on other devices in the same network.
+
+## Set up & start
+
+At the moment the start is still a little more difficult if you are not so much into programming, but this will improve in the course of the updates. :)
+How to Start:
+
+1. install Node Modules
+2. go to the root directory and execute npm run install.
+   (If this does not work, go to the folder ‘backend’ and ‘de.plexdev.lovapp’ and enter npm i in each case)
+3. in the root directory: npm run build
+4. in the root directory: npm run start
+5. enter http:// localhost or IP :8081/ in the browser. (http://127.0.0.1:8081/)
+6. activate the game mode in the Lovense app (Apple, Android or Windows)
+7. enter the IP and port in the ‘Settings’ tab of the website and save. (alternatively change in config.json and restart server)
+
+Optional from 3 (work in progress)
+
+- If https is to be used, set the value use-https to true in config.json
+- Execute the following commands (in Windows e.g. with the Git Bash)
+  - openssl genrsa -out private.key 2048
+  - openssl req -new -key private.key -out cert.csr
+  - openssl x509 -req -in cert.csr -signkey private.key -out certificate.crt
+- Then of course open https:// localhost or IP :8081
+
+And have fun :)
+
+## Current functions (planned and partly already available)
+
+The app currently has the following functions:
+
+### General
+
+- Stop button at the top for all toys
+- Connections status and refresh button (green: connected, red: not connected), can be pressed to refresh
+
+### Home page
+
+- Stop button for each individual toy (home page)
+- General starting of individual or multiple devices with a specific or undefined length and strength. The appropriate function (feature) can always be selected. (Sometimes several at the same time)
+- Current information on the toys and the app (battery, name, network status) (this is updated automatically every 20 seconds)
+
+### Random page
+
+- From-to parameters can be entered here, the app then generates a pattern for the selected toy/toys.
+- You can generate a separate pattern per toy or per function (feature) or use the same pattern for all of them.
+
+### Custom Pattern (Not yet available)
+
+### Sound (Not yet available)
+
+### Predefined Pattern
+
+- There are also predefined patterns in the official app, such as Stairs or Impulse, but these are not customisable. In my version you can set there:
+  - from-to how much the strength is
+  - how long the pattern should run for
+  - how long an interval should be, i.e. a strength (in ms)
+
+### Alarm Clock (not yet available)
+
+- Alarm clock function with setting options?
+
+### Shake Phone (Not yet available)
+
+- Only available on the mobile phone, and will scan how much the mobile phone moves.
+- A pattern or strength will be sent to the toy accordingly
+
+### Save Options (Not yet available)
+
+- General customising, if I ever have a database in the background (currently not yet the case)
+
+### Idle Game??? (Not yet available)
+
+- Maybe a game where you have to play the patterns or something. Not sure yet
+
+### Settings
+
+- Setting the IP and port
+
+### Help (Not yet available)
+
+- Info like here
+
+## Roadmap?!
+
+I don't have a clear roadmap, I build what comes to my mind. But ideas are always welcome :).
+Nevertheless, there are already some buttons and pages built in that don't have a function yet, these will probably come in the future. (So the roadmap is, so to speak, what is unfinished in the app).
+
+Translated with DeepL.com (free version)
