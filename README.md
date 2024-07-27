@@ -3,6 +3,12 @@
 Diese App ist für die besonderen Spielzeuge von der Firma "Lovense".
 Für diese Spielzeuge gibt es eine offizielle Handy App und PC App, diese bieten auch viele Möglichkeiten, jedoch möchte so mancher sein Vergnügen genauer steuern können, dafür gibts nun unteranderem meine App.
 
+
+## Lizenzen:
+Ich benutze andere Librarys, von daher ist unter anderem die Lizenz von Apache und ISC enthalten. 
+Für mein Coding gilt allerdings die MIT Lizenz.
+
+
 ## Aufbau der App
 
 Die App besteht aus Frontend (OpenUI5) und Backend. Gestartet wird die App wie nachfolgend beschrieben. Sie kann bspw. auf dem Rechner (oder Lokalen Server) gestartet werden, und im gleichen Netz auf anderen Geräten geöffnet werden.

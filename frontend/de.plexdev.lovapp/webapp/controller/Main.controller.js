@@ -14,9 +14,6 @@ sap.ui.define(
 			},
 
 			onAfterRendering() {},
-			sayHello: function () {
-				MessageBox.show("Hello World!");
-			},
 
 			async onPressStop() {
 				const oResult = await this.sendPost("/stopDevice?userId=1", {});

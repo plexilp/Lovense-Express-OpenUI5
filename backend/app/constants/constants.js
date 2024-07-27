@@ -1,7 +1,8 @@
+const configFile = require("../../../config.json");
 const consts = {};
 consts.CONFIG = {
-  ip: "192.168.178.1",
-  port: "30010",
+  ip: configFile["lovense"]["default-ip"],
+  port: configFile["lovense"]["default-port"],
 };
 
 consts.ARR_RULES = [
@@ -148,6 +149,7 @@ consts.ARR_MODES = [
     settedInterval: 500,
     settedToy: "",
     settedFeatures: ["v"],
+    latestPattern: "",
   },
   {
     key: "stair",
@@ -160,11 +162,13 @@ consts.ARR_MODES = [
     settedInterval: 500,
     settedToy: "",
     settedFeatures: ["v"],
+    stepSize: 1,
+    latestPattern: "",
   },
   {
     key: "wave",
     name: "Welle",
-    description: "1,2,3,4,5,6,5,4,3,2,1",
+    description: "1,2,3,4,5,6,5,4,3,2",
     icon: "sap-icon://sort-ascending",
     settedMaxStrength: 5,
     settedMinStrength: 0,
@@ -172,6 +176,8 @@ consts.ARR_MODES = [
     settedInterval: 500,
     settedToy: "",
     settedFeatures: ["v"],
+    stepSize: 1,
+    latestPattern: "",
   },
   {
     key: "symmetric",
@@ -184,6 +190,7 @@ consts.ARR_MODES = [
     settedInterval: 500,
     settedToy: "",
     settedFeatures: ["v"],
+    latestPattern: "",
   },
   // { key: "custom", name: "Custom", description: "" },
 ];

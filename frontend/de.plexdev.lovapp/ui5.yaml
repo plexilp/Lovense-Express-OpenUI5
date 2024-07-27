@@ -26,8 +26,21 @@ server:
       configuration:
         debug: true
         /api:
-          target: http://localhost:4711
+          target: http://localhost:8081
+    # - name: ui5-middleware-simpleproxy
+    #   mountPath: /proxy
+    #   afterMiddleware: compression
+    #   configuration:
+    #     baseUri: https://localhost:8081
+    # - name: ui5-middleware-ssl
+    #   afterMiddleware: compression
+    #   configuration:
+    #     key: "./key.pem"
+    #     cert: "./cert.pem"
 
+    #
+    #
+    #
     # - name: fiori-tools-proxy
     #   afterMiddleware: compression
     #   configuration:

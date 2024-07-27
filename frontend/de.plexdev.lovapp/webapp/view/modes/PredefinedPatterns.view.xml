@@ -83,6 +83,29 @@
                             >
                                 <ResponsiveScale tickmarksBetweenLabels="25" />
                             </Slider>
+                            <Label
+                                text="Stepsize {backend>stepSize}"
+                                visible="{= !!${backend>stepSize}}"
+                            />
+                            <Slider
+                                visible="{= !!${backend>stepSize}}"
+                                min="1"
+                                max="{= ${backend>settedMaxStrength} - ${backend>settedMinStrength}}"
+                                enableTickmarks="true"
+                                value="{backend>stepSize}"
+                                class="sapUiMediumMarginBottom"
+                                enabled="true"
+                            >
+                                <ResponsiveScale tickmarksBetweenLabels="25" />
+                            </Slider>
+                            <Label
+                                text="Requested: Latest Pattern"
+                                visible="{= !!${backend>latestPattern}}"
+                            />
+                            <Text
+                                text="{backend>latestPattern}"
+                                visible="{= !!${backend>latestPattern}}"
+                            />
                         </form:content>
                         <form:toolbar>
                             <Toolbar>

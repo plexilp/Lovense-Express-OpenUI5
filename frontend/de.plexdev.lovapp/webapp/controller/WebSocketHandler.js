@@ -8,7 +8,7 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
 			const socket = new WebSocket(sPath);
 			// on Open Connection
 			socket.addEventListener("open", (event) => {
-				socket.send("Hello Server!");
+				socket.send(`Connection test from: ${window.location.origin}`);
 			});
 
 			// on receive new message

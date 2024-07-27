@@ -87,6 +87,10 @@ sap.ui.define(
 					],
 					fixedNavigation: [
 						{
+							title: "Save Options",
+							icon: "sap-icon://save",
+						},
+						{
 							title: "Settings",
 							icon: "sap-icon://settings",
 							key: "settings",
@@ -96,10 +100,6 @@ sap.ui.define(
 							icon: "sap-icon://sys-help",
 							key: "help",
 						},
-						// {
-						// 	title: "Fixed Item 2",
-						// 	icon: "sap-icon://building",
-						// },
 						// {
 						// 	title: "Fixed Item 3",
 						// 	icon: "sap-icon://card",

@@ -1,14 +1,14 @@
 class WebSocketHandler {
-  constructor(oWebSocketServer, oCaller) {
+  constructor(oWebSocketServer, oApiFunctions) {
     this.wss = oWebSocketServer;
-    this.oCaller = oCaller;
+    this.oApiFunctions = oApiFunctions;
     this.oUserObj = undefined;
   }
 
   setupWebSocketHandler() {
     // WebSocket-Verbindungs-Handler
     this.wss.on("connection", (ws) => {
-      this.oUserObj = this.oCaller._getSetUser("1"); //TEMP If another Idea how to to
+      this.oUserObj = this.oApiFunctions.getSetUser("1"); //TEMP If another Idea how to to
       console.log("Client connected");
       // ws.send(`Server received: `);
 
@@ -20,10 +20,11 @@ class WebSocketHandler {
       // Client-Verbindung geschlossen
       ws.on("close", () => {
         this.onConnectionClosed(ws);
+        clearInterval(oIntervalConnections);
       });
 
-      this.sendStatus();
-      setInterval(() => {
+      this.sendStatus(ws);
+      const oIntervalConnections = setInterval(() => {
         this.sendRefreshConnections(ws);
       }, 20000);
     });
@@ -31,7 +32,7 @@ class WebSocketHandler {
 
   onReceiveMessage(ws, sMessage) {
     console.log(`Received message: ${sMessage}`);
-    ws.send(`Server received: ${sMessage}`);
+    this.sendMessage(ws, `Server received: ${sMessage}`);
   }
 
   onConnectionClosed(ws) {
@@ -50,6 +51,11 @@ class WebSocketHandler {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  sendMessage(ws, message) {
+    const oData = { message: message };
+    ws.send(JSON.stringify(oData));
   }
 }
 
