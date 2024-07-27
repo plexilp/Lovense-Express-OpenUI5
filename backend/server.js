@@ -7,7 +7,7 @@ const https = require("https");
 const fs = require("fs");
 const WebSocket = require("ws");
 const WebSocketHandler = require("./app/controllers/websocket");
-const backendConfig = require("../backend-config.json");
+const configFile = require("../config.json");
 
 // Den Eintrag ändern, wenn der Server über HTTPS erreichbar sein soll
 const bHttps = false;
@@ -41,6 +41,7 @@ async function start() {
     "de.plexdev.lovapp",
     "dist"
   );
+
   app.use("/app", express.static(appPath));
 
   process.on("uncaughtException", (err) => {
@@ -64,9 +65,11 @@ async function start() {
   const ApiPost = new Express_POST();
 
   // Redirect to app page
-  app.get("/", (req, res) => {
-    res.redirect("/app");
-  });
+  if (configFile["baseConfig"]["redirect-to-app-on-no-route"]) {
+    app.get("/", (req, res) => {
+      res.redirect("/app");
+    });
+  }
 
   // simple route
   app.get("/api/", (req, res) => {
@@ -101,7 +104,7 @@ async function start() {
   // });
 
   let server;
-  if (backendConfig["baseConfig"]["use-https"]) {
+  if (configFile["baseConfig"]["use-https"]) {
     const sslOptions = {
       key: fs.readFileSync(path.resolve(__dirname, "private.key")),
       cert: fs.readFileSync(path.resolve(__dirname, "certificate.crt")),
