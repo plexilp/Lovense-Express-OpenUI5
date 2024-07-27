@@ -1,9 +1,0 @@
-{
-    "baseConfig": {
-        "use-https": false
-
-    },
-    "serviceConfig": {
-        "api-user-required": false
-    }
-}
