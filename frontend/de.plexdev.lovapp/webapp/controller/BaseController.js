@@ -105,8 +105,10 @@ sap.ui.define(
 
 			getBackendUrl() {
 				const hostname = window.location.hostname;
+				const protocol = window.location.protocol;
 				const port = "8081";
-				return `http://${hostname}:${port}/api`;
+				const sUrl = `${protocol}//${hostname}:${port}/api`;
+				return sUrl;
 			},
 
 			async sendPost(sPath, oData = {}) {
@@ -184,6 +186,32 @@ sap.ui.define(
 					oModel.setProperty(sPropertyPath, oData);
 					return oModel.getProperty(sPropertyPath);
 				}
+			},
+
+			/**
+			 * .
+			 * @param {string} sName  Name of the fragment
+			 * @param {object} [oContext=this]  Default value
+			 * @returns {object}  The fragment
+			 */
+			getPopover(sName, oContext = this) {
+				if (!this["fragments"]) {
+					this["fragments"] = {};
+				}
+
+				if (!this["fragments"][sName]) {
+					this["fragments"][sName] = sap.ui.xmlfragment(
+						"de.plexdev.lovapp.view.fragments.popover." + sName,
+						oContext
+					);
+					this.getView().addDependent(this["fragments"][sName]);
+				}
+				return this["fragments"][sName];
+			},
+
+			async refreshHistory() {
+				const oModel = this.getModel("backend");
+				await this.getModelProperty(oModel, "/getHistory");
 			},
 		});
 	}

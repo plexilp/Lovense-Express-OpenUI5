@@ -3,10 +3,16 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const http = require("http");
+const https = require("https");
+const fs = require("fs");
 const WebSocket = require("ws");
 const WebSocketHandler = require("./app/controllers/websocket");
+const backendConfig = require("../backend-config.json");
 
-const config = {
+// Den Eintrag ändern, wenn der Server über HTTPS erreichbar sein soll
+const bHttps = false;
+
+const dbConfiguration = {
   bRebuildDatabase: false,
 };
 
@@ -72,6 +78,7 @@ async function start() {
   app.get("/api/getConfig", ApiGet.getConfig.bind(ApiGet));
   app.get("/api/getConnection", ApiGet.getConnection.bind(ApiGet));
   app.get("/api/getDevices", ApiGet.getDevices.bind(ApiGet));
+  app.get("/api/getHistory", ApiGet.getHistory.bind(ApiGet));
 
   app.get("/api/F4Actions", ApiGet.F4Actions.bind(ApiGet));
   app.get("/api/F4Rules", ApiGet.F4Rules.bind(ApiGet));
@@ -93,7 +100,18 @@ async function start() {
   //   res.send("POST");
   // });
 
-  const server = http.createServer(app);
+  let server;
+  if (backendConfig["baseConfig"]["use-https"]) {
+    const sslOptions = {
+      key: fs.readFileSync(path.resolve(__dirname, "private.key")),
+      cert: fs.readFileSync(path.resolve(__dirname, "certificate.crt")),
+    };
+    server = https.createServer(sslOptions, app);
+    console.log("Server configured for HTTPS");
+  } else {
+    server = http.createServer(app);
+    console.log("Server configured for HTTP");
+  }
 
   const wss = new WebSocket.Server({ server });
   const oWebSocketHandler = new WebSocketHandler(wss, new ApiFunctions());
