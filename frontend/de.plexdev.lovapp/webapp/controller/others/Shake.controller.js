@@ -19,11 +19,11 @@ sap.ui.define(
 
 				await this.getMotion();
 				addEventListener("devicemotion", (event) => {
-					MessageBox.show(event);
+					console.log(event);
 				});
 
 				window.ondevicemotion = (event) => {
-					MessageBox.show(event);
+					console.log(event);
 					// const aNewArr = oViewModel.getProperty("/test");
 					// const oEntry = {
 					// 	value: event,
