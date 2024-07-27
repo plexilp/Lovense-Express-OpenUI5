@@ -26,6 +26,7 @@ sap.ui.define(
 				new WebSocketHandler().start(`ws://${hostname}:8081`, this);
 				//First Request for initial loading
 				this.loadValueHelps();
+				this.refreshHistory();
 				this.getSetConnectionStatus(false);
 				//And that runs every x Seconds
 				//Geht momentan nicht, weil multithreading und JS keine Freund sind. #Follow4Follo
@@ -148,6 +149,20 @@ sap.ui.define(
 				await this.getModelProperty(oModel, "/F4Actions");
 				await this.getModelProperty(oModel, "/getUserId");
 				// await this.getModelProperty(oModel, "/getDevices?userId=1", true);
+			},
+
+			onOverflowToolbarButtonHistoryPress(oEvent) {
+				const oPopover = this.getPopover("HistoryPopover");
+
+				if (oPopover.isOpen()) {
+					oPopover.close();
+				} else {
+					oPopover.openBy(oEvent.getSource());
+				}
+			},
+
+			onCloseHistoryPopover() {
+				this.getPopover("HistoryPopover").close();
 			},
 		});
 	}

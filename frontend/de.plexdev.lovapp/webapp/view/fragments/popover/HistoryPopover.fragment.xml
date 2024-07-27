@@ -1,0 +1,29 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core"
+>
+    <Popover
+        placement="Bottom"
+        resizable="true"
+        title="History"
+    >
+        <beginButton>
+        </beginButton>
+        <content>
+            <NotificationList />
+        </content>
+        <customHeader>
+        </customHeader>
+        <endButton>
+        </endButton>
+        <footer>
+            <Button
+                text="Close"
+                type="Emphasized"
+                press="onCloseHistoryPopover"
+            />
+        </footer>
+        <subHeader>
+        </subHeader>
+    </Popover>
+</c:FragmentDefinition>
