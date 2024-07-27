@@ -1,16 +1,19 @@
 const RequestController = require("./requests.controller");
 const oReqCtrlInstances = {};
 const constants = require("../constants/constants");
+const backendConfig = require("../../../backend-config.json");
 
 class ApiFunctions {
   constructor() {}
   getUserObject = (req, res) => {
-    const sUserId = req.query.userId;
-    if (!sUserId) {
+    let sUserId = req.query.userId;
+    if (!sUserId && backendConfig["serviceConfig"]["api-user-required"]) {
       res
         .status(400)
         .json({ error: "userId is required: Example: /getConfig?userId=1" });
       return false;
+    } else if (!sUserId) {
+      sUserId = "1";
     }
 
     return this.getSetUser(sUserId);
@@ -159,6 +162,25 @@ module.exports.Express_GET = class Express_GET {
         res.send(error);
       }
     });
+  }
+  getHistory(req, res) {
+    const oUserObj = this.oFuncs.getUserObject(req, res);
+    if (oUserObj === false) {
+      return;
+    }
+
+    let aHistory = [
+      {
+        pattern: "1",
+        time: "2021-07-01 12:00:00",
+        strength: "1",
+        interval: "1",
+        features: "1",
+      },
+    ];
+    // oUserObj.getHistory().then((response) => res.send(response));
+
+    res.send(aHistory);
   }
   F4Actions(req, res) {
     let oDetails = constants.ARR_ACTIONS;
