@@ -23,7 +23,15 @@ sap.ui.define(
 			 */
 			onBeforeRendering() {
 				const hostname = window.location.hostname;
-				new WebSocketHandler().start(`ws://${hostname}:8081`, this);
+				const protocol = window.location.protocol;
+				let sWebsocketProtocol = "ws";
+				if (protocol === "https:") {
+					sWebsocketProtocol = "wss";
+				}
+				new WebSocketHandler().start(
+					`${sWebsocketProtocol}://${hostname}:8081`,
+					this
+				);
 				//First Request for initial loading
 				this.loadValueHelps();
 				this.refreshHistory();
