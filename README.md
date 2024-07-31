@@ -101,6 +101,9 @@ Die App besitzt momentan folgende Funktionen:
 Eine klare Roadmap habe ich nicht, ich baue, was mir in den Sinn kommt. Ideen sind natürlich aber immer Willkommen :).
 Dennoch sind teilweise schon Buttons und Seiten eingebaut, die noch keine Funktion haben, diese kommt vermutlich in Zukunft. (Demnach ist die Roadmap so zu sagen das was unfertig in der App vorzufinden ist.)
 
+Viel Spaß damit :)
+PlexDev
+
 ---
 
 ---
@@ -216,3 +219,6 @@ I don't have a clear roadmap, I build what comes to my mind. But ideas are alway
 Nevertheless, there are already some buttons and pages built in that don't have a function yet, these will probably come in the future. (So the roadmap is, so to speak, what is unfinished in the app).
 
 Translated with DeepL.com (free version)
+
+Over and Out
+PlexDev :)
