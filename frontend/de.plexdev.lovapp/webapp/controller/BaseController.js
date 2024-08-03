@@ -106,8 +106,9 @@ sap.ui.define(
 			getBackendUrl() {
 				const hostname = window.location.hostname;
 				const protocol = window.location.protocol;
-				const port = "8081";
-				const sUrl = `${protocol}//${hostname}:${port}/api`;
+				const port = this.getModel("config").getProperty("/port-to-api");
+				const sPath = this.getModel("config").getProperty("/path-to-api");
+				const sUrl = `${protocol}//${hostname}:${port}/${sPath}`;
 				return sUrl;
 			},
 

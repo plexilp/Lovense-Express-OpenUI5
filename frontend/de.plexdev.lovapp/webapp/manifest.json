@@ -55,6 +55,10 @@
 					"bundleName": "de.plexdev.lovapp.i18n.i18n"
 				}
 			},
+			"config": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "config.json"
+			},
 			"backend": {
 				"type": "sap.ui.model.json.JSONModel",
 				"settings": {

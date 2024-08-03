@@ -1,7 +1,11 @@
 {
     "baseConfig": {
         "use-https": false,
-        "redirect-to-app-on-no-route": true
+        "redirect-to-app-on-no-route": true,
+        "path-to-app": "app",
+        "path-to-api": "api",
+        "path-to-socket": "/socket",
+        "port-app": 8081
     },
     "serviceConfig": {
         "api-user-required": false
