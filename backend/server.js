@@ -10,7 +10,6 @@ const WebSocketHandler = require("./app/controllers/websocket");
 const configFile = require("../config.json");
 
 // Den Eintrag ändern, wenn der Server über HTTPS erreichbar sein soll
-const bHttps = false;
 
 const dbConfiguration = {
   bRebuildDatabase: false,
@@ -41,6 +40,15 @@ async function start() {
     "de.plexdev.lovapp",
     "dist"
   );
+
+  app.use((req, res, next) => {
+    if (req.secure || !configFile["baseConfig"]["use-https"]) {
+      // Anforderung ist bereits sicher
+      return next();
+    }
+    // Umleitung auf HTTPS
+    res.redirect(`https://${req.headers.host}${req.url}`);
+  });
 
   app.use("/app", express.static(appPath));
 
