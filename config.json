@@ -1,6 +1,6 @@
 {
     "baseConfig": {
-        "use-https": true,
+        "use-https": false,
         "redirect-to-app-on-no-route": true
     },
     "serviceConfig": {

@@ -11,7 +11,7 @@
     busyIndicatorDelay="0"
 >
     <Page
-        title="{i18n>appTitle.PredefinedPatterns} (Work In Progress)"
+        title="{i18n>appTitle.PredefinedPatterns}"
         content="{backend>/F4Modes}"
     >
         <content>
