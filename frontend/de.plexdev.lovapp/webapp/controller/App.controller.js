@@ -3,11 +3,13 @@ sap.ui.define(
 		"./BaseController",
 		"de/plexdev/lovapp/model/models",
 		"de/plexdev/lovapp/controller/WebSocketHandler",
+		"de/plexdev/lovapp/model/formatter",
 	],
-	function (BaseController, models, WebSocketHandler) {
+	function (BaseController, models, WebSocketHandler, formatter) {
 		"use strict";
 
 		return BaseController.extend("de.plexdev.lovapp.controller.App", {
+			clFormatter: formatter,
 			onInit: function () {
 				// apply content density mode to root view
 				this.getView().addStyleClass(
@@ -135,11 +137,13 @@ sap.ui.define(
 				const aSecTitleConnToys = [];
 				if (aDevices.length) {
 					aDevices.forEach((oDevice) => {
-						// debugger;
 						if (oDevice.id) {
 							const sName = oDevice.nickName || oDevice.name;
 							const sBattery = oDevice.battery.toString();
-							aSecTitleConnToys.push(`${sName}: ${sBattery}`);
+							const strVisualBattery = this.clFormatter.getVisualProcentBar(
+								parseInt(sBattery, 10)
+							);
+							aSecTitleConnToys.push(`${sName}: ${strVisualBattery}`);
 						}
 					});
 				}

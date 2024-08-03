@@ -149,6 +149,8 @@ consts.ARR_MODES = [
     settedInterval: 500,
     settedToy: "",
     settedFeatures: ["v"],
+    stepSize: 1,
+    showStepSize: false,
     latestPattern: "",
   },
   {
@@ -163,6 +165,7 @@ consts.ARR_MODES = [
     settedToy: "",
     settedFeatures: ["v"],
     stepSize: 1,
+    showStepSize: true,
     latestPattern: "",
   },
   {
@@ -177,6 +180,7 @@ consts.ARR_MODES = [
     settedToy: "",
     settedFeatures: ["v"],
     stepSize: 1,
+    showStepSize: true,
     latestPattern: "",
   },
   {
@@ -191,6 +195,7 @@ consts.ARR_MODES = [
     settedToy: "",
     settedFeatures: ["v"],
     stepSize: 1,
+    showStepSize: true,
     latestPattern: "",
   },
   {
@@ -204,6 +209,8 @@ consts.ARR_MODES = [
     settedInterval: 500,
     settedToy: "",
     settedFeatures: ["v"],
+    stepSize: 1,
+    showStepSize: false,
     latestPattern: "",
   },
   // { key: "custom", name: "Custom", description: "" },
