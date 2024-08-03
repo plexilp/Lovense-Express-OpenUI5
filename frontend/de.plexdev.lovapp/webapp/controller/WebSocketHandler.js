@@ -11,18 +11,18 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
 				socket.addEventListener("open", (event) => {
 					socket.send(`Connection test from: ${window.location.origin}`);
 				});
-	
+
 				// on receive new message
 				socket.addEventListener("message", (oEvent) => {
 					this.onMessageReceive(oEvent);
 					console.log("Message from server ", oEvent.data);
 				});
-	
+
 				this.oBaseController = oBaseController;
 				this.oSocket = socket;
 				this.oEventBus = oBaseController.getOwnerComponent().getEventBus();
 			} catch (error) {
-				console.log(error)
+				console.log(error);
 				sap.m.MessageToast.show("Websocket not connected!");
 			}
 		},
@@ -46,11 +46,19 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
 						// this.oBaseController
 					);
 					break;
-				case "trigger irgenwas":
+				case "connectionStatus":
 					this.oEventBus.publish(
 						"App",
 						"setConnectionStatus",
-						oData
+						oData.oData
+						// this.oBaseController
+					);
+					break;
+				case "addHistory":
+					this.oEventBus.publish(
+						"App",
+						"addHistory",
+						oData.oData
 						// this.oBaseController
 					);
 					break;

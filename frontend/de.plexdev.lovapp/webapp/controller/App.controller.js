@@ -57,6 +57,11 @@ sap.ui.define(
 					"refreshConnection",
 					this.getSetConnectionStatus.bind(this)
 				);
+				await this.getEventBus().subscribe(
+					"App",
+					"addHistory",
+					this.addHistory.bind(this)
+				);
 			},
 
 			/**
@@ -90,8 +95,8 @@ sap.ui.define(
 				if (oData.code === 200) {
 					// IF erst, wenn die Funktion alle x Sekunden aufgerufen wird
 					// if (oModel.getProperty("/connected") !== "Success") {
-					debugger;
-					this.loadDevices();
+					const aDevices = this.convertObjectIntoArray(oData?.data.toys);
+					this.setConnectionStatusSubTitle(aDevices);
 					// }
 					oModel.setProperty("/connected", "Success");
 				} else {
@@ -126,7 +131,6 @@ sap.ui.define(
 			 */
 			async loadDevices(aDevices = []) {
 				const oModel = this.getModel("backend");
-				const oRuntimeModel = this.getModel("runtimeModel");
 				if (!aDevices.length) {
 					aDevices = await this.getModelProperty(
 						oModel,
@@ -134,6 +138,11 @@ sap.ui.define(
 						true
 					);
 				}
+
+				this.setConnectionStatusSubTitle(aDevices);
+			},
+
+			setConnectionStatusSubTitle(aDevices) {
 				const aSecTitleConnToys = [];
 				if (aDevices.length) {
 					aDevices.forEach((oDevice) => {
@@ -148,6 +157,7 @@ sap.ui.define(
 					});
 				}
 
+				const oRuntimeModel = this.getModel("runtimeModel");
 				oRuntimeModel.setProperty(
 					"/secTitleConnToys",
 					aSecTitleConnToys.join(", ")
@@ -175,6 +185,13 @@ sap.ui.define(
 
 			onCloseHistoryPopover() {
 				this.getPopover("HistoryPopover").close();
+			},
+
+			addHistory(oCaller, oApp, oData) {
+				const oModel = this.getModel("runtimeModel");
+				const aHistory = oModel.getProperty("/history") || [];
+				aHistory.unshift(oData);
+				oModel.setProperty("/history", aHistory);
 			},
 		});
 	}

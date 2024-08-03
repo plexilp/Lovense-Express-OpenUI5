@@ -1,7 +1,7 @@
 @localhost=http://localhost:8081/api
-@lovApp=192.168.178.71:30010
-# @lovAppLocal=127-0-0-1.lovense.club:30010
-@lovAppLocal=127.0.0.1:30010
+@lovense=192.168.178.71:30010
+# @lovenseLocal=127-0-0-1.lovense.club:30010
+@lovenseLocal=127.0.0.1:30010
 
 ###
 GET {{localhost}}/
@@ -97,7 +97,7 @@ Content-Type: application/json
 
 
 ### Try out
-POST {{lovAppLocal}}/command
+POST {{lovenseLocal}}/command
 Content-Type: application/json
 
 {
@@ -105,7 +105,7 @@ Content-Type: application/json
 }
 
 ### Try out
-POST {{lovApp}}/command
+POST {{lovense}}/command
 Content-Type: application/json
 
 {
@@ -113,7 +113,7 @@ Content-Type: application/json
 }
 
 ### Try out
-POST {{lovApp}}/command
+POST {{lovense}}/command
 Content-Type: application/json
 
 {
@@ -127,7 +127,7 @@ Content-Type: application/json
 }
 
 ### Try out
-POST {{lovApp}}/command
+POST {{lovense}}/command
 Content-Type: application/json
 
 {
@@ -142,18 +142,16 @@ Content-Type: application/json
 }
 
 ### Try out
-POST {{lovApp}}/command
+POST {{lovense}}/command
 Content-Type: application/json
 
 {
-    "action" : "Vibrate2:0",
-    "loopPauseSec" : 0,
-    "loopRunningSec" : 0,
-    "timeSec" : 0,
-    "toy" : "048727454def",
-    "apiVer" : 1,
-    "command": "Function",
-    "stopPrevious": 0
+    
+  "command": "Function",
+  "action": "Vibrate:1",
+  "timeSec": 20,
+  "apiVer": 1
+
 }
 
 
