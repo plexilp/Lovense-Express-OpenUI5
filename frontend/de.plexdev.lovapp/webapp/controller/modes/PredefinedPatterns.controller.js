@@ -16,7 +16,7 @@ sap.ui.define(
 				 */
 				onBeforeRendering: function () {
 					this.getView().setModel(
-						new JSONModel({ showInputs: true }),
+						new JSONModel({ showInputs: true, sliderEnabled: false }),
 						"viewModel"
 					);
 				},
@@ -64,8 +64,10 @@ sap.ui.define(
 					const oModel = this.getModel("viewModel");
 					if (oModel.getProperty("/showInputs")) {
 						oModel.setProperty("/showInputs", false);
+						oModel.setProperty("/sliderEnabled", true);
 					} else {
 						oModel.setProperty("/showInputs", true);
+						oModel.setProperty("/sliderEnabled", false);
 					}
 				},
 

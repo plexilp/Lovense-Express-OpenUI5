@@ -29,6 +29,7 @@ sap.ui.define(
 					newForEachToy: true,
 					newForEachFeature: false,
 					showInputs: true,
+					sliderEnabled: false,
 				};
 				const oModel = this.getView().getModel("viewModel");
 				oModel.setData(oData);
@@ -100,8 +101,10 @@ sap.ui.define(
 				const oModel = this.getModel("viewModel");
 				if (oModel.getProperty("/showInputs")) {
 					oModel.setProperty("/showInputs", false);
+					oModel.setProperty("/sliderEnabled", true);
 				} else {
 					oModel.setProperty("/showInputs", true);
+					oModel.setProperty("/sliderEnabled", false);
 				}
 			},
 		});
