@@ -53,6 +53,19 @@
 						max="600"
 						enabled="false"
 					/>
+					<Label text="{i18n>label.changeLanguage}" />
+					<Select enabled="false">
+						<items>
+							<core:Item
+								key="en"
+								text="English"
+							/>
+							<core:Item
+								key="de"
+								text="Deutsch"
+							/>
+						</items>
+					</Select>
 				</form:content>
 				<form:toolbar>
 					<OverflowToolbar asyncMode="false">
