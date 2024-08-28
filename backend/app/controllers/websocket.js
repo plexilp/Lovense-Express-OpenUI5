@@ -30,8 +30,8 @@ class WebSocketHandler {
 
       const oIntervalConnections = setInterval(() => {
         this.sendStatus(ws);
-        this.addHistory("Client connected", "Client connected", "Low");
-      }, 5 * 1000);
+        // this.addHistory("Client connected", "Client connected", "Low");
+      }, 10 * 1000);
     });
   }
 
