@@ -8,8 +8,8 @@ sap.ui.define(["sap/ui/test/opaQunit", "./pages/Main"], function (opaTest) {
 		// Arrangements
 		Given.iStartMyUIComponent({
 			componentConfig: {
-				name: "de.plexdev.lovapp"
-			}
+				name: "de.plexdev.lovapp",
+			},
 		});
 
 		// Actions
@@ -32,8 +32,8 @@ sap.ui.define(["sap/ui/test/opaQunit", "./pages/Main"], function (opaTest) {
 		// Arrangements
 		Given.iStartMyUIComponent({
 			componentConfig: {
-				name: "de.plexdev.lovapp"
-			}
+				name: "de.plexdev.lovapp",
+			},
 		});
 
 		// Actions

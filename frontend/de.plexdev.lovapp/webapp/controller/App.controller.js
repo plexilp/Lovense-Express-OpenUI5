@@ -11,7 +11,7 @@ sap.ui.define(
 			onInit: function () {
 				// apply content density mode to root view
 				this.getView().addStyleClass(
-					this.getOwnerComponent().getContentDensityClass()
+					this.getOwnerComponent().getContentDensityClass(),
 				);
 				this._setEventBus();
 
@@ -40,12 +40,12 @@ sap.ui.define(
 				await this.getEventBus().subscribe(
 					"App",
 					"setConnectionStatus",
-					this.setConnectionStatus.bind(this)
+					this.setConnectionStatus.bind(this),
 				);
 				await this.getEventBus().subscribe(
 					"App",
 					"refreshConnection",
-					this.getSetConnectionStatus.bind(this)
+					this.getSetConnectionStatus.bind(this),
 				);
 			},
 
@@ -58,7 +58,7 @@ sap.ui.define(
 				const oBackendModel = this.getModel("backend");
 				const oResponse = await this.getModelProperty(
 					oBackendModel,
-					`/getConnection?userId=${this.getUserId()}`
+					`/getConnection?userId=${this.getUserId()}`,
 				);
 
 				if (oResponse.code === 200) {
@@ -121,7 +121,7 @@ sap.ui.define(
 					aDevices = await this.getModelProperty(
 						oModel,
 						"/getDevices?userId=1",
-						true
+						true,
 					);
 				}
 				const aSecTitleConnToys = [];
@@ -138,7 +138,7 @@ sap.ui.define(
 
 				oRuntimeModel.setProperty(
 					"/secTitleConnToys",
-					aSecTitleConnToys.join(", ")
+					aSecTitleConnToys.join(", "),
 				);
 			},
 
@@ -165,5 +165,5 @@ sap.ui.define(
 				this.getPopover("HistoryPopover").close();
 			},
 		});
-	}
+	},
 );

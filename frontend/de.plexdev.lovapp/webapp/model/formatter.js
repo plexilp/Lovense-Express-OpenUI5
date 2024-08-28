@@ -4,6 +4,6 @@ sap.ui.define(function () {
 	return {
 		formatValue: function (value) {
 			return value && value.toUpperCase();
-		}
+		},
 	};
 });

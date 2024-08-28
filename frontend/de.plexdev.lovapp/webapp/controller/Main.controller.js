@@ -9,7 +9,7 @@ sap.ui.define(
 			onBeforeRendering() {
 				this.getView().setModel(
 					new JSONModel({ selectedActions: ["Vibrate"] }),
-					"viewModel"
+					"viewModel",
 				);
 			},
 
@@ -68,7 +68,7 @@ sap.ui.define(
 								path: "key",
 								operator: "Contains",
 								value1: item,
-							})
+							}),
 						);
 					});
 				}
@@ -77,5 +77,5 @@ sap.ui.define(
 				// oSelectAction.setSelectedItems([]);
 			},
 		});
-	}
+	},
 );
