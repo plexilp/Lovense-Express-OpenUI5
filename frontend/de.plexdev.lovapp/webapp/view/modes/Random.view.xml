@@ -13,7 +13,6 @@
         <content>
             <form:SimpleForm
                 editable="true"
-                layout="ResponsiveGridLayout"
                 breakpointM="800"
             >
                 <Label text="Toy" />
@@ -59,111 +58,127 @@
                     <Text text="Soll für jedes ausgewählte Feature ein neues Pattern generiert werden?" />
                 </FlexBox>
                 <Label text="Strength {viewModel>/strengthMin} {viewModel>/strengthMax}" />
-                <RangeSlider
-                    min="0"
-                    max="20"
-                    value="1"
-                    value2="5"
-                    enableTickmarks="true"
-                    class="sapUiMediumMarginBottom"
-                    change="onRangeSliderChange($event, '/strengthMin', '/strengthMax')"
-                    liveChange="onRangeSliderLiveChange($event, '/strengthMin', '/strengthMax')"
-                >
-                    <ResponsiveScale tickmarksBetweenLabels="2" />
-                </RangeSlider>
-                <HBox
-                    width="100%"
-                    class="sapUiTinyMarginBottom"
-                    visible="{viewModel>/showInputs}"
-                >
-                    <StepInput value="{viewModel>/strengthMin}" />
-                    <StepInput value="{viewModel>/strengthMax}" />
-                    <!-- <layoutData>
+                <VBox width="100%">
+                    <RangeSlider
+                        width="100%"
+                        min="0"
+                        max="20"
+                        value="1"
+                        value2="5"
+                        enableTickmarks="true"
+                        visible="{viewModel>/sliderEnabled}"
+                        class="sapUiMediumMarginBottom"
+                        change="onRangeSliderChange($event, '/strengthMin', '/strengthMax')"
+                        liveChange="onRangeSliderLiveChange($event, '/strengthMin', '/strengthMax')"
+                    >
+                        <ResponsiveScale tickmarksBetweenLabels="2" />
+                    </RangeSlider>
+                    <HBox
+                        width="100%"
+                        class="sapUiTinyMarginBottom"
+                        visible="{viewModel>/showInputs}"
+                    >
+                        <StepInput value="{viewModel>/strengthMin}" />
+                        <StepInput value="{viewModel>/strengthMax}" />
+                        <!-- <layoutData>
                         <layout:GridData span="XL2 L2 M12 S12" />
                     </layoutData> -->
-                </HBox>
+                    </HBox>
+                </VBox>
                 <Label text="Interval (millisec) {viewModel>/intervalMin} {viewModel>/intervalMax}" />
-                <RangeSlider
-                    min="100"
-                    max="10000"
-                    value="100"
-                    value2="1000"
-                    enableTickmarks="true"
-                    class="sapUiMediumMarginBottom"
-                    change="onRangeSliderChange($event, '/intervalMin', '/intervalMax')"
-                    liveChange="onRangeSliderLiveChange($event, '/intervalMin', '/intervalMax')"
-                >
-                    <ResponsiveScale tickmarksBetweenLabels="10" />
-                </RangeSlider>
-                <HBox
-                    class="sapUiTinyMarginBottom"
-                    visible="{viewModel>/showInputs}"
-                >
-                    <StepInput value="{viewModel>/intervalMin}" />
-                    <StepInput value="{viewModel>/intervalMax}" />
-                    <!-- <layoutData>
-                        <layout:GridData span="XL2 L2 M12 S12" />
-                    </layoutData> -->
-                </HBox>
+                <VBox width="100%">
+                    <RangeSlider
+                        min="100"
+                        max="10000"
+                        value="100"
+                        value2="1000"
+                        visible="{viewModel>/sliderEnabled}"
+                        enableTickmarks="true"
+                        class="sapUiMediumMarginBottom"
+                        change="onRangeSliderChange($event, '/intervalMin', '/intervalMax')"
+                        liveChange="onRangeSliderLiveChange($event, '/intervalMin', '/intervalMax')"
+                    >
+                        <ResponsiveScale tickmarksBetweenLabels="10" />
+                    </RangeSlider>
+                    <HBox
+                        class="sapUiTinyMarginBottom"
+                        visible="{viewModel>/showInputs}"
+                    >
+                        <StepInput value="{viewModel>/intervalMin}" />
+                        <StepInput value="{viewModel>/intervalMax}" />
+                        <!-- <layoutData>
+                            <layout:GridData span="XL2 L2 M12 S12" />
+                        </layoutData> -->
+                    </HBox>
+                </VBox>
                 <Label text="Time (sec) {viewModel>/timeMin} {viewModel>/timeMax}" />
-                <RangeSlider
-                    min="0"
-                    max="600"
-                    value="0"
-                    value2="0"
-                    enableTickmarks="true"
-                    class="sapUiMediumMarginBottom"
-                    change="onRangeSliderChange($event, '/timeMin', '/timeMax')"
-                    liveChange="onRangeSliderLiveChange($event, '/timeMin', '/timeMax')"
-                >
-                    <ResponsiveScale tickmarksBetweenLabels="10" />
-                </RangeSlider>
-                <HBox
-                    class="sapUiTinyMarginBottom"
-                    visible="{viewModel>/showInputs}"
-                >
-                    <StepInput value="{viewModel>/timeMin}" />
-                    <StepInput value="{viewModel>/timeMax}" />
-                    <!-- <layoutData>
+                <VBox width="100%">
+                    <RangeSlider
+                        min="0"
+                        max="600"
+                        value="0"
+                        value2="0"
+                        visible="{viewModel>/sliderEnabled}"
+                        enableTickmarks="true"
+                        class="sapUiMediumMarginBottom"
+                        change="onRangeSliderChange($event, '/timeMin', '/timeMax')"
+                        liveChange="onRangeSliderLiveChange($event, '/timeMin', '/timeMax')"
+                    >
+                        <ResponsiveScale tickmarksBetweenLabels="10" />
+                    </RangeSlider>
+                    <HBox
+                        class="sapUiTinyMarginBottom"
+                        visible="{viewModel>/showInputs}"
+                    >
+                        <StepInput value="{viewModel>/timeMin}" />
+                        <StepInput value="{viewModel>/timeMax}" />
+                        <!-- <layoutData>
                         <layout:GridData span="XL2 L2 M12 S12" />
                     </layoutData> -->
-                </HBox>
+                    </HBox>
+                </VBox>
                 <Label text="PatternLength {viewModel>/patternLength}" />
-                <Slider
-                    min="1"
-                    max="50"
-                    value="{viewModel>/patternLength}"
-                    enableTickmarks="true"
-                    class="sapUiMediumMarginBottom"
-                >
-                    <ResponsiveScale tickmarksBetweenLabels="2" />
-                </Slider>
-                <StepInput
-                    visible="{viewModel>/showInputs}"
-                    value="{viewModel>/patternLength}"
-                >
-                    <!-- <layoutData>
+                <VBox width="100%">
+                    <Slider
+                        min="1"
+                        max="50"
+                        value="{viewModel>/patternLength}"
+                        visible="{viewModel>/sliderEnabled}"
+                        enableTickmarks="true"
+                        class="sapUiMediumMarginBottom"
+                    >
+                        <ResponsiveScale tickmarksBetweenLabels="2" />
+                    </Slider>
+                    <StepInput
+                        visible="{viewModel>/showInputs}"
+                        value="{viewModel>/patternLength}"
+                    >
+                        <!-- <layoutData>
                         <layout:GridData span="XL2 L2 M12 S12" />
                     </layoutData> -->
-                </StepInput>
+                    </StepInput>
+                </VBox>
                 <Label text="PossibleDifference {viewModel>/possibleDifference}" />
-                <Slider
-                    min="1"
-                    max="20"
-                    value="{viewModel>/possibleDifference}"
-                    enableTickmarks="true"
-                    class="sapUiMediumMarginBottom"
-                >
-                    <ResponsiveScale tickmarksBetweenLabels="2" />
-                </Slider>
-                <StepInput
-                    visible="{viewModel>/showInputs}"
-                    value="{viewModel>/possibleDifference}"
-                >
-                    <!-- <layoutData>
+                <VBox width="100%">
+                    <Slider
+                        min="1"
+                        max="20"
+                        value="{viewModel>/possibleDifference}"
+                        visible="{viewModel>/sliderEnabled}"
+                        enableTickmarks="true"
+                        class="sapUiMediumMarginBottom"
+                    >
+                        <ResponsiveScale tickmarksBetweenLabels="2" />
+                    </Slider>
+                    <StepInput
+                        visible="{viewModel>/showInputs}"
+                        value="{viewModel>/possibleDifference}"
+                    >
+                        <!-- <layoutData>
                         <layout:GridData span="XL2 L2 M12 S12" />
                     </layoutData> -->
-                </StepInput>
+                    </StepInput>
+                </VBox>
                 <!-- <form:toolbar>
                     <OverflowToolbar asyncMode="false">
                         <ToolbarSpacer />

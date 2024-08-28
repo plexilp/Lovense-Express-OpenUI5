@@ -81,7 +81,7 @@
                                         enableTickmarks="true"
                                         value="{backend>settedTime}"
                                         class="sapUiMediumMarginBottom"
-                                        enabled="true"
+                                        visible="{viewModel>/sliderEnabled}"
                                     >
                                         <ResponsiveScale tickmarksBetweenLabels="25" />
                                     </Slider>
@@ -98,6 +98,7 @@
                                         min="0"
                                         max="20"
                                         enableTickmarks="true"
+                                        visible="{viewModel>/sliderEnabled}"
                                         change="onRangeSliderChange($event, '/settedMinStrength', '/settedMaxStrength')"
                                     >
                                         <ResponsiveScale tickmarksBetweenLabels="2" />
@@ -116,7 +117,7 @@
                                         enableTickmarks="true"
                                         value="{backend>settedInterval}"
                                         class="sapUiMediumMarginBottom"
-                                        enabled="true"
+                                        visible="{viewModel>/sliderEnabled}"
                                     >
                                         <ResponsiveScale tickmarksBetweenLabels="25" />
                                     </Slider>
@@ -138,13 +139,13 @@
                                         visible="{backend>showStepSize}"
                                     />
                                     <Slider
-                                        visible="{backend>showStepSize}"
+                                        visible="{= ${backend>showStepSize} &amp;&amp; ${viewModel>/sliderEnabled}}"
                                         min="1"
                                         max="{= ${backend>settedMaxStrength} - ${backend>settedMinStrength}}"
                                         enableTickmarks="true"
                                         value="{backend>stepSize}"
                                         class="sapUiMediumMarginBottom"
-                                        enabled="true"
+                                        enabled="{viewModel>/sliderEnabled}"
                                     >
                                         <ResponsiveScale tickmarksBetweenLabels="25" />
                                     </Slider>
