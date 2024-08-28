@@ -53,7 +53,7 @@ sap.ui.define(
 								window.addEventListener(
 									"devicemotion",
 									this.handleMotionEvent.bind(this),
-									true
+									true,
 								);
 							} else {
 								alert("Permission not granted for DeviceMotion");
@@ -68,7 +68,7 @@ sap.ui.define(
 					window.addEventListener(
 						"devicemotion",
 						this.handleMotionEvent.bind(this),
-						true
+						true,
 					);
 				}
 			},
@@ -121,5 +121,5 @@ sap.ui.define(
 			// 	});
 			// },
 		});
-	}
+	},
 );

@@ -169,7 +169,7 @@ sap.ui.define(
 			async bindPropertyToModel(
 				sPath,
 				oModel = this.getModel("backend"),
-				sAltPropName = ""
+				sAltPropName = "",
 			) {
 				const oData = await this.sendGet(sPath);
 				let sPropName = sPath;
@@ -203,7 +203,7 @@ sap.ui.define(
 				if (!this["fragments"][sName]) {
 					this["fragments"][sName] = sap.ui.xmlfragment(
 						"de.plexdev.lovapp.view.fragments.popover." + sName,
-						oContext
+						oContext,
 					);
 					this.getView().addDependent(this["fragments"][sName]);
 				}
@@ -224,5 +224,5 @@ sap.ui.define(
 				return [];
 			},
 		});
-	}
+	},
 );

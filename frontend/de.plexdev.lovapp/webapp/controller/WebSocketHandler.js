@@ -42,7 +42,7 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
 					this.oEventBus.publish(
 						"App",
 						"refreshConnection",
-						oData
+						oData,
 						// this.oBaseController
 					);
 					break;
@@ -50,7 +50,7 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
 					this.oEventBus.publish(
 						"App",
 						"setConnectionStatus",
-						oData.oData
+						oData.oData,
 						// this.oBaseController
 					);
 					break;
@@ -58,7 +58,7 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
 					this.oEventBus.publish(
 						"App",
 						"addHistory",
-						oData.oData
+						oData.oData,
 						// this.oBaseController
 					);
 					break;
