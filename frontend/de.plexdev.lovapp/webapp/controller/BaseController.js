@@ -104,12 +104,7 @@ sap.ui.define(
 			},
 
 			getBackendUrl() {
-				const hostname = window.location.hostname;
-				const protocol = window.location.protocol;
-				const port = this.getModel("config").getProperty("/port-to-api");
-				const sPath = this.getModel("config").getProperty("/path-to-api");
-				const sUrl = `${protocol}//${hostname}:${port}/${sPath}`;
-				return sUrl;
+				return `/api`;
 			},
 
 			async sendPost(sPath, oData = {}) {
