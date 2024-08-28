@@ -22,23 +22,44 @@ sap.ui.define(
 					intervalMax: 1000,
 					timeMin: 0,
 					timeMax: 0,
-					patternLength: 40,
+					patternLength: 50,
 					possibleDifference: 10,
 					selectedDevice: [""],
 					selectedAction: [""],
 					newForEachToy: true,
 					newForEachFeature: false,
+					showInputs: true,
 				};
 				const oModel = this.getView().getModel("viewModel");
 				oModel.setData(oData);
 			},
 			onRangeSliderLiveChange(oEvent, vProperty1, vProperty2) {
+				const oModel = this.getModel("viewModel");
 				const oSlider = oEvent.getSource();
 				const value1 = oSlider.getValue();
 				const value2 = oSlider.getValue2();
-				const oModel = this.getModel("viewModel");
+
+				// if (value1 > value2) {
+				// 	oSlider.setValue2(value1);
+				// 	oSlider.setValue(value2);
+				// }
+
 				oModel.setProperty(vProperty1, value1);
 				oModel.setProperty(vProperty2, value2);
+			},
+
+			onRangeSliderChange(oEvent, vProperty1, vProperty2) {
+				const oModel = this.getModel("viewModel");
+				const oSlider = oEvent.getSource();
+				const value1 = oSlider.getValue();
+				const value2 = oSlider.getValue2();
+
+				if (value1 > value2) {
+					oSlider.setValue2(value1);
+					oSlider.setValue(value2);
+					oModel.setProperty(vProperty1, value2);
+					oModel.setProperty(vProperty2, value1);
+				}
 			},
 
 			async onPressSendRandom() {
@@ -72,6 +93,15 @@ sap.ui.define(
 					MessageToast.show(`Pattern: ${oRequest[0]["strength"]}`);
 				} catch (error) {
 					console.error(error);
+				}
+			},
+
+			onButtonShowInputsPress() {
+				const oModel = this.getModel("viewModel");
+				if (oModel.getProperty("/showInputs")) {
+					oModel.setProperty("/showInputs", false);
+				} else {
+					oModel.setProperty("/showInputs", true);
 				}
 			},
 		});
