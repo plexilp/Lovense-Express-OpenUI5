@@ -64,5 +64,5 @@ sap.ui.define(
 				return this.contentDensityClass;
 			},
 		});
-	}
+	},
 );

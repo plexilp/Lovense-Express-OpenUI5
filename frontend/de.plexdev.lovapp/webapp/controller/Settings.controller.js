@@ -27,14 +27,14 @@ sap.ui.define(
 				oData.port = oData.port.replaceAll("_", "").replaceAll(" ", "");
 				const oResult = await this.sendPost(
 					"/setConfig?userId=" + this.getUserId(),
-					oData
+					oData,
 				);
 				this.getModelProperty(
 					oModel,
 					`/getConfig?userId=${this.getUserId()}`,
-					true
+					true,
 				);
 			},
 		});
-	}
+	},
 );

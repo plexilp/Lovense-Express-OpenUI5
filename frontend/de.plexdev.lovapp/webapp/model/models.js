@@ -110,5 +110,5 @@ sap.ui.define(
 				return oData;
 			},
 		};
-	}
+	},
 );

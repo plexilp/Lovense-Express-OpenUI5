@@ -13,7 +13,7 @@ sap.ui.define(
 			onInit: function () {
 				// apply content density mode to root view
 				this.getView().addStyleClass(
-					this.getOwnerComponent().getContentDensityClass()
+					this.getOwnerComponent().getContentDensityClass(),
 				);
 				this._setEventBus();
 
@@ -32,7 +32,7 @@ sap.ui.define(
 				}
 				new WebSocketHandler().start(
 					`${sWebsocketProtocol}://${hostname}:8081`,
-					this
+					this,
 				);
 				//First Request for initial loading
 				this.loadValueHelps();
@@ -50,17 +50,17 @@ sap.ui.define(
 				await this.getEventBus().subscribe(
 					"App",
 					"setConnectionStatus",
-					this.setConnectionStatus.bind(this)
+					this.setConnectionStatus.bind(this),
 				);
 				await this.getEventBus().subscribe(
 					"App",
 					"refreshConnection",
-					this.getSetConnectionStatus.bind(this)
+					this.getSetConnectionStatus.bind(this),
 				);
 				await this.getEventBus().subscribe(
 					"App",
 					"addHistory",
-					this.addHistory.bind(this)
+					this.addHistory.bind(this),
 				);
 			},
 
@@ -73,7 +73,7 @@ sap.ui.define(
 				const oBackendModel = this.getModel("backend");
 				const oResponse = await this.getModelProperty(
 					oBackendModel,
-					`/getConnection?userId=${this.getUserId()}`
+					`/getConnection?userId=${this.getUserId()}`,
 				);
 
 				if (oResponse.code === 200) {
@@ -135,7 +135,7 @@ sap.ui.define(
 					aDevices = await this.getModelProperty(
 						oModel,
 						"/getDevices?userId=1",
-						true
+						true,
 					);
 				}
 
@@ -150,7 +150,7 @@ sap.ui.define(
 							const sName = oDevice.nickName || oDevice.name;
 							const sBattery = oDevice.battery.toString();
 							const strVisualBattery = this.clFormatter.getVisualProcentBar(
-								parseInt(sBattery, 10)
+								parseInt(sBattery, 10),
 							);
 							aSecTitleConnToys.push(`${sName}: ${strVisualBattery}`);
 						}
@@ -160,7 +160,7 @@ sap.ui.define(
 				const oRuntimeModel = this.getModel("runtimeModel");
 				oRuntimeModel.setProperty(
 					"/secTitleConnToys",
-					aSecTitleConnToys.join(", ")
+					aSecTitleConnToys.join(", "),
 				);
 			},
 
@@ -194,5 +194,5 @@ sap.ui.define(
 				oModel.setProperty("/history", aHistory);
 			},
 		});
-	}
+	},
 );

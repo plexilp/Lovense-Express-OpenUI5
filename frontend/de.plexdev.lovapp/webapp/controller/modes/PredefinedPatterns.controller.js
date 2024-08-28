@@ -17,7 +17,7 @@ sap.ui.define(
 				onBeforeRendering: function () {
 					this.getView().setModel(
 						new JSONModel({ showInputs: true, sliderEnabled: false }),
-						"viewModel"
+						"viewModel",
 					);
 				},
 
@@ -48,7 +48,7 @@ sap.ui.define(
 
 					const oResult = await this.sendPost(
 						"/sendSpecialPattern?userId=" + this.getUserId(),
-						oData
+						oData,
 					);
 					try {
 						const oResultJson = oResult;
@@ -84,7 +84,7 @@ sap.ui.define(
 						oModel.setProperty(vProperty2, value1);
 					}
 				},
-			}
+			},
 		);
-	}
+	},
 );
