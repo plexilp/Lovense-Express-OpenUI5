@@ -46,6 +46,13 @@
 					</MaskInput> -->
 					<Label text="Port" />
 					<Input value="{backend>port}" />
+					<Label text="{i18n>label.refreshRate}" />
+					<StepInput
+						value="5"
+						min="1"
+						max="600"
+						enabled="false"
+					/>
 				</form:content>
 				<form:toolbar>
 					<OverflowToolbar asyncMode="false">
