@@ -41,14 +41,14 @@ sap.ui.define(
 					!window.DeviceMotionEvent.requestPermission
 				) {
 					return alert(
-						"Your current device does not have access to the DeviceMotion event"
+						"Your current device does not have access to the DeviceMotion event",
 					);
 				}
 
 				const permission = await window.DeviceMotionEvent.requestPermission();
 				if (permission !== "granted") {
 					return alert(
-						"You must grant access to the device's sensor for this demo"
+						"You must grant access to the device's sensor for this demo",
 					);
 				}
 			},
@@ -83,5 +83,5 @@ sap.ui.define(
 				});
 			},
 		});
-	}
+	},
 );

@@ -45,7 +45,7 @@ sap.ui.define(
 
 					const oResult = await this.sendPost(
 						"/sendSpecialPattern?userId=" + this.getUserId(),
-						oData
+						oData,
 					);
 					try {
 						const oResultJson = oResult;
@@ -56,7 +56,7 @@ sap.ui.define(
 						console.error(error);
 					}
 				},
-			}
+			},
 		);
-	}
+	},
 );
