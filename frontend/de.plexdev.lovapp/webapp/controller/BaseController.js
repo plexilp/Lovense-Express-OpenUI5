@@ -209,6 +209,15 @@ sap.ui.define(
 				const oModel = this.getModel("backend");
 				await this.getModelProperty(oModel, "/getHistory");
 			},
+
+			convertObjectIntoArray(oObject) {
+				if (oObject) {
+					return Object.keys(oObject).map((key) => {
+						return oObject[key];
+					});
+				}
+				return [];
+			},
 		});
 	},
 );

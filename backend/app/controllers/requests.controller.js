@@ -2,6 +2,7 @@ const db = require("../models");
 const https = require("https");
 const constants = require("../constants/constants");
 const websocket = require("./websocket");
+const patternFunctions = require("../functions/patterns");
 
 class RequestController {
   constructor(userId, ip, port) {
@@ -134,9 +135,10 @@ class RequestController {
   /**
    * TODO:
    * @param {object} oBody Sendet Data from POST Request
+   * @param {boolean} [bReverse] Reverse the pattern
    * @returns
    */
-  _getStairPatternObj(oBody) {
+  _getStairPatternObj(oBody, bReverse = false) {
     const oPostData = this.getPostData(oBody);
     try {
       const iInterval = this.getRandomInt(oBody.minInterval, oBody.maxInterval);
@@ -153,6 +155,10 @@ class RequestController {
       }
       if (aStrengths[aStrengths.length - 1] < oBody.maxStrength) {
         aStrengths.push(oBody.maxStrength);
+      }
+
+      if (bReverse) {
+        aStrengths.reverse();
       }
 
       oPostData.strength = aStrengths.slice(0, 50).join(";") || "0";
@@ -266,7 +272,14 @@ class RequestController {
         });
         break;
       case "stair":
-        oPatternObj = this._getStairPatternObj(oBody);
+        oPatternObj = this._getStairPatternObj(oBody, false);
+        oBody.toy.forEach((toy) => {
+          oPatternObj.toy = toy;
+          aReturnData.push(oPatternObj);
+        });
+        break;
+      case "stair-reverse":
+        oPatternObj = this._getStairPatternObj(oBody, true);
         oBody.toy.forEach((toy) => {
           oPatternObj.toy = toy;
           aReturnData.push(oPatternObj);

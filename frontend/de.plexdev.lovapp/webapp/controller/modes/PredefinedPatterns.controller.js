@@ -15,7 +15,10 @@ sap.ui.define(
 				 * @override
 				 */
 				onBeforeRendering: function () {
-					this.getView().setModel(new JSONModel({}), "viewModel");
+					this.getView().setModel(
+						new JSONModel({ showInputs: true, sliderEnabled: false }),
+						"viewModel",
+					);
 				},
 
 				async onStartPatternButtonPress(oEvent) {
@@ -54,6 +57,31 @@ sap.ui.define(
 						this.getModel("backend").refresh();
 					} catch (error) {
 						console.error(error);
+					}
+				},
+
+				onButtonShowInputsPress() {
+					const oModel = this.getModel("viewModel");
+					if (oModel.getProperty("/showInputs")) {
+						oModel.setProperty("/showInputs", false);
+						oModel.setProperty("/sliderEnabled", true);
+					} else {
+						oModel.setProperty("/showInputs", true);
+						oModel.setProperty("/sliderEnabled", false);
+					}
+				},
+
+				onRangeSliderChange(oEvent, vProperty1, vProperty2) {
+					const oModel = this.getModel("backend");
+					const oSlider = oEvent.getSource();
+					const value1 = oSlider.getValue();
+					const value2 = oSlider.getValue2();
+
+					if (value1 > value2) {
+						oSlider.setValue2(value1);
+						oSlider.setValue(value2);
+						oModel.setProperty(vProperty1, value2);
+						oModel.setProperty(vProperty2, value1);
 					}
 				},
 			},

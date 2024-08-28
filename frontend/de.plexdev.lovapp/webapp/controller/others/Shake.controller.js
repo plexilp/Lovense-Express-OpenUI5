@@ -1,13 +1,13 @@
 sap.ui.define(
 	[
-		"sap/ui/core/mvc/Controller",
+		"de/plexdev/lovapp/controller/BaseController",
 		"sap/ui/model/json/JSONModel",
-		"sap/m/MessageBox",
+		"sap/m/MessageToast",
 	],
-	function (Controller, JSONModel, MessageBox) {
+	function (BaseController, JSONModel, MessageToast) {
 		"use strict";
 
-		return Controller.extend("de.plexdev.lovapp.controller.others.Shake", {
+		return BaseController.extend("de.plexdev.lovapp.controller.others.Shake", {
 			onInit() {},
 
 			onBeforeRendering() {
@@ -17,71 +17,109 @@ sap.ui.define(
 			async onAfterRendering() {
 				// const oViewModel = this.getModel("viewModel");
 
-				await this.getMotion();
-				addEventListener("devicemotion", (event) => {
-					console.log(event);
-				});
+				// await this.getMotion();
+				// addEventListener("devicemotion", (event) => {
+				// 	console.log(event);
+				// });
 
-				window.ondevicemotion = (event) => {
-					console.log(event);
-					// const aNewArr = oViewModel.getProperty("/test");
-					// const oEntry = {
-					// 	value: event,
-					// };
-					// aNewArr.push(oEntry);
-					// oViewModel.setProperty("/test", aNewArr);
-				};
+				// window.ondevicemotion = (event) => {
+				// 	console.log(event);
+				// 	// const aNewArr = oViewModel.getProperty("/test");
+				// 	// const oEntry = {
+				// 	// 	value: event,
+				// 	// };
+				// 	// aNewArr.push(oEntry);
+				// 	// oViewModel.setProperty("/test", aNewArr);
+				// };
 
-				this._addEvents();
+				this.requestMotionPermission();
 			},
 
-			async getMotion() {
-				if (
-					!window.DeviceMotionEvent ||
-					!window.DeviceMotionEvent.requestPermission
-				) {
-					return alert(
-						"Your current device does not have access to the DeviceMotion event",
+			handleMotionEvent(event) {
+				const oViewModel = this.getModel("viewModel");
+				const x = event.accelerationIncludingGravity.x;
+				const y = event.accelerationIncludingGravity.y;
+				const z = event.accelerationIncludingGravity.z;
+
+				oViewModel.setProperty("/test", `${x}, ${y}, ${z}`);
+			},
+
+			requestMotionPermission() {
+				if (typeof DeviceMotionEvent.requestPermission === "function") {
+					// iOS 13+
+					DeviceMotionEvent.requestPermission()
+						.then((permissionState) => {
+							if (permissionState === "granted") {
+								window.addEventListener(
+									"devicemotion",
+									this.handleMotionEvent.bind(this),
+									true,
+								);
+							} else {
+								alert("Permission not granted for DeviceMotion");
+							}
+						})
+						.catch((error) => {
+							console.error(error.message);
+							MessageToast.show(error.message);
+						});
+				} else {
+					// Handle regular non iOS 13+ devices
+					window.addEventListener(
+						"devicemotion",
+						this.handleMotionEvent.bind(this),
+						true,
 					);
 				}
-
-				const permission = await window.DeviceMotionEvent.requestPermission();
-				if (permission !== "granted") {
-					return alert(
-						"You must grant access to the device's sensor for this demo",
-					);
-				}
 			},
 
-			_addEvents() {
-				window.addEventListener("devicemotion", function (e) {
-					let requestBtn = document.querySelector("#get-motion");
-					if (requestBtn) {
-						requestBtn.remove();
-					}
+			// async getMotion() {
+			// 	if (
+			// !window.DeviceMotionEvent ||
+			// 		!window.DeviceMotionEvent.requestPermission
+			// 	) {
+			// 		return alert(
+			// 			"Your current device does not have access to the DeviceMotion event"
+			// 		);
+			// 	}
 
-					document.getElementById("acceleration-x").innerHTML =
-						e.acceleration.x.toFixed(2) + "m/s²";
-					document.getElementById("acceleration-y").innerHTML =
-						e.acceleration.y.toFixed(2) + "m/s²";
-					document.getElementById("acceleration-z").innerHTML =
-						e.acceleration.z.toFixed(2) + "m/s²";
+			// 	const permission = await window.DeviceMotionEvent.requestPermission();
+			// 	if (permission !== "granted") {
+			// 		return alert(
+			// 			"You must grant access to the device's sensor for this demo"
+			// 		);
+			// 	}
+			// },
 
-					document.getElementById("acceleration-gravity-x").innerHTML =
-						e.accelerationIncludingGravity.x.toFixed(2) + "m/s²";
-					document.getElementById("acceleration-gravity-y").innerHTML =
-						e.accelerationIncludingGravity.y.toFixed(2) + "m/s²";
-					document.getElementById("acceleration-gravity-z").innerHTML =
-						e.accelerationIncludingGravity.z.toFixed(2) + "m/s²";
+			// _addEvents() {
+			// 	window.addEventListener("devicemotion", function (e) {
+			// 		let requestBtn = document.querySelector("#get-motion");
+			// 		if (requestBtn) {
+			// 			requestBtn.remove();
+			// 		}
 
-					document.getElementById("rotation-alpha").innerHTML =
-						e.rotationRate.alpha.toFixed(2) + "°/s";
-					document.getElementById("rotation-beta").innerHTML =
-						e.rotationRate.beta.toFixed(2) + "°/s";
-					document.getElementById("rotation-gamma").innerHTML =
-						e.rotationRate.gamma.toFixed(2) + "°/s";
-				});
-			},
+			// 		document.getElementById("acceleration-x").innerHTML =
+			// 			e.acceleration.x.toFixed(2) + "m/s²";
+			// 		document.getElementById("acceleration-y").innerHTML =
+			// 			e.acceleration.y.toFixed(2) + "m/s²";
+			// 		document.getElementById("acceleration-z").innerHTML =
+			// 			e.acceleration.z.toFixed(2) + "m/s²";
+
+			// 		document.getElementById("acceleration-gravity-x").innerHTML =
+			// 			e.accelerationIncludingGravity.x.toFixed(2) + "m/s²";
+			// 		document.getElementById("acceleration-gravity-y").innerHTML =
+			// 			e.accelerationIncludingGravity.y.toFixed(2) + "m/s²";
+			// 		document.getElementById("acceleration-gravity-z").innerHTML =
+			// 			e.accelerationIncludingGravity.z.toFixed(2) + "m/s²";
+
+			// 		document.getElementById("rotation-alpha").innerHTML =
+			// 			e.rotationRate.alpha.toFixed(2) + "°/s";
+			// 		document.getElementById("rotation-beta").innerHTML =
+			// 			e.rotationRate.beta.toFixed(2) + "°/s";
+			// 		document.getElementById("rotation-gamma").innerHTML =
+			// 			e.rotationRate.gamma.toFixed(2) + "°/s";
+			// 	});
+			// },
 		});
 	},
 );

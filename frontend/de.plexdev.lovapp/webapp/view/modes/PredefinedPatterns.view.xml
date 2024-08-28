@@ -6,18 +6,36 @@
     xmlns:form="sap.ui.layout.form"
     xmlns:card="sap.f.cards"
     xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
     displayBlock="true"
     height="100%"
     busyIndicatorDelay="0"
 >
     <Page
-        title="{i18n>appTitle.PredefinedPatterns} (Work In Progress)"
+        title="{i18n>appTitle.PredefinedPatterns}"
         content="{backend>/F4Modes}"
     >
+        <headerContent>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Button
+                    icon="sap-icon://show"
+                    press="onButtonShowInputsPress"
+                    text="{i18n>button.showInputs}"
+                />
+                <ToolbarSeparator />
+                <Button
+                    icon="sap-icon://add"
+                    press="onAddPatternButtonPress"
+                    text="{i18n>addPattern}"
+                    enabled="false"
+                />
+            </Toolbar>
+        </headerContent>
         <content>
             <f:Card
                 class="sapUiMediumMargin"
-                width="300px"
+                width="{= (${device>/system/phone} &amp;&amp; ${device>/orientation/portrait}) ? '90%' : '400px' }"
             >
                 <f:header>
                     <card:Header
@@ -50,62 +68,102 @@
                                     key="{backend>shortKey}"
                                 />
                             </MultiComboBox>
-                            <Label text="Time {backend>settedTime}" />
-                            <Slider
-                                min="0"
-                                max="600"
-                                enableTickmarks="true"
-                                value="{backend>settedTime}"
-                                class="sapUiMediumMarginBottom"
-                                enabled="true"
+                            <Panel
+                                expanded="true"
+                                expandable="true"
+                                headerText="General"
                             >
-                                <ResponsiveScale tickmarksBetweenLabels="25" />
-                            </Slider>
-                            <Label text="Strength {backend>settedMinStrength} {backend>settedMaxStrength}" />
-                            <RangeSlider
-                                value="{backend>settedMinStrength}"
-                                value2="{backend>settedMaxStrength}"
-                                class="sapUiMediumMarginBottom"
-                                min="0"
-                                max="20"
-                                enableTickmarks="true"
+                                <content>
+                                    <Label text="Time {backend>settedTime}" />
+                                    <Slider
+                                        min="0"
+                                        max="600"
+                                        enableTickmarks="true"
+                                        value="{backend>settedTime}"
+                                        class="sapUiMediumMarginBottom"
+                                        visible="{viewModel>/sliderEnabled}"
+                                    >
+                                        <ResponsiveScale tickmarksBetweenLabels="25" />
+                                    </Slider>
+                                    <StepInput
+                                        visible="{viewModel>/showInputs}"
+                                        value="{backend>settedTime}"
+                                        class="sapUiTinyMarginBottom"
+                                    />
+                                    <Label text="Strength {backend>settedMinStrength} {backend>settedMaxStrength}" />
+                                    <RangeSlider
+                                        value="{backend>settedMinStrength}"
+                                        value2="{backend>settedMaxStrength}"
+                                        class="sapUiMediumMarginBottom"
+                                        min="0"
+                                        max="20"
+                                        enableTickmarks="true"
+                                        visible="{viewModel>/sliderEnabled}"
+                                        change="onRangeSliderChange($event, '/settedMinStrength', '/settedMaxStrength')"
+                                    >
+                                        <ResponsiveScale tickmarksBetweenLabels="2" />
+                                    </RangeSlider>
+                                    <HBox
+                                        class="sapUiTinyMarginBottom"
+                                        visible="{viewModel>/showInputs}"
+                                    >
+                                        <StepInput value="{backend>settedMinStrength}" />
+                                        <StepInput value="{backend>settedMaxStrength}" />
+                                    </HBox>
+                                    <Label text="Intervall {backend>settedInterval}" />
+                                    <Slider
+                                        min="100"
+                                        max="5000"
+                                        enableTickmarks="true"
+                                        value="{backend>settedInterval}"
+                                        class="sapUiMediumMarginBottom"
+                                        visible="{viewModel>/sliderEnabled}"
+                                    >
+                                        <ResponsiveScale tickmarksBetweenLabels="25" />
+                                    </Slider>
+                                    <StepInput
+                                        visible="{viewModel>/showInputs}"
+                                        value="{backend>settedInterval}"
+                                        class="sapUiTinyMarginBottom"
+                                    />
+                                </content>
+                            </Panel>
+                            <Panel
+                                expandable="true"
+                                expanded="false"
+                                headerText="Custom"
                             >
-                                <ResponsiveScale tickmarksBetweenLabels="2" />
-                            </RangeSlider>
-                            <Label text="Intervall {backend>settedInterval}" />
-                            <Slider
-                                min="100"
-                                max="5000"
-                                enableTickmarks="true"
-                                value="{backend>settedInterval}"
-                                class="sapUiMediumMarginBottom"
-                                enabled="true"
-                            >
-                                <ResponsiveScale tickmarksBetweenLabels="25" />
-                            </Slider>
-                            <Label
-                                text="Stepsize {backend>stepSize}"
-                                visible="{= !!${backend>stepSize}}"
-                            />
-                            <Slider
-                                visible="{= !!${backend>stepSize}}"
-                                min="1"
-                                max="{= ${backend>settedMaxStrength} - ${backend>settedMinStrength}}"
-                                enableTickmarks="true"
-                                value="{backend>stepSize}"
-                                class="sapUiMediumMarginBottom"
-                                enabled="true"
-                            >
-                                <ResponsiveScale tickmarksBetweenLabels="25" />
-                            </Slider>
-                            <Label
-                                text="Requested: Latest Pattern"
-                                visible="{= !!${backend>latestPattern}}"
-                            />
-                            <Text
-                                text="{backend>latestPattern}"
-                                visible="{= !!${backend>latestPattern}}"
-                            />
+                                <content>
+                                    <Label
+                                        text="Stepsize {backend>stepSize}"
+                                        visible="{backend>showStepSize}"
+                                    />
+                                    <Slider
+                                        visible="{= ${backend>showStepSize} &amp;&amp; ${viewModel>/sliderEnabled}}"
+                                        min="1"
+                                        max="{= ${backend>settedMaxStrength} - ${backend>settedMinStrength}}"
+                                        enableTickmarks="true"
+                                        value="{backend>stepSize}"
+                                        class="sapUiMediumMarginBottom"
+                                        enabled="{viewModel>/sliderEnabled}"
+                                    >
+                                        <ResponsiveScale tickmarksBetweenLabels="25" />
+                                    </Slider>
+                                    <StepInput
+                                        visible="{viewModel>/showInputs}"
+                                        value="{backend>stepSize}"
+                                        class="sapUiTinyMarginBottom"
+                                    />
+                                    <Label
+                                        text="Requested: Latest Pattern"
+                                        visible="{= !!${backend>latestPattern}}"
+                                    />
+                                    <Text
+                                        text="{backend>latestPattern}"
+                                        visible="{= !!${backend>latestPattern}}"
+                                    />
+                                </content>
+                            </Panel>
                         </form:content>
                         <form:toolbar>
                             <Toolbar>

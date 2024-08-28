@@ -10,7 +10,14 @@
         <beginButton>
         </beginButton>
         <content>
-            <NotificationList />
+            <NotificationList items="{runtimeModel>/history}">
+                <NotificationListItem
+                    title="{runtimeModel>title}"
+                    description="{runtimeModel>description}"
+                    priority="{runtimeModel>priority}"
+                    close="onCloseHistoryItem"
+                />
+            </NotificationList>
         </content>
         <customHeader>
         </customHeader>

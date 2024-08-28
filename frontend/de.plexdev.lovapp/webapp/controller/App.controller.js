@@ -3,11 +3,13 @@ sap.ui.define(
 		"./BaseController",
 		"de/plexdev/lovapp/model/models",
 		"de/plexdev/lovapp/controller/WebSocketHandler",
+		"de/plexdev/lovapp/model/formatter",
 	],
-	function (BaseController, models, WebSocketHandler) {
+	function (BaseController, models, WebSocketHandler, formatter) {
 		"use strict";
 
 		return BaseController.extend("de.plexdev.lovapp.controller.App", {
+			clFormatter: formatter,
 			onInit: function () {
 				// apply content density mode to root view
 				this.getView().addStyleClass(
@@ -23,7 +25,15 @@ sap.ui.define(
 			 */
 			onBeforeRendering() {
 				const hostname = window.location.hostname;
-				new WebSocketHandler().start(`ws://${hostname}:8081`, this);
+				const protocol = window.location.protocol;
+				let sWebsocketProtocol = "ws";
+				if (protocol === "https:") {
+					sWebsocketProtocol = "wss";
+				}
+				new WebSocketHandler().start(
+					`${sWebsocketProtocol}://${hostname}:8081`,
+					this,
+				);
 				//First Request for initial loading
 				this.loadValueHelps();
 				this.refreshHistory();
@@ -46,6 +56,11 @@ sap.ui.define(
 					"App",
 					"refreshConnection",
 					this.getSetConnectionStatus.bind(this),
+				);
+				await this.getEventBus().subscribe(
+					"App",
+					"addHistory",
+					this.addHistory.bind(this),
 				);
 			},
 
@@ -80,8 +95,8 @@ sap.ui.define(
 				if (oData.code === 200) {
 					// IF erst, wenn die Funktion alle x Sekunden aufgerufen wird
 					// if (oModel.getProperty("/connected") !== "Success") {
-					debugger;
-					this.loadDevices();
+					const aDevices = this.convertObjectIntoArray(oData?.data.toys);
+					this.setConnectionStatusSubTitle(aDevices);
 					// }
 					oModel.setProperty("/connected", "Success");
 				} else {
@@ -116,7 +131,6 @@ sap.ui.define(
 			 */
 			async loadDevices(aDevices = []) {
 				const oModel = this.getModel("backend");
-				const oRuntimeModel = this.getModel("runtimeModel");
 				if (!aDevices.length) {
 					aDevices = await this.getModelProperty(
 						oModel,
@@ -124,18 +138,26 @@ sap.ui.define(
 						true,
 					);
 				}
+
+				this.setConnectionStatusSubTitle(aDevices);
+			},
+
+			setConnectionStatusSubTitle(aDevices) {
 				const aSecTitleConnToys = [];
 				if (aDevices.length) {
 					aDevices.forEach((oDevice) => {
-						// debugger;
 						if (oDevice.id) {
 							const sName = oDevice.nickName || oDevice.name;
 							const sBattery = oDevice.battery.toString();
-							aSecTitleConnToys.push(`${sName}: ${sBattery}`);
+							const strVisualBattery = this.clFormatter.getVisualProcentBar(
+								parseInt(sBattery, 10),
+							);
+							aSecTitleConnToys.push(`${sName}: ${strVisualBattery}`);
 						}
 					});
 				}
 
+				const oRuntimeModel = this.getModel("runtimeModel");
 				oRuntimeModel.setProperty(
 					"/secTitleConnToys",
 					aSecTitleConnToys.join(", "),
@@ -163,6 +185,13 @@ sap.ui.define(
 
 			onCloseHistoryPopover() {
 				this.getPopover("HistoryPopover").close();
+			},
+
+			addHistory(oCaller, oApp, oData) {
+				const oModel = this.getModel("runtimeModel");
+				const aHistory = oModel.getProperty("/history") || [];
+				aHistory.unshift(oData);
+				oModel.setProperty("/history", aHistory);
 			},
 		});
 	},

@@ -3,6 +3,7 @@ class WebSocketHandler {
     this.wss = oWebSocketServer;
     this.oApiFunctions = oApiFunctions;
     this.oUserObj = undefined;
+    this.clients = [];
   }
 
   setupWebSocketHandler() {
@@ -10,6 +11,9 @@ class WebSocketHandler {
     this.wss.on("connection", (ws) => {
       this.oUserObj = this.oApiFunctions.getSetUser("1"); //TEMP If another Idea how to to
       console.log("Client connected");
+      this.clients.push(ws);
+      this.sendStatus(ws);
+      this.addHistory("Client connected", "Client connected", "Low");
       // ws.send(`Server received: `);
 
       // Nachricht vom Client empfangen
@@ -20,19 +24,20 @@ class WebSocketHandler {
       // Client-Verbindung geschlossen
       ws.on("close", () => {
         this.onConnectionClosed(ws);
+        this.clients = this.clients.filter((client) => client !== ws);
         clearInterval(oIntervalConnections);
       });
 
-      this.sendStatus(ws);
       const oIntervalConnections = setInterval(() => {
-        this.sendRefreshConnections(ws);
-      }, 20000);
+        this.sendStatus(ws);
+        // this.addHistory("Client connected", "Client connected", "Low");
+      }, 10 * 1000);
     });
   }
 
   onReceiveMessage(ws, sMessage) {
     console.log(`Received message: ${sMessage}`);
-    this.sendMessage(ws, `Server received: ${sMessage}`);
+    this.sendResponse(ws, "message", "Server Received " + sMessage);
   }
 
   onConnectionClosed(ws) {
@@ -40,22 +45,39 @@ class WebSocketHandler {
   }
 
   sendRefreshConnections(ws) {
-    ws.send(JSON.stringify({ function: "refreshConnection" }));
+    ws.send(this.sendResponse(ws, "refreshConnection"));
   }
 
   sendStatus(ws) {
     try {
       this.oUserObj.getDevice().then((response) => {
-        ws.send(JSON.stringify(response));
+        this.sendResponse(ws, "connectionStatus", response);
       });
     } catch (error) {
       console.error(error);
     }
   }
 
-  sendMessage(ws, message) {
-    const oData = { message: message };
-    ws.send(JSON.stringify(oData));
+  addHistory(sTitle, sDescription, sPriority) {
+    this.clients.forEach((client) => {
+      const oData = {
+        title: sTitle,
+        description: sDescription,
+        priority: sPriority,
+      };
+
+      this.sendResponse(client, "addHistory", oData);
+    });
+  }
+
+  /**
+   *
+   * @param {*} ws WebSocket object
+   * @param {*} sFunction Functionname
+   * @param {*} [oData] Data to send
+   */
+  sendResponse(ws, sFunction, oData = {}) {
+    ws.send(JSON.stringify({ function: sFunction, oData: oData }));
   }
 }
 

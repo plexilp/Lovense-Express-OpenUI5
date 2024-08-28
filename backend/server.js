@@ -10,7 +10,6 @@ const WebSocketHandler = require("./app/controllers/websocket");
 const configFile = require("../config.json");
 
 // Den Eintrag ändern, wenn der Server über HTTPS erreichbar sein soll
-const bHttps = false;
 
 const dbConfiguration = {
   bRebuildDatabase: false,
@@ -42,7 +41,19 @@ async function start() {
     "dist"
   );
 
-  app.use("/app", express.static(appPath));
+  app.use((req, res, next) => {
+    if (req.secure || !configFile["baseConfig"]["use-https"]) {
+      // Anforderung ist bereits sicher
+      return next();
+    }
+    // Umleitung auf HTTPS
+    res.redirect(`https://${req.headers.host}${req.url}`);
+  });
+
+  app.use(
+    "/" + configFile["baseConfig"]["path-to-app"],
+    express.static(appPath)
+  );
 
   process.on("uncaughtException", (err) => {
     console.error("There was an uncaught error", err);
@@ -67,33 +78,37 @@ async function start() {
   // Redirect to app page
   if (configFile["baseConfig"]["redirect-to-app-on-no-route"]) {
     app.get("/", (req, res) => {
-      res.redirect("/app");
+      res.redirect("/" + configFile["baseConfig"]["path-to-app"]);
     });
   }
 
+  const sApiRoute = configFile["baseConfig"]["path-to-api"];
   // simple route
-  app.get("/api/", (req, res) => {
+  app.get(`/${sApiRoute}/`, (req, res) => {
     res.status(200).json({ code: "Route /help for more informations" });
   });
-  app.get("/api/test", ApiGet.getTest.bind(ApiGet));
-  app.get("/api/help", ApiGet.getHelp.bind(ApiGet));
-  app.get("/api/getUserId", ApiGet.getUserId.bind(ApiGet));
-  app.get("/api/getConfig", ApiGet.getConfig.bind(ApiGet));
-  app.get("/api/getConnection", ApiGet.getConnection.bind(ApiGet));
-  app.get("/api/getDevices", ApiGet.getDevices.bind(ApiGet));
-  app.get("/api/getHistory", ApiGet.getHistory.bind(ApiGet));
+  app.get(`/${sApiRoute}/test`, ApiGet.getTest.bind(ApiGet));
+  app.get(`/${sApiRoute}/help`, ApiGet.getHelp.bind(ApiGet));
+  app.get(`/${sApiRoute}/getUserId`, ApiGet.getUserId.bind(ApiGet));
+  app.get(`/${sApiRoute}/getConfig`, ApiGet.getConfig.bind(ApiGet));
+  app.get(`/${sApiRoute}/getConnection`, ApiGet.getConnection.bind(ApiGet));
+  app.get(`/${sApiRoute}/getDevices`, ApiGet.getDevices.bind(ApiGet));
+  app.get(`/${sApiRoute}/getHistory`, ApiGet.getHistory.bind(ApiGet));
 
-  app.get("/api/F4Actions", ApiGet.F4Actions.bind(ApiGet));
-  app.get("/api/F4Rules", ApiGet.F4Rules.bind(ApiGet));
-  app.get("/api/F4Modes", ApiGet.F4Modes.bind(ApiGet));
+  app.get(`/${sApiRoute}/F4Actions`, ApiGet.F4Actions.bind(ApiGet));
+  app.get(`/${sApiRoute}/F4Rules`, ApiGet.F4Rules.bind(ApiGet));
+  app.get(`/${sApiRoute}/F4Modes`, ApiGet.F4Modes.bind(ApiGet));
 
   // Posts
 
-  app.post("/api/setConfig", ApiPost.setConfig.bind(ApiPost));
-  app.post("/api/sendFunction", ApiPost.sendFunction.bind(ApiPost));
-  app.post("/api/sendPattern", ApiPost.sendPattern.bind(ApiPost));
-  app.post("/api/sendSpecialPattern", ApiPost.sendSpecialPattern.bind(ApiPost));
-  app.post("/api/stopDevice", ApiPost.stopDevice.bind(ApiPost));
+  app.post(`/${sApiRoute}/setConfig`, ApiPost.setConfig.bind(ApiPost));
+  app.post(`/${sApiRoute}/sendFunction`, ApiPost.sendFunction.bind(ApiPost));
+  app.post(`/${sApiRoute}/sendPattern`, ApiPost.sendPattern.bind(ApiPost));
+  app.post(
+    `/${sApiRoute}/sendSpecialPattern`,
+    ApiPost.sendSpecialPattern.bind(ApiPost)
+  );
+  app.post(`/${sApiRoute}/stopDevice`, ApiPost.stopDevice.bind(ApiPost));
 
   // app.post("/api/checkConnection", (req, res) => {
   //   const oUserObj = getUserObject(req, res);
@@ -121,7 +136,7 @@ async function start() {
   oWebSocketHandler.setupWebSocketHandler();
 
   // set port, listen for requests
-  const PORT = process.env.PORT || 8081;
+  const PORT = process.env.PORT || configFile["baseConfig"]["port-app"];
   server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
   });

@@ -48,26 +48,30 @@
       "cozy": true
     },
 
-    "models": {
-      "i18n": {
-        "type": "sap.ui.model.resource.ResourceModel",
-        "settings": {
-          "bundleName": "de.plexdev.lovapp.i18n.i18n"
-        }
-      },
-      "backend": {
-        "type": "sap.ui.model.json.JSONModel",
-        "settings": {
-          "defaultBindingMode": "TwoWay"
-        }
-      },
-      "appModel": {
-        "type": "sap.ui.model.json.JSONModel"
-      },
-      "runtimeModel": {
-        "type": "sap.ui.model.json.JSONModel"
-      }
-    },
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "de.plexdev.lovapp.i18n.i18n"
+				}
+			},
+			"config": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "config.json"
+			},
+			"backend": {
+				"type": "sap.ui.model.json.JSONModel",
+				"settings": {
+                    "defaultBindingMode": "TwoWay"
+                }
+			},
+			"appModel": {
+				"type": "sap.ui.model.json.JSONModel"
+			},
+			"runtimeModel": {
+				"type": "sap.ui.model.json.JSONModel"
+			}
+		},
 
     "routing": {
       "config": {

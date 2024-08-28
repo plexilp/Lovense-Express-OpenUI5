@@ -1,6 +1,11 @@
 sap.ui.define(
-	["sap/ui/core/UIComponent", "sap/ui/Device", "./model/models"],
-	function (UIComponent, Device, models) {
+	[
+		"sap/ui/core/UIComponent",
+		"sap/ui/Device",
+		"./model/models",
+		"sap/ui/model/json/JSONModel",
+	],
+	function (UIComponent, Device, models, JSONModel) {
 		"use strict";
 
 		return UIComponent.extend("de.plexdev.lovapp.Component", {
@@ -25,6 +30,14 @@ sap.ui.define(
 				Device.resize.attachHandler(function () {
 					oDeviceModel.setData(Device);
 				});
+
+				// const oModel = new JSONModel();
+				// const sConfigPath = sap.ui.require.toUrl("./config.json");
+
+				// // Laden der Konfigurationsdatei
+				// oModel.loadData(sConfigPath);
+
+				// this.getView().setModel(oModel, "config");
 			},
 			/**
 			 * This method can be called to determine whether the sapUiSizeCompact or sapUiSizeCozy

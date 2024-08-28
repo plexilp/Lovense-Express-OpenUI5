@@ -46,6 +46,26 @@
 					</MaskInput> -->
 					<Label text="Port" />
 					<Input value="{backend>port}" />
+					<Label text="{i18n>label.refreshRate}" />
+					<StepInput
+						value="5"
+						min="1"
+						max="600"
+						enabled="false"
+					/>
+					<Label text="{i18n>label.changeLanguage}" />
+					<Select enabled="false">
+						<items>
+							<core:Item
+								key="en"
+								text="English"
+							/>
+							<core:Item
+								key="de"
+								text="Deutsch"
+							/>
+						</items>
+					</Select>
 				</form:content>
 				<form:toolbar>
 					<OverflowToolbar asyncMode="false">
