@@ -63,7 +63,7 @@ sap.ui.define(
 				}
 			},
 
-			async onPressSendRandom() {
+			async onSendRandomPress() {
 				const oModel = this.getModel("viewModel");
 				const aSelectedToys = this.byId("idSelectDevice").getSelectedKeys();
 				const aFeatures = this.byId("idSelectAction").getSelectedKeys();
