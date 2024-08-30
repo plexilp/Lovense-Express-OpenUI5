@@ -1,205 +1,196 @@
 {
-	"_version": "1.12.0",
+  "_version": "1.12.0",
 
-	"sap.app": {
-		"id": "de.plexdev.lovapp",
-		"type": "application",
-		"i18n": "i18n/i18n.properties",
-		"title": "{{appTitle}}",
-		"description": "{{appDescription}}",
-		"applicationVersion": {
-			"version": "${version}"
-		},
-		"dataSources": {}
-	},
+  "sap.app": {
+    "id": "de.plexdev.lovapp",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "applicationVersion": {
+      "version": "${version}"
+    },
+    "dataSources": {}
+  },
 
-	"sap.ui": {
-		"technology": "UI5",
-		"icons": {},
-		"deviceTypes": {
-			"desktop": true,
-			"tablet": true,
-			"phone": true
-		}
-	},
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {},
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
 
-	"sap.ui5": {
-		"rootView": {
-			"viewName": "de.plexdev.lovapp.view.App",
-			"type": "XML",
-			"async": true,
-			"id": "app"
-		},
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "de.plexdev.lovapp.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "app"
+    },
 
-		"dependencies": {
-			"minUI5Version": "1.126.0",
-			"libs": {
-				"sap.ui.core": {},
-				"sap.m": {},
-				"sap.f": {},
-				"sap.tnt": {}
-			}
-		},
+    "dependencies": {
+      "minUI5Version": "1.126.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.m": {},
+        "sap.f": {},
+        "sap.tnt": {}
+      }
+    },
 
-		"handleValidation": true,
+    "handleValidation": true,
 
-		"contentDensities": {
-			"compact": true,
-			"cozy": true
-		},
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
 
-		"models": {
-			"i18n": {
-				"type": "sap.ui.model.resource.ResourceModel",
-				"settings": {
-					"bundleName": "de.plexdev.lovapp.i18n.i18n"
-				}
-			},
-			"config": {
-				"type": "sap.ui.model.json.JSONModel",
-				"uri": "config.json"
-			},
-			"backend": {
-				"type": "sap.ui.model.json.JSONModel",
-				"settings": {
-                    "defaultBindingMode": "TwoWay"
-                }
-			},
-			"appModel": {
-				"type": "sap.ui.model.json.JSONModel"
-			},
-			"runtimeModel": {
-				"type": "sap.ui.model.json.JSONModel"
-			}
-		},
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "de.plexdev.lovapp.i18n.i18n"
+        }
+      },
+      "config": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "config.json"
+      },
+      "backend": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {
+          "defaultBindingMode": "TwoWay"
+        }
+      },
+      "appModel": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "runtimeModel": {
+        "type": "sap.ui.model.json.JSONModel"
+      }
+    },
 
-		"routing": {
-			"config": {
-				"routerClass": "sap.m.routing.Router",
-				"viewType": "XML",
-				"viewPath": "de.plexdev.lovapp.view",
-				"controlId": "pageContainer",
-				"controlAggregation": "pages",
-				"async": true,
-				"bypassed": {
-				"target": "app"
-				}
-			},
-			"routes": [
-				{
-					"pattern": "",
-					"name": "app",
-					"target": "app"
-				},
-				{
-					"pattern": "main",
-					"name": "main",
-					"target": "main"
-				},
-				{
-					"pattern": "mode/random",
-					"name": "mode-random",
-					"target": "mode-random"
-				},
-				{
-					"pattern": "mode/sound",
-					"name": "mode-sound",
-					"target": "mode-sound"
-				},
-				{
-					"pattern": "mode/custom-pattern",
-					"name": "mode-custom-pattern",
-					"target": "mode-custom-pattern"
-				},
-				{
-					"pattern": "mode/predefined-patterns",
-					"name": "mode-predef-patterns",
-					"target": "mode-predef-patterns"
-				},
-				{
-					"pattern": "others/alarm",
-					"name": "others-alarm",
-					"target": "others-alarm"
-				},
-				{
-					"pattern": "others/shake",
-					"name": "others-shake",
-					"target": "others-shake"
-				},
-				{
-					"pattern": "idle-game/home",
-					"name": "game-idle-home",
-					"target": "game-idle-home"
-				},
-				{
-					"pattern": "settings",
-					"name": "settings",
-					"target": "settings"
-				},
-				{
-					"pattern": "help",
-					"name": "help",
-					"target": "help"
-				}
-			],
-			"targets": {
-				"app": {
-					"viewId": "app",
-					"viewName": "App"
-				},
-				"main": {
-					"viewId": "main",
-					"viewName": "Main",
-					"transition": "fade",
-					"viewLevel": 0
-				},
-				"mode-random": {
-					"viewName": "Random",
-					"viewPath": "de.plexdev.lovapp.view.modes",
-					"transition": "fade",
-					"viewLevel": 1
-				},
-				"mode-sound": {
-					"viewName": "Sound",
-					"viewPath": "de.plexdev.lovapp.view.modes",
-					"transition": "fade",
-					"viewLevel": 1
-				},
-				"mode-predef-patterns": {
-					"viewName": "PredefinedPatterns",
-					"viewPath": "de.plexdev.lovapp.view.modes",
-					"transition": "fade",
-					"viewLevel": 1
-				},
-				"others-alarm": {
-					"viewName": "Alarm",
-					"viewPath": "de.plexdev.lovapp.view.others",
-					"transition": "fade",
-					"viewLevel": 1
-				},
-				"others-shake": {
-					"viewName": "Shake",
-					"viewPath": "de.plexdev.lovapp.view.others",
-					"transition": "fade",
-					"viewLevel": 1
-				},
-				"game-idle-home": {
-					"viewName": "IdleGameHome",
-					"viewPath": "de.plexdev.lovapp.view.games",
-					"transition": "fade",
-					"viewLevel": 1
-				},
-				"settings": {
-					"viewName": "Settings",
-					"transition": "fade",
-					"viewLevel": 0
-				},
-				"help": {
-					"viewName": "Help",
-					"transition": "fade",
-					"viewLevel": 0
-				}
-			}
-		}
-	}
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "viewPath": "de.plexdev.lovapp.view",
+        "controlId": "pageContainer",
+        "controlAggregation": "pages",
+        "async": true,
+        "bypassed": {
+          "target": ["main"]
+        }
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "main",
+          "target": "main"
+        },
+        {
+          "pattern": "mode/random",
+          "name": "mode-random",
+          "target": "mode-random"
+        },
+        {
+          "pattern": "mode/sound",
+          "name": "mode-sound",
+          "target": "mode-sound"
+        },
+        {
+          "pattern": "mode/custom-pattern",
+          "name": "mode-custom-pattern",
+          "target": "mode-custom-pattern"
+        },
+        {
+          "pattern": "mode/predefined-patterns",
+          "name": "mode-predef-patterns",
+          "target": "mode-predef-patterns"
+        },
+        {
+          "pattern": "others/alarm",
+          "name": "others-alarm",
+          "target": "others-alarm"
+        },
+        {
+          "pattern": "others/shake",
+          "name": "others-shake",
+          "target": "others-shake"
+        },
+        {
+          "pattern": "idle-game/home",
+          "name": "game-idle-home",
+          "target": "game-idle-home"
+        },
+        {
+          "pattern": "settings",
+          "name": "settings",
+          "target": "settings"
+        },
+        {
+          "pattern": "help",
+          "name": "help",
+          "target": "help"
+        }
+      ],
+      "targets": {
+        "main": {
+          "viewId": "main",
+          "viewName": "Main",
+          "transition": "fade",
+          "viewLevel": 0
+        },
+        "mode-random": {
+          "viewName": "Random",
+          "viewPath": "de.plexdev.lovapp.view.modes",
+          "transition": "fade",
+          "viewLevel": 1
+        },
+        "mode-sound": {
+          "viewName": "Sound",
+          "viewPath": "de.plexdev.lovapp.view.modes",
+          "transition": "fade",
+          "viewLevel": 1
+        },
+        "mode-predef-patterns": {
+          "viewName": "PredefinedPatterns",
+          "viewPath": "de.plexdev.lovapp.view.modes",
+          "transition": "fade",
+          "viewLevel": 1
+        },
+        "others-alarm": {
+          "viewName": "Alarm",
+          "viewPath": "de.plexdev.lovapp.view.others",
+          "transition": "fade",
+          "viewLevel": 1
+        },
+        "others-shake": {
+          "viewName": "Shake",
+          "viewPath": "de.plexdev.lovapp.view.others",
+          "transition": "fade",
+          "viewLevel": 1
+        },
+        "game-idle-home": {
+          "viewName": "IdleGameHome",
+          "viewPath": "de.plexdev.lovapp.view.games",
+          "transition": "fade",
+          "viewLevel": 1
+        },
+        "settings": {
+          "viewName": "Settings",
+          "transition": "fade",
+          "viewLevel": 0
+        },
+        "help": {
+          "viewName": "Help",
+          "transition": "fade",
+          "viewLevel": 0
+        }
+      }
+    }
+  }
 }
