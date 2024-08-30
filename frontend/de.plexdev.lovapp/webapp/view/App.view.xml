@@ -3,7 +3,6 @@
 	displayBlock="true"
 	xmlns="sap.m"
 	xmlns:f="sap.f"
-	xmlns:core="sap.ui.core"
 	xmlns:tnt="sap.tnt"
 	xmlns:mvc="sap.ui.core.mvc"
 >
@@ -19,7 +18,7 @@
 				showMenuButton="true"
 				showCopilot="false"
 				showNotifications="false"
-				menuButtonPressed="onMenuButtonPress"
+				menuButtonPressed="onMenuButtonPressed"
 				notificationsNumber="0"
 			>
 				<f:additionalContent>
@@ -47,7 +46,7 @@
 				<Button
 						icon="sap-icon://connected"
 						type="{runtimeModel>/connected}"
-						press="onMenuButtonPress"
+						press="onMenuButtonPressed"
 						width="100px"
 					/>
 				<Title level="H1" text="LovApp" title="TEST" wrapping="false" id="productName">

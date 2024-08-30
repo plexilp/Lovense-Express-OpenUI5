@@ -15,12 +15,12 @@ sap.ui.define(
 
 			onAfterRendering() {},
 
-			async onPressStop() {
+			async onStopPress() {
 				const oResult = await this.sendPost("/stopDevice?userId=1", {});
 				console.log(oResult);
 			},
 
-			async onPressStopToy(oEvent) {
+			async onStopToyPress(oEvent) {
 				const oBinding = oEvent
 					.getSource()
 					.getBindingContext("backend")

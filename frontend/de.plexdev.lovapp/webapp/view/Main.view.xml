@@ -86,7 +86,7 @@
 								<additionalContent>
 									<Button
 										text="STOP EVERYTHING"
-										press="onPressStop"
+										press="onStopPress"
 										type="Negative"
 									/>
 								</additionalContent>
@@ -131,7 +131,7 @@
 									<Button
 										bindingContexts="{backend>id}"
 										text="STOP TOY"
-										press="onPressStopToy"
+										press="onStopToyPress"
 										type="Negative"
 										width="100%"
 									/>
@@ -160,7 +160,7 @@
 									<Button
 										bindingContexts="{backend>id}"
 										text="STOP TOY"
-										press="onPressStopToy"
+										press="onStopToyPress"
 										type="Negative"
 									/>
 								</additionalContent>
