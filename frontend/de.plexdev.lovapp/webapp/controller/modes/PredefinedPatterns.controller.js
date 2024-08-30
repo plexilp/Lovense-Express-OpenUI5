@@ -84,6 +84,26 @@ sap.ui.define(
 						oModel.setProperty(vProperty2, value1);
 					}
 				},
+
+				onMinStepInputChange(_oEvent, vMinProperty, vMaxProperty) {
+					const oModel = this.getModel("backend");
+					const vMinValue = oModel.getProperty(vMinProperty);
+					const vMaxValue = oModel.getProperty(vMaxProperty);
+
+					if (vMinValue > vMaxValue) {
+						oModel.setProperty(vMaxProperty, vMinValue);
+					}
+				},
+
+				onMaxStepInputChange(_oEvent, vMaxProperty, vMinProperty) {
+					const oModel = this.getModel("backend");
+					const vMinValue = oModel.getProperty(vMinProperty);
+					const vMaxValue = oModel.getProperty(vMaxProperty);
+
+					if (vMaxValue < vMinValue) {
+						oModel.setProperty(vMinProperty, vMaxValue);
+					}
+				},
 			},
 		);
 	},

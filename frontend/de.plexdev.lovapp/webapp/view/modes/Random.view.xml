@@ -61,8 +61,8 @@
                 <VBox width="100%">
                     <RangeSlider
                         width="100%"
-                        min="0"
-                        max="20"
+                        min="{config>/minimum-values/strength}"
+                        max="{config>/maximum-values/strength}"
                         value="1"
                         value2="5"
                         enableTickmarks="true"
@@ -78,8 +78,20 @@
                         class="sapUiTinyMarginBottom"
                         visible="{viewModel>/showInputs}"
                     >
-                        <StepInput value="{viewModel>/strengthMin}" />
-                        <StepInput value="{viewModel>/strengthMax}" />
+                        <StepInput
+                            value="{viewModel>/strengthMin}"
+                            min="{config>/minimum-values/strength}"
+                            max="{config>/maximum-values/strength}"
+                            step="{config>/step-values/strength}"
+                            change="onMinStepInputChange($event, '/strengthMin', '/strengthMax')"
+                        />
+                        <StepInput
+                            value="{viewModel>/strengthMax}"
+                            min="{config>/minimum-values/strength}"
+                            max="{config>/maximum-values/strength}"
+                            step="{config>/step-values/strength}"
+                            change="onMaxStepInputChange($event, '/strengthMax', '/strengthMin')"
+                        />
                         <!-- <layoutData>
                         <layout:GridData span="XL2 L2 M12 S12" />
                     </layoutData> -->
@@ -88,8 +100,8 @@
                 <Label text="Interval (millisec) {viewModel>/intervalMin} {viewModel>/intervalMax}" />
                 <VBox width="100%">
                     <RangeSlider
-                        min="100"
-                        max="10000"
+                        min="{config>/minimum-values/interval}"
+                        max="{config>/maximum-values/interval}"
                         value="100"
                         value2="1000"
                         visible="{viewModel>/sliderEnabled}"
@@ -104,8 +116,20 @@
                         class="sapUiTinyMarginBottom"
                         visible="{viewModel>/showInputs}"
                     >
-                        <StepInput value="{viewModel>/intervalMin}" />
-                        <StepInput value="{viewModel>/intervalMax}" />
+                        <StepInput
+                            value="{viewModel>/intervalMin}"
+                            min="{config>/minimum-values/interval}"
+                            max="{config>/maximum-values/interval}"
+                            step="{config>/step-values/interval}"
+                            change="onMinStepInputChange($event, '/intervalMin', '/intervalMax')"
+                        />
+                        <StepInput
+                            value="{viewModel>/intervalMax}"
+                            min="{config>/minimum-values/interval}"
+                            max="{config>/maximum-values/interval}"
+                            step="{config>/step-values/interval}"
+                            change="onMaxStepInputChange($event, '/intervalMax', '/intervalMin')"
+                        />
                         <!-- <layoutData>
                             <layout:GridData span="XL2 L2 M12 S12" />
                         </layoutData> -->
@@ -114,8 +138,8 @@
                 <Label text="Time (sec) {viewModel>/timeMin} {viewModel>/timeMax}" />
                 <VBox width="100%">
                     <RangeSlider
-                        min="0"
-                        max="600"
+                        min="{config>/minimum-values/time}"
+                        max="{config>/maximum-values/time}"
                         value="0"
                         value2="0"
                         visible="{viewModel>/sliderEnabled}"
@@ -130,8 +154,20 @@
                         class="sapUiTinyMarginBottom"
                         visible="{viewModel>/showInputs}"
                     >
-                        <StepInput value="{viewModel>/timeMin}" />
-                        <StepInput value="{viewModel>/timeMax}" />
+                        <StepInput
+                            value="{viewModel>/timeMin}"
+                            min="{config>/minimum-values/time}"
+                            max="{config>/maximum-values/time}"
+                            step="{config>/step-values/time}"
+                            change="onMinStepInputChange($event, '/timeMin', '/timeMax')"
+                        />
+                        <StepInput
+                            value="{viewModel>/timeMax}"
+                            min="{config>/minimum-values/time}"
+                            max="{config>/maximum-values/time}"
+                            step="{config>/step-values/time}"
+                            change="onMaxStepInputChange($event, '/timeMax', '/timeMin')"
+                        />
                         <!-- <layoutData>
                         <layout:GridData span="XL2 L2 M12 S12" />
                     </layoutData> -->
@@ -152,6 +188,9 @@
                     <StepInput
                         visible="{viewModel>/showInputs}"
                         value="{viewModel>/patternLength}"
+                        min="{config>/minimum-values/patternLength}"
+                        max="{config>/maximum-values/patternLength}"
+                        step="{config>/step-values/patternLength}"
                     >
                         <!-- <layoutData>
                         <layout:GridData span="XL2 L2 M12 S12" />
@@ -173,6 +212,9 @@
                     <StepInput
                         visible="{viewModel>/showInputs}"
                         value="{viewModel>/possibleDifference}"
+                        min="{config>/minimum-values/possibleDifference}"
+                        max="{config>/maximum-values/possibleDifference}"
+                        step="{config>/step-values/possibleDifference}"
                     >
                         <!-- <layoutData>
                         <layout:GridData span="XL2 L2 M12 S12" />
@@ -205,7 +247,7 @@
                 <Button
                     type="Emphasized"
                     text="Senden"
-					press="onSendRandomPress"
+                    press="onSendRandomPress"
                 />
             </OverflowToolbar>
         </subHeader>
