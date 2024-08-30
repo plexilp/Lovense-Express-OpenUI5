@@ -8,7 +8,7 @@
 >
 	<!-- <App id="app" /> -->
 	<tnt:ToolPage
-		id="app"
+		id="app-tool-page"
 		sideExpanded="true"
 	>
 		<tnt:header>
