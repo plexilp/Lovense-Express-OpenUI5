@@ -41,5 +41,23 @@
 	},
 	"dependencies": {
 		"ui5-middleware-route-proxy": "^1.0.10"
-	}
+	},
+	"ui5": {
+    "ui5parser": {
+      "ui5version": "1.120.6",
+      "excludeFolderPatterns": [
+        "**/resources/**",
+        "**/dist/**",
+        "**/node_modules/**",
+        "**/lib/**"
+      ]
+    },
+    "ui5linter": {
+      "severity": {
+        "UnusedClassLinter": "Warning"
+      },
+      "eventNamingPattern": "^on.*{EventName}$",
+      "idNamingPattern": ".*"
+    }
+  }
 }
