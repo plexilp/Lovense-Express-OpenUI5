@@ -1,4 +1,26 @@
 {
-    "path-to-api": "api",
-    "port-to-api": 8081
+  "path-to-api": "api",
+  "port-to-api": 8081,
+
+  "minimum-values": {
+    "strength": 0,
+    "interval": 100,
+    "time": 0,
+    "patternLength": 1,
+    "possibleDifference": 1
+  },
+  "maximum-values": {
+    "strength": 20,
+    "interval": 10000,
+    "time": 600,
+    "patternLength": 50,
+    "possibleDifference": 20
+  },
+  "step-values": {
+    "strength": 1,
+    "interval": 100,
+    "time": 5,
+    "patternLength": 1,
+    "possibleDifference": 1
+  }
 }

@@ -40,8 +40,8 @@
 					</MultiComboBox>
 					<Label text="Time {viewModel>/selectedTime}" />
 					<Slider
-						min="0"
-						max="600"
+						min="{config>/minimum-values/time}"
+						max="{config>/maximum-values/time}"
 						enableTickmarks="true"
 						value="{viewModel>/selectedTime}"
 						class="sapUiMediumMarginBottom"
@@ -51,8 +51,8 @@
 					</Slider>
 					<Label text="Strength {viewModel>/selectedStrength}" />
 					<Slider
-						min="0"
-						max="20"
+						min="{config>/minimum-values/strength}"
+						max="{config>/maximum-values/strength}"
 						enableTickmarks="true"
 						liveChange="onSliderLiveChange"
 						value="{viewModel>/selectedStrength}"
@@ -86,7 +86,7 @@
 								<additionalContent>
 									<Button
 										text="STOP EVERYTHING"
-										press="onPressStop"
+										press="onStopPress"
 										type="Negative"
 									/>
 								</additionalContent>
@@ -131,7 +131,7 @@
 									<Button
 										bindingContexts="{backend>id}"
 										text="STOP TOY"
-										press="onPressStopToy"
+										press="onStopToyPress"
 										type="Negative"
 										width="100%"
 									/>
@@ -160,7 +160,7 @@
 									<Button
 										bindingContexts="{backend>id}"
 										text="STOP TOY"
-										press="onPressStopToy"
+										press="onStopToyPress"
 										type="Negative"
 									/>
 								</additionalContent>

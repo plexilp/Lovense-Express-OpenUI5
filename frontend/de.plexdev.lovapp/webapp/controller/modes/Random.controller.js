@@ -34,6 +34,27 @@ sap.ui.define(
 				const oModel = this.getView().getModel("viewModel");
 				oModel.setData(oData);
 			},
+
+			onMinStepInputChange(_oEvent, vMinProperty, vMaxProperty) {
+				const oModel = this.getModel("viewModel");
+				const vMinValue = oModel.getProperty(vMinProperty);
+				const vMaxValue = oModel.getProperty(vMaxProperty);
+
+				if (vMinValue > vMaxValue) {
+					oModel.setProperty(vMaxProperty, vMinValue);
+				}
+			},
+
+			onMaxStepInputChange(_oEvent, vMaxProperty, vMinProperty) {
+				const oModel = this.getModel("viewModel");
+				const vMinValue = oModel.getProperty(vMinProperty);
+				const vMaxValue = oModel.getProperty(vMaxProperty);
+
+				if (vMaxValue < vMinValue) {
+					oModel.setProperty(vMinProperty, vMaxValue);
+				}
+			},
+
 			onRangeSliderLiveChange(oEvent, vProperty1, vProperty2) {
 				const oModel = this.getModel("viewModel");
 				const oSlider = oEvent.getSource();
@@ -63,7 +84,7 @@ sap.ui.define(
 				}
 			},
 
-			async onPressSendRandom() {
+			async onSendRandomPress() {
 				const oModel = this.getModel("viewModel");
 				const aSelectedToys = this.byId("idSelectDevice").getSelectedKeys();
 				const aFeatures = this.byId("idSelectAction").getSelectedKeys();

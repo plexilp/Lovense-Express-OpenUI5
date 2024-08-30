@@ -104,7 +104,7 @@ sap.ui.define(
 				}
 			},
 
-			onMenuButtonPress(oEvent) {
+			onMenuButtonPressed(oEvent) {
 				const appBar = oEvent.getSource().getParent();
 
 				appBar.setSideExpanded(!appBar.getSideExpanded());

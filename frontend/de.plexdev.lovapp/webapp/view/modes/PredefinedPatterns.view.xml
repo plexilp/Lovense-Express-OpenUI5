@@ -6,7 +6,6 @@
     xmlns:form="sap.ui.layout.form"
     xmlns:card="sap.f.cards"
     xmlns:core="sap.ui.core"
-    xmlns:layout="sap.ui.layout"
     displayBlock="true"
     height="100%"
     busyIndicatorDelay="0"
@@ -76,8 +75,8 @@
                                 <content>
                                     <Label text="Time {backend>settedTime}" />
                                     <Slider
-                                        min="0"
-                                        max="600"
+                                        min="{config>/minimum-values/time}"
+                                        max="{config>/maximum-values/time}"
                                         enableTickmarks="true"
                                         value="{backend>settedTime}"
                                         class="sapUiMediumMarginBottom"
@@ -88,6 +87,9 @@
                                     <StepInput
                                         visible="{viewModel>/showInputs}"
                                         value="{backend>settedTime}"
+                                        min="{config>/minimum-values/time}"
+                                        max="{config>/maximum-values/time}"
+                                        step="{config>/step-values/time}"
                                         class="sapUiTinyMarginBottom"
                                     />
                                     <Label text="Strength {backend>settedMinStrength} {backend>settedMaxStrength}" />
@@ -95,8 +97,8 @@
                                         value="{backend>settedMinStrength}"
                                         value2="{backend>settedMaxStrength}"
                                         class="sapUiMediumMarginBottom"
-                                        min="0"
-                                        max="20"
+                                        min="{config>/minimum-values/strength}"
+                                        max="{config>/maximum-values/strength}"
                                         enableTickmarks="true"
                                         visible="{viewModel>/sliderEnabled}"
                                         change="onRangeSliderChange($event, '/settedMinStrength', '/settedMaxStrength')"
@@ -107,10 +109,23 @@
                                         class="sapUiTinyMarginBottom"
                                         visible="{viewModel>/showInputs}"
                                     >
-                                        <StepInput value="{backend>settedMinStrength}" />
-                                        <StepInput value="{backend>settedMaxStrength}" />
+                                        <StepInput
+                                            value="{backend>settedMinStrength}"
+                                            min="{config>/minimum-values/strength}"
+                                            max="{config>/maximum-values/strength}"
+                                            step="{config>/step-values/strength}"
+                                            change="onMinStepInputChange($event, '/settedMinStrength', '/settedMaxStrength')"
+                                        />
+                                        <StepInput
+                                            value="{backend>settedMaxStrength}"
+                                            min="{config>/minimum-values/strength}"
+                                            max="{config>/maximum-values/strength}"
+                                            step="{config>/step-values/strength}"
+                                            change="onMaxStepInputChange($event, '/settedMaxStrength', '/settedMinStrength')"
+                                        />
                                     </HBox>
                                     <Label text="Intervall {backend>settedInterval}" />
+                                    <!-- TODO: min/max -->
                                     <Slider
                                         min="100"
                                         max="5000"
@@ -151,6 +166,8 @@
                                     </Slider>
                                     <StepInput
                                         visible="{viewModel>/showInputs}"
+                                        min="1"
+                                        max="{= ${backend>settedMaxStrength} - ${backend>settedMinStrength}}"
                                         value="{backend>stepSize}"
                                         class="sapUiTinyMarginBottom"
                                     />
