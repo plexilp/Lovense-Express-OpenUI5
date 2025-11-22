@@ -4,6 +4,12 @@ node_modules
 *.key
 *.crt
 *.pem
-platforms
-plugins
-www
+
+# Cordova generated files
+platforms/*/
+plugins/*/
+!plugins/fetch.json
+!plugins/android.json
+
+# Build output (generated from webapp/)
+www/
