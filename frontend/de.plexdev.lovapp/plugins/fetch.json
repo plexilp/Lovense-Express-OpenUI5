@@ -62,5 +62,13 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-vibration": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-vibration@^3.1.1"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

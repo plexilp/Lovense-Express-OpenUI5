@@ -66,6 +66,12 @@
               "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
               "count": 1
             }
+          ],
+          "/manifest": [
+            {
+              "xml": "<uses-permission android:name=\"android.permission.VIBRATE\" />",
+              "count": 1
+            }
           ]
         }
       }
@@ -88,6 +94,9 @@
       "PACKAGE_NAME": "de.plexdev.lovapp"
     },
     "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "de.plexdev.lovapp"
+    },
+    "cordova-plugin-vibration": {
       "PACKAGE_NAME": "de.plexdev.lovapp"
     }
   },
@@ -337,6 +346,7 @@
     "cordova-plugin-media": "5.0.4",
     "cordova-plugin-device": "2.1.0",
     "cordova-plugin-network-information": "3.0.0",
-    "cordova-plugin-statusbar": "4.0.0"
+    "cordova-plugin-statusbar": "4.0.0",
+    "cordova-plugin-vibration": "3.1.1"
   }
 }

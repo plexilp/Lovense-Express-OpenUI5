@@ -21,6 +21,9 @@
     },
     "cordova-plugin-statusbar": {
       "PACKAGE_NAME": "de.plexdev.lovapp"
+    },
+    "cordova-plugin-vibration": {
+      "PACKAGE_NAME": "de.plexdev.lovapp"
     }
   },
   "dependent_plugins": {
