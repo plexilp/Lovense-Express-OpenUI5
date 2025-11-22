@@ -1,0 +1,5 @@
+# Cordova-spezifische Dateien und Verzeichnisse
+platforms/
+plugins/
+node_modules/
+package-lock.json

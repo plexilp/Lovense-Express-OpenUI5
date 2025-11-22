@@ -1,0 +1,9 @@
+{
+    "path-to-api": "api",
+    "port-to-api": 8081,
+    "mobile": {
+        "backend-url": "https://your-server-ip-or-domain.com",
+        "backend-port": 8081,
+        "use-ssl": true
+    }
+}

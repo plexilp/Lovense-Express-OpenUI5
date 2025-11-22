@@ -1,38 +1,46 @@
 sap.ui.define(
 	[
 		"de/plexdev/lovapp/controller/BaseController",
+		"de/plexdev/lovapp/controller/CordovaPluginManager",
 		"sap/ui/model/json/JSONModel",
 		"sap/m/MessageToast",
 	],
-	function (BaseController, JSONModel, MessageToast) {
+	function (BaseController, CordovaPluginManager, JSONModel, MessageToast) {
 		"use strict";
 
 		return BaseController.extend("de.plexdev.lovapp.controller.others.Shake", {
+			_shakeWatcher: null,
+
 			onInit() {},
 
 			onBeforeRendering() {
-				this.getView().setModel(new JSONModel({ test: [] }), "viewModel");
+				this.getView().setModel(
+					new JSONModel({
+						test: [],
+						isShaking: false,
+						deviceInfo: CordovaPluginManager.getDeviceInfo(),
+					}),
+					"viewModel",
+				);
 			},
 
 			async onAfterRendering() {
-				// const oViewModel = this.getModel("viewModel");
+				// Warte auf Cordova deviceready
+				await CordovaPluginManager.deviceReady();
 
-				// await this.getMotion();
-				// addEventListener("devicemotion", (event) => {
-				// 	console.log(event);
-				// });
+				// Verstecke Splashscreen falls noch sichtbar
+				CordovaPluginManager.hideSplashScreen();
 
-				// window.ondevicemotion = (event) => {
-				// 	console.log(event);
-				// 	// const aNewArr = oViewModel.getProperty("/test");
-				// 	// const oEntry = {
-				// 	// 	value: event,
-				// 	// };
-				// 	// aNewArr.push(oEntry);
-				// 	// oViewModel.setProperty("/test", aNewArr);
-				// };
-
+				// Starte Shake-Detection
 				this.requestMotionPermission();
+			},
+
+			onExit() {
+				// Cleanup: Stoppe Shake-Überwachung beim Verlassen
+				if (this._shakeWatcher) {
+					this._shakeWatcher.clear();
+					this._shakeWatcher = null;
+				}
 			},
 
 			handleMotionEvent(event) {
@@ -45,30 +53,84 @@ sap.ui.define(
 			},
 
 			requestMotionPermission() {
-				if (typeof DeviceMotionEvent.requestPermission === "function") {
-					// iOS 13+
-					DeviceMotionEvent.requestPermission()
-						.then((permissionState) => {
-							if (permissionState === "granted") {
-								window.addEventListener(
-									"devicemotion",
-									this.handleMotionEvent.bind(this),
-									true,
-								);
-							} else {
-								alert("Permission not granted for DeviceMotion");
-							}
-						})
-						.catch((error) => {
-							console.error(error.message);
-							MessageToast.show(error.message);
-						});
+				const oViewModel = this.getModel("viewModel");
+
+				// Wenn Cordova verfügbar ist, nutze den CordovaPluginManager
+				if (CordovaPluginManager.isCordova()) {
+					this._shakeWatcher = CordovaPluginManager.watchAcceleration(
+						(acceleration) => {
+							console.log("Shake detected!", acceleration);
+							oViewModel.setProperty("/isShaking", true);
+							oViewModel.setProperty(
+								"/test",
+								`Shake! X:${acceleration.x.toFixed(2)}, Y:${acceleration.y.toFixed(2)}, Z:${acceleration.z.toFixed(2)}`,
+							);
+
+							// Vibriere bei Shake-Erkennung
+							CordovaPluginManager.vibrate([100, 50, 100]);
+
+							// Sende Shake-Event ans Backend (falls gewünscht)
+							this.onShakeDetected(acceleration);
+
+							// Reset isShaking nach kurzer Zeit
+							setTimeout(() => {
+								oViewModel.setProperty("/isShaking", false);
+							}, 500);
+						},
+						15,
+					); // Threshold für Shake-Erkennung
+
+					MessageToast.show("Shake-Detection mit Cordova aktiviert");
 				} else {
-					// Handle regular non iOS 13+ devices
-					window.addEventListener(
-						"devicemotion",
-						this.handleMotionEvent.bind(this),
-						true,
+					// Fallback auf Web API (wie bisher)
+					if (typeof DeviceMotionEvent.requestPermission === "function") {
+						// iOS 13+
+						DeviceMotionEvent.requestPermission()
+							.then((permissionState) => {
+								if (permissionState === "granted") {
+									this._startWebShakeDetection();
+								} else {
+									alert("Permission not granted for DeviceMotion");
+								}
+							})
+							.catch((error) => {
+								console.error(error.message);
+								MessageToast.show(error.message);
+							});
+					} else {
+						// Handle regular non iOS 13+ devices
+						this._startWebShakeDetection();
+					}
+				}
+			},
+
+			_startWebShakeDetection() {
+				window.addEventListener(
+					"devicemotion",
+					this.handleMotionEvent.bind(this),
+					true,
+				);
+				MessageToast.show("Shake-Detection mit Web API aktiviert");
+			},
+
+			onShakeDetected(acceleration) {
+				// Hier kannst du das Shake-Event ans Backend senden
+				// Beispiel: WebSocket-Nachricht
+				const ws = this.getWebSocket();
+				if (ws && ws.readyState === WebSocket.OPEN) {
+					ws.send(
+						JSON.stringify({
+							type: "shake",
+							data: {
+								x: acceleration.x,
+								y: acceleration.y,
+								z: acceleration.z,
+								deltaX: acceleration.deltaX,
+								deltaY: acceleration.deltaY,
+								deltaZ: acceleration.deltaZ,
+								timestamp: new Date().toISOString(),
+							},
+						}),
 					);
 				}
 			},
