@@ -4,3 +4,6 @@ node_modules
 *.key
 *.crt
 *.pem
+platforms
+plugins
+www
